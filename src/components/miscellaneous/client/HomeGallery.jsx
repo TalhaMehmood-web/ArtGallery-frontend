@@ -21,9 +21,9 @@ const HomeGallery = () => {
     setSelectedCategory(categoryId);
   };
   return (
-    <section className="flex flex-col space-y-6 md:space-y-3 p-4 mt-4">
+    <section className="flex flex-col p-4 mt-4 space-y-6 md:space-y-3">
       <header className="w-full text-center">
-        <p className="text-4xl animate-pulse  font-extrabold text-yellow-500  italic">
+        <p className="text-4xl italic font-extrabold text-yellow-500 animate-pulse">
           Art Gallery
         </p>
       </header>
@@ -49,7 +49,7 @@ const HomeGallery = () => {
           </p>
         ))}
       </div>
-      <div className="block xl:hidden w-fit  md:px-10 ">
+      <div className="block xl:hidden w-fit md:px-10 ">
         <CategoryCombobox
           categories={categories}
           selectedCategory={selectedCategory}
@@ -57,8 +57,8 @@ const HomeGallery = () => {
         />
       </div>
       {/* pictures section */}
-      <section className="grid justify-items-center mt-4 xl:mt-0 gap-4  md:px-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-        {isPicturesLoading &&
+      <section className="grid gap-4 mt-4 justify-items-center xl:mt-0 md:px-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+        {true &&
           Array.from({ length: 5 }).map((_, index) => (
             <PictureSkeleton key={index} />
           ))}
