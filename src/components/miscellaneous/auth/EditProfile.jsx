@@ -31,7 +31,11 @@ const EditProfile = ({ openProfileDialog, setOpenProfileDialog }) => {
         if (data) {
           setUser(data);
           setOpenProfileDialog(false);
-          reset();
+          reset({
+            fullname: data?.fullname,
+            username: data?.username,
+            email: data?.email,
+          });
           toast.success("Profile updated Successfully");
         }
       },
