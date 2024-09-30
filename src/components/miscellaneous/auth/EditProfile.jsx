@@ -84,28 +84,24 @@ const EditProfile = ({ openProfileDialog, setOpenProfileDialog }) => {
             <div className="flex flex-col space-y-6">
               <div className="grid grid-cols-2 gap-2">
                 <div className="flex flex-col space-y-1">
-                  <label
-                    className="font-semibold"
-                    htmlFor="fullname"
-                    type="text"
-                  >
+                  <label className="font-semibold" htmlFor="fullname">
                     Full Name
                   </label>
                   <Input
+                    type="text"
+                    name="fullname"
                     className="text-white bg-transparent border border-yellow-500"
                     placeholder="John Doe"
                     {...register("fullname")}
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
-                  <label
-                    className="font-semibold"
-                    htmlFor="username"
-                    type="text"
-                  >
+                  <label className="font-semibold" htmlFor="username">
                     User Name
                   </label>
                   <Input
+                    type="text"
+                    name="username"
                     className="text-white bg-transparent border border-yellow-500"
                     placeholder="john_doe"
                     {...register("username")}
@@ -113,10 +109,12 @@ const EditProfile = ({ openProfileDialog, setOpenProfileDialog }) => {
                 </div>
               </div>
               <div className="flex flex-col space-y-1">
-                <label className="font-semibold" htmlFor="email" type="email">
+                <label className="font-semibold" htmlFor="email">
                   Email
                 </label>
                 <Input
+                  type="email"
+                  name="email"
                   className="text-white bg-transparent border border-yellow-500"
                   placeholder="exapmle@gmai.com"
                   {...register("email")}
