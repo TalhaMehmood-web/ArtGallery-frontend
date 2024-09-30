@@ -46,10 +46,10 @@ const ClientNav = () => {
 
           <Avatar
             onClick={() => setUserSheet(true)}
-            className="rounded-full cursor-pointer"
+            className="border-2 border-yellow-500 rounded-full cursor-pointer"
           >
             <AvatarImage src={user?.profile && user?.profile} alt="avatar" />
-            <AvatarFallback className="text-white bg-black border-2 border-yellow-500 rounded-full cursor-pointer ">
+            <AvatarFallback className="text-white bg-black rounded-full cursor-pointer ">
               {getInitials(user?.fullname)}
             </AvatarFallback>
           </Avatar>

@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 const Client = () => {
   return (
-    <div className="flex flex-col w-full min-h-screen text-black relative overflow-hidden">
+    <div className="flex flex-col w-full min-h-screen overflow-hidden text-black ">
       {/* navbar */}
       <div className="h-[5rem]">
         <ClientNav />
@@ -12,7 +12,7 @@ const Client = () => {
         style={{
           height: "calc(100vh - 5rem )",
         }}
-        className="flex-grow flex relative max-h-full overflow-y-auto scroll-smooth  "
+        className="relative flex flex-grow max-h-full overflow-y-auto scroll-smooth "
       >
         {<Outlet />}
       </div>

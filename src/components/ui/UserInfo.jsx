@@ -10,8 +10,7 @@ import { useGlobalContext } from "@/context/UserContext";
 import useLogout from "@/hooks/useLogout";
 import { FaEdit } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import getInitials from "@/utils/getInitials";
+
 import EditProfile from "../miscellaneous/auth/EditProfile";
 import { useState } from "react";
 const UserInfo = ({ userSheet, setUserSheet }) => {
@@ -35,12 +34,11 @@ const UserInfo = ({ userSheet, setUserSheet }) => {
             {/* profile picture */}
             {user?.profile && (
               <div>
-                <Avatar className="w-full h-full rounded-full">
-                  <AvatarImage
-                    src={user?.profile && user?.profile}
-                    alt="avatar"
-                  />
-                </Avatar>
+                <img
+                  src={user?.profile}
+                  alt="profile"
+                  className="object-cover w-full h-full rounded-full aspect-square"
+                />
               </div>
             )}
             <div className="text-2xl italic font-extrabold text-center text-yellow-500 ">
