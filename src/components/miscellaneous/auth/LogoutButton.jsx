@@ -1,27 +1,11 @@
 /* eslint-disable react/prop-types */
-import { postData } from "@/api/postData";
 import { Button } from "@/components/ui/button";
-import { useGlobalContext } from "@/context/UserContext";
-import { useMutation } from "react-query";
-import Loading from "../loading/Loading";
-import { routeStorage } from "@/utils/routeStorage";
+import Loading from "@/components/miscellaneous/loading/Loading";
+import useLogout from "@/hooks/useLogout"; // Import the reusable logout hook
 
 const LogoutButton = ({ logoutOutText = false }) => {
-  const { setUser, setRoute } = useGlobalContext();
-  const logoutMutation = useMutation(() => postData("user/logout", null), {
-    onSuccess: ({ data }) => {
-      if (data) {
-        setUser(null);
-        setRoute("/");
-        routeStorage.saveRoute("/");
-      }
-    },
-  });
+  const { handleLogout, isLoading } = useLogout(); // Use the custom hook
 
-  const handleLogout = async () => {
-    await logoutMutation.mutateAsync();
-  };
-  const { isLoading } = logoutMutation;
   return (
     <>
       <div>
@@ -37,7 +21,7 @@ const LogoutButton = ({ logoutOutText = false }) => {
         )}
       </div>
       {isLoading && (
-        <div className="absolute top-0 right-0 w-full min-h-screen ">
+        <div className="absolute top-0 right-0 w-full min-h-screen">
           <Loading />
         </div>
       )}

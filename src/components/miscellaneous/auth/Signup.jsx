@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useGlobalContext } from "@/context/UserContext";
 import { useNavigate } from "react-router-dom";
 const Signup = () => {
-  const { setUser, user, setRoute } = useGlobalContext();
+  const { setUser, setRoute } = useGlobalContext();
 
   const navigate = useNavigate();
   const form = useForm({
@@ -29,7 +29,7 @@ const Signup = () => {
         description: `Signed up as ${data?.fullname}`,
       });
       setUser(data);
-      if (user?.isAdmin) {
+      if (data?.isAdmin) {
         navigate("/admin");
         setRoute("/admin");
       } else {
