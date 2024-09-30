@@ -9,7 +9,7 @@ import { useGlobalContext } from "@/context/UserContext";
 import { routeStorage } from "@/utils/routeStorage";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import getInitials from "@/utils/getInitials";
-import UserInfo from "@/components/ui/userInfo";
+import UserInfo from "@/components/ui/UserInfo";
 const ClientNav = () => {
   const [openSheet, setOpenSheet] = useState(false);
   const navigate = useNavigate();
