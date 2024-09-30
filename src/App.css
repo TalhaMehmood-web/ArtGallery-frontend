@@ -1,0 +1,49 @@
+* {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.img-effect:hover > .hover-effect-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background-color: black;
+  background-blend-mode: darken;
+  opacity: 0.5;
+  z-index: 1;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  animation: effect 0.5s ease-in-out;
+}
+
+@keyframes effect {
+  0% {
+    height: 0%;
+  }
+  100% {
+    height: 100%;
+  }
+}
+.trash-icon {
+  display: none;
+  z-index: 30;
+}
+.img-effect:hover .trash-icon {
+  display: block;
+}
+.no-scroll::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #61605f;
+}
+.scroll::-webkit-scrollbar {
+  width: 4px;
+  height: 2px;
+  background-color: #f1c95048;
+}
+.height {
+  height: calc(100vh - 5rem);
+}

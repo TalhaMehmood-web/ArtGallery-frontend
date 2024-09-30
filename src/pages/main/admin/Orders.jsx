@@ -1,0 +1,278 @@
+import { useState } from "react";
+import {
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  getPaginationRowModel,
+  getFilteredRowModel,
+  flexRender,
+} from "@tanstack/react-table";
+import { useQuery } from "react-query";
+import { fetchData } from "@/api/fetchData";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableCaption,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import BiddersSheet from "@/components/miscellaneous/client/BiddersSheet";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown, ArrowUpDown } from "lucide-react";
+import Loading from "@/components/miscellaneous/loading/Loading";
+import { toast } from "sonner";
+
+const Orders = () => {
+  const {
+    data: auctions,
+    isLoading,
+    error,
+  } = useQuery("bids", () => fetchData("auction/bids"));
+
+  const [sorting, setSorting] = useState([]);
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [columnVisibility, setColumnVisibility] = useState({});
+  const [selectedAuction, setSelectedAuction] = useState(null);
+  const [isSheetOpen, setSheetOpen] = useState(false);
+
+  const columns = [
+    {
+      accessorKey: "checkbox",
+      header: "Select", // Updated to display correctly
+      cell: ({ row }) => (
+        <Checkbox
+          checked={selectedAuction?._id === row.original._id} // Only one row can be selected at a time
+          onCheckedChange={() => handleRowSelectionChange(row)}
+        />
+      ),
+      enableSorting: false, // Disable sorting for checkbox column
+    },
+    {
+      accessorKey: "_id",
+      header: "Auction ID",
+      cell: ({ row }) => row.original._id,
+    },
+    {
+      accessorKey: "startingBid",
+      header: "Starting Bid",
+      cell: ({ row }) => `$${row.original.startingBid}`,
+    },
+    {
+      accessorKey: "startDate",
+      header: "Start Date",
+      cell: ({ row }) => new Date(row.original.startDate).toLocaleDateString(),
+    },
+    {
+      accessorKey: "endDate",
+      header: "End Date",
+      cell: ({ row }) => new Date(row.original.endDate).toLocaleDateString(),
+    },
+    {
+      accessorKey: "numberOfBidders",
+      header: "Number of Bidders",
+      cell: ({ row }) => row.original.numberOfBidders,
+    },
+    {
+      accessorKey: "highestBidderName",
+      header: "Highest Bidder Name",
+      cell: ({ row }) => row.original.highestBidderName || "N/A",
+    },
+    {
+      accessorKey: "highestBidderEmail",
+      header: "Highest Bidder Email",
+      cell: ({ row }) => row.original.highestBidderEmail || "N/A",
+    },
+    {
+      accessorKey: "highestBid",
+      header: "Highest Bid",
+      cell: ({ row }) =>
+        row.original.highestBid ? `$${row.original.highestBid}` : "No Bids",
+    },
+  ];
+
+  const handleRowSelectionChange = (row) => {
+    const auction = row.original;
+    setSelectedAuction(
+      (prevSelectedAuction) =>
+        prevSelectedAuction?._id === auction._id ? null : auction // Toggle selection
+    );
+  };
+
+  const handleViewAllBiddersClick = () => {
+    if (!selectedAuction) {
+      toast.error("Select auction first to view details", {
+        description: "Click on Checkbox",
+        position: "top-center",
+      });
+      return;
+    }
+    setSheetOpen(true);
+  };
+
+  const handleSheetClose = () => {
+    setSheetOpen(false);
+    setSelectedAuction(null); // Clear selection when the sheet closes
+  };
+
+  const table = useReactTable({
+    data: auctions || [],
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+    },
+  });
+
+  const filterByEmailOrName = (value) => {
+    table.getColumn("highestBidderEmail")?.setFilterValue(value);
+    table.getColumn("highestBidderName")?.setFilterValue(value);
+  };
+
+  if (isLoading) return <Loading />;
+  if (error) return <div>Error loading data</div>;
+
+  return (
+    <div className="w-full p-5">
+      <div className="flex items-center py-4">
+        <div className="flex items-center flex-1 space-x-4 ">
+          <Input
+            placeholder="Filter by name or email..."
+            onChange={(event) => filterByEmailOrName(event.target.value)}
+            className="max-w-sm border border-yellow-500 "
+          />
+          <div className="flex justify-end py-2">
+            <Button
+              className={`text-sm text-white bg-yellow-500 ${
+                !selectedAuction
+                  ? " opacity-50 hover:bg-yellow-500 hover:text-white focus:text-white focus:bg-yellow-500 "
+                  : ""
+              }`}
+              onClick={handleViewAllBiddersClick}
+            >
+              View All Bidders
+            </Button>
+          </div>
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Columns <ChevronDown className="w-4 h-4 ml-2" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="border border-yellow-500" align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                >
+                  {column.columnDef.header}
+                </DropdownMenuCheckboxItem>
+              ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <Table>
+        <TableCaption>A list of auctions and highest bids</TableCaption>
+        <TableHeader className="bg-black">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                  {header.column.getCanSort() && (
+                    <ArrowUpDown
+                      onClick={() => header.column.toggleSorting()}
+                      size={15}
+                      className="text-center cursor-pointer"
+                    />
+                  )}
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows.length > 0 ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                className={
+                  selectedAuction?._id === row.original._id ? "bg-gray-200" : ""
+                }
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+
+      {selectedAuction && (
+        <BiddersSheet
+          selectedAuction={selectedAuction}
+          isOpen={isSheetOpen}
+          onClose={handleSheetClose}
+        />
+      )}
+
+      <div className="flex items-center justify-end py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default Orders;
