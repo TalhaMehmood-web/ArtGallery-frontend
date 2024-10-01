@@ -145,7 +145,7 @@ const EditProfile = ({ openProfileDialog, setOpenProfileDialog }) => {
         </DialogContent>
       </Dialog>
       {EditProfileMutation.isLoading && (
-        <div className="absolute z-[100] w-full min-h-screen ">
+        <div className="absolute z-[9999] w-full min-h-screen top-0 right-0 ">
           <Loading />
         </div>
       )}

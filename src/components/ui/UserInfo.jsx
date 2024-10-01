@@ -11,21 +11,31 @@ import { FaEdit } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 
 import EditProfile from "../miscellaneous/auth/EditProfile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import getInitials from "@/utils/getInitials";
+import Loading from "../miscellaneous/loading/Loading";
 const UserInfo = () => {
   const { user } = useGlobalContext();
-  const { handleLogout } = useLogout();
+  const { handleLogout, isLoading } = useLogout();
   const [openProfileDialog, setOpenProfileDialog] = useState(false);
   const [userSheet, setUserSheet] = useState(false);
+  useEffect(() => {
+    if (isLoading) {
+      setUserSheet(false);
+    }
+  }, [isLoading]);
   return (
     <>
       <Avatar
         onClick={() => setUserSheet(true)}
         className="border-2 border-yellow-500 rounded-full cursor-pointer"
       >
-        <AvatarImage src={user?.profile && user?.profile} alt="avatar" />
+        <AvatarImage
+          className="object-cover"
+          src={user?.profile && user?.profile}
+          alt="avatar"
+        />
         <AvatarFallback className="text-white bg-black rounded-full cursor-pointer ">
           {getInitials(user?.fullname)}
         </AvatarFallback>
@@ -81,6 +91,11 @@ const UserInfo = () => {
         openProfileDialog={openProfileDialog}
         setOpenProfileDialog={setOpenProfileDialog}
       />
+      {isLoading && (
+        <div className="absolute top-0 right-0 z-auto w-full min-h-screen overflow-hidden ">
+          <Loading />
+        </div>
+      )}
     </>
   );
 };
