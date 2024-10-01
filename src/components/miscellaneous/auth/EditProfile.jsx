@@ -87,7 +87,7 @@ const EditProfile = ({ openProfileDialog, setOpenProfileDialog }) => {
             className="flex flex-col flex-1 p-4 text-white rounded-md shadow-xl shadow-black/10 bg-black/60 "
           >
             <div className="flex flex-col space-y-6">
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 <div className="flex flex-col space-y-1">
                   <label className="font-semibold" htmlFor="fullname">
                     Full Name
