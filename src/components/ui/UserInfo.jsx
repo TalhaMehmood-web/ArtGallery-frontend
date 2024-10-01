@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   Sheet,
   SheetContent,
@@ -13,12 +12,25 @@ import { FiLogOut } from "react-icons/fi";
 
 import EditProfile from "../miscellaneous/auth/EditProfile";
 import { useState } from "react";
-const UserInfo = ({ userSheet, setUserSheet }) => {
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import getInitials from "@/utils/getInitials";
+const UserInfo = () => {
   const { user } = useGlobalContext();
   const { handleLogout } = useLogout();
   const [openProfileDialog, setOpenProfileDialog] = useState(false);
+  const [userSheet, setUserSheet] = useState(false);
   return (
     <>
+      <Avatar
+        onClick={() => setUserSheet(true)}
+        className="border-2 border-yellow-500 rounded-full cursor-pointer"
+      >
+        <AvatarImage src={user?.profile && user?.profile} alt="avatar" />
+        <AvatarFallback className="text-white bg-black rounded-full cursor-pointer ">
+          {getInitials(user?.fullname)}
+        </AvatarFallback>
+      </Avatar>
+
       <Sheet open={userSheet} onOpenChange={setUserSheet}>
         <SheetContent
           className={"bg-black flex text-white border-none flex-col "}

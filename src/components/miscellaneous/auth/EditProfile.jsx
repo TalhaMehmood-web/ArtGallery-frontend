@@ -54,6 +54,7 @@ const EditProfile = ({ openProfileDialog, setOpenProfileDialog }) => {
     }
   );
   const onSubmit = async (data) => {
+    console.log(data);
     if (
       !data.profile &&
       user?.fullname === data.fullname.trim() &&
