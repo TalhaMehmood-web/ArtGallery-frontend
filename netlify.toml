@@ -1,11 +1,38 @@
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
-
-# Netlify proxy to avoid CORS issues during development
+# Redirect API requests to the backend
 [[redirects]]
 from = "/api/*"
 to = "https://artgallery-backend-production.up.railway.app/api/:splat"
 status = 200
 force = true
+
+# Serve assets without redirection
+[[redirects]]
+from = "/assets/*"
+to = "/assets/:splat"
+status = 200
+force = true
+
+# Redirect all other routes to index.html for SPA
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+# Set headers for JavaScript files to ensure correct MIME type
+[[headers]]
+for = "/assets/*.js"
+[headers.values]
+Content-Type = "application/javascript"
+
+# Set headers for CSS files to ensure correct MIME type
+[[headers]]
+for = "/assets/*.css"
+[headers.values]
+Content-Type = "text/css"
+
+# Other headers if needed
+[[headers]]
+for = "/*"
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
