@@ -8,12 +8,11 @@ import {
 } from "@/components/ui/sheet";
 import { useLocation, useNavigate } from "react-router-dom";
 import LogoutButton from "../miscellaneous/auth/LogoutButton";
-import { useGlobalContext } from "@/context/UserContext";
 
 const ResNav = ({ openSheet, setOpenSheet, navLinks, height }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setRoute } = useGlobalContext();
+
   return (
     <Sheet open={openSheet} onOpenChange={setOpenSheet}>
       <SheetContent
@@ -40,7 +39,6 @@ const ResNav = ({ openSheet, setOpenSheet, navLinks, height }) => {
               onClick={() => {
                 navigate(item.link);
                 setOpenSheet(false);
-                setRoute(item?.link);
               }}
             >
               {item.title}

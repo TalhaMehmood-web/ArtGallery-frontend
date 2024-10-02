@@ -5,14 +5,12 @@ import ResNav from "@/components/ui/ResNav";
 import { clientNavLinks } from "@/lib/navLinks";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useGlobalContext } from "@/context/UserContext";
 
 import UserInfo from "@/components/ui/UserInfo";
 const ClientNav = () => {
   const [openSheet, setOpenSheet] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { setRoute } = useGlobalContext();
 
   return (
     <>
@@ -42,7 +40,6 @@ const ClientNav = () => {
               } `}
               onClick={() => {
                 navigate(item?.link);
-                setRoute(item?.link);
               }}
               key={item?.link + index}
             >

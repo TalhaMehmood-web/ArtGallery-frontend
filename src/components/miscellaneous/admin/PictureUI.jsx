@@ -12,7 +12,7 @@ import { useGlobalContext } from "@/context/UserContext";
 const PictureUI = ({ picURL, id, picture }) => {
   const queryClient = useQueryClient();
 
-  const { setRoute, setSelectedPicture } = useGlobalContext();
+  const { setSelectedPicture } = useGlobalContext();
   const navigate = useNavigate();
   const deletePictureMutation = useMutation(
     async () =>
@@ -43,7 +43,6 @@ const PictureUI = ({ picURL, id, picture }) => {
         <img
           onClick={() => {
             navigate(`/admin/pictures/${id}`);
-            setRoute(`/admin/pictures/${id}`), setSelectedPicture(picture);
           }}
           src={picURL}
           alt="pic"

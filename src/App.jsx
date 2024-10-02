@@ -28,7 +28,7 @@ const PrivateRoute = ({ children }) => {
 };
 
 function App() {
-  const { user, setUser, route } = useGlobalContext();
+  const { user, setUser } = useGlobalContext();
   const navigate = useNavigate();
 
   const { data, isLoading } = useQuery(
@@ -49,12 +49,13 @@ function App() {
 
   // Navigate to the saved route from localStorage when user is set
   useEffect(() => {
-    if (user) {
-      navigate(route);
-    } else {
-      navigate("/");
+    if (!user) return;
+    if (user && user?.isAdmin) {
+      navigate("/admin");
+    } else if (!user?.isAdmin) {
+      navigate("/client");
     }
-  }, [user, route, navigate]);
+  }, [user, navigate]);
 
   if (isLoading) {
     return <Loading />;

@@ -5,12 +5,10 @@ import { useNavigate, Outlet } from "react-router-dom";
 import ResNav from "@/components/ui/ResNav";
 import { adminNavLinks } from "@/lib/navLinks";
 
-import { useGlobalContext } from "@/context/UserContext";
-
 import UserInfo from "@/components/ui/UserInfo";
 const Admin = () => {
   const navigate = useNavigate();
-  const { setRoute } = useGlobalContext();
+
   const [openSheet, setOpenSheet] = useState(false);
   const handleWildCard = () => {};
   return (
@@ -40,7 +38,6 @@ const Admin = () => {
                 className="italic "
                 onClick={() => {
                   navigate(link.link);
-                  setRoute(link.link);
                 }}
               >
                 {link.title}

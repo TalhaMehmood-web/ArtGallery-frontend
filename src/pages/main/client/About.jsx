@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { useGlobalContext } from "@/context/UserContext";
 
 import { useNavigate } from "react-router-dom";
 import { IoPersonSharp } from "react-icons/io5";
@@ -9,7 +8,6 @@ import about from "@/assets/about.jpg"; // Import the image directly
 
 const About = () => {
   const navigate = useNavigate();
-  const { setRoute } = useGlobalContext();
 
   return (
     <div className="relative flex text-white ">
@@ -54,7 +52,6 @@ const About = () => {
           <Button
             onClick={() => {
               navigate("/client/gallery");
-              setRoute("/client/gallery");
             }}
             className="block text-white bg-yellow-500 w-fit hover:bg-transparent hover:text-yellow-500"
           >
