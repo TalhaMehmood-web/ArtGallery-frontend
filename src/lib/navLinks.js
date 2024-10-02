@@ -8,6 +8,10 @@ export const adminNavLinks = [
         link: "/admin/pictures",
     },
     {
+        title: "Categories",
+        link: "/admin/categories",
+    },
+    {
         title: "Orders",
         link: "/admin/orders",
     },

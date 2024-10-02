@@ -15,11 +15,16 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import PictureAuctions from "@/components/miscellaneous/admin/PictureActions";
-const PictureUI = ({ picURL, id }) => {
+import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "@/context/UserContext";
+import { routeStorage } from "@/utils/routeStorage";
+const PictureUI = ({ picURL, id, picture }) => {
   const queryClient = useQueryClient();
   const [displayImage, setDisplayImage] = useState(false);
   const [editPicture, setEditPicture] = useState(false);
   const [openAuction, setOpenAuction] = useState(false);
+  const { setRoute, setSelectedPicture } = useGlobalContext();
+  const navigate = useNavigate();
   const deletePictureMutation = useMutation(
     async () =>
       await deleteData(
@@ -47,11 +52,17 @@ const PictureUI = ({ picURL, id }) => {
     <>
       <div className="relative flex items-center justify-center p-2 border-4 border-yellow-500 rounded-md img-effect ">
         <img
+          onClick={() => {
+            navigate(`/admin/pictures/${id}`);
+            setRoute(`/admin/pictures/${id}`),
+              routeStorage.saveRoute(`/admin/pictures/${id}`);
+            setSelectedPicture(picture);
+          }}
           src={picURL}
           alt="pic"
-          className="object-cover w-full h-full shadow-md cursor-pointer shadow-yellow-200 aspect-square "
+          className="object-cover w-full h-full transition-all duration-300 shadow-md cursor-pointer hover:scale-95 hover:brightness-90 shadow-yellow-200 aspect-square "
         />
-        <div className=" hover-effect-img"></div>
+        {/* <div className=" hover-effect-img"></div> */}
         <div className="absolute z-10 flex flex-col space-y-6 trash-icon top-2 right-2">
           <div>
             <TooltipProvider delayDuration={200}>

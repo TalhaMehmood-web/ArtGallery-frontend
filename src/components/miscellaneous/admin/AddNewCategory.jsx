@@ -75,7 +75,11 @@ const AddNewCategory = ({ openDialog, setOpenDialog }) => {
             />
           </div>
           <DialogFooter>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">
+              {addCategoryMutation.isLoading
+                ? "Adding new Category..."
+                : "Save changes"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

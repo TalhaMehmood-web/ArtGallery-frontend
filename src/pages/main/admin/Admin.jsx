@@ -15,7 +15,7 @@ const Admin = () => {
   const handleWildCard = () => {};
   return (
     <>
-      <div className="relative flex flex-col w-full h-screen ">
+      <div className="relative flex flex-col w-full min-h-screen ">
         {/* admin nav */}
         <div className="sticky top-0 z-50 flex items-center w-full h-16 px-4 text-white lg:justify-between md:h-20 bg-black/85 backdrop-opacity-10 ">
           <div className="block cursor-pointer lg:hidden">
@@ -62,7 +62,7 @@ const Admin = () => {
         navLinks={adminNavLinks}
         openSheet={openSheet}
         setOpenSheet={setOpenSheet}
-        height={"h-[40%]"}
+        height={"h-[50%]"}
       />
     </>
   );

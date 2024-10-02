@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useQueryClient } from "react-query";
 import { Textarea } from "@/components/ui/textarea";
-import { Trash } from "lucide-react";
+
 import Loading from "@/components/miscellaneous/loading/Loading";
 
 const UploadPictures = () => {
@@ -36,8 +36,13 @@ const UploadPictures = () => {
   });
 
   // Fetching categories
-  const { data: categories } = useQuery("categories", () =>
-    fetchData("admin/category")
+  const { data: categories } = useQuery(
+    "categories",
+    () => fetchData("admin/category"),
+    {
+      staleTime: Infinity,
+      refetchOnMount: false,
+    }
   );
 
   // Mutation to upload the picture
@@ -73,8 +78,9 @@ const UploadPictures = () => {
   };
   const { isLoading } = uploadPictureMutation;
   return (
-    <div className="flex flex-col  bg-black opacity-90 items-center w-full flex-1 px-5 lg:px-10">
+    <div className="flex flex-col relative  bg-black opacity-90 items-center w-full flex-1 px-5 lg:px-10">
       {/* Upload picture form */}
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
@@ -175,19 +181,13 @@ const UploadPictures = () => {
                 <SelectTrigger className="w-full bg-transparent border border-yellow-500">
                   <SelectValue placeholder="Picture Category" />
                 </SelectTrigger>
-                <SelectContent className="bg-black text-white border border-yellow-500">
+                <SelectContent className="">
                   <SelectGroup className="bg-transparent">
                     <SelectLabel>Select Picture Category</SelectLabel>
                     {categories?.map((category) => (
-                      <div
-                        key={category?._id}
-                        className="flex w-full justify-between"
-                      >
-                        <SelectItem value={category?.name}>
-                          {category?.name}
-                        </SelectItem>
-                        <Trash size={18} />
-                      </div>
+                      <SelectItem key={category?._id} value={category?.name}>
+                        <p>{category?.name}</p>
+                      </SelectItem>
                     ))}
                   </SelectGroup>
                 </SelectContent>
@@ -195,26 +195,24 @@ const UploadPictures = () => {
             </div>
           </div>
 
-          <div className="flex justify-between space-x-4">
-            <Button
-              type="button"
-              onClick={() => setOpenDialog(true)}
-              className="flex flex-[0.5] w-full justify-center"
-            >
-              Add new Category +
-            </Button>
-            <Button
-              type="submit"
-              className="flex flex-[0.5] w-full justify-center"
-              disabled={uploadPictureMutation.isLoading} // Disable button while uploading
-            >
-              {uploadPictureMutation.isLoading
-                ? "Uploading..."
-                : "Upload Picture"}
-            </Button>
-          </div>
+          <Button
+            type="submit"
+            className=""
+            disabled={uploadPictureMutation.isLoading} // Disable button while uploading
+          >
+            {uploadPictureMutation.isLoading
+              ? "Uploading..."
+              : "Upload Picture"}
+          </Button>
         </div>
       </form>
+      <Button
+        type="button"
+        onClick={() => setOpenDialog(true)}
+        className="absolute top-2 right-2"
+      >
+        Add new Category +
+      </Button>
       <AddNewCategory openDialog={openDialog} setOpenDialog={setOpenDialog} />
       {isLoading && <Loading />}
     </div>

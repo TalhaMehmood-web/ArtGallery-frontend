@@ -144,6 +144,8 @@ const Orders = () => {
   const filterByEmailOrName = (value) => {
     table.getColumn("highestBidderEmail")?.setFilterValue(value);
     table.getColumn("highestBidderName")?.setFilterValue(value);
+    table.getColumn("startDate")?.setFilterValue(value);
+    table.getColumn("endDate")?.setFilterValue(value);
   };
 
   if (isLoading) return <Loading />;

@@ -14,6 +14,8 @@ import NewsFeed from "./pages/main/client/NewsFeed";
 import Portfolio from "./pages/main/client/Portfolio";
 import About from "./pages/main/client/About";
 import Orders from "./pages/main/admin/Orders";
+import Categories from "./pages/main/admin/Categories";
+import PictureDetails from "./pages/main/admin/PictureDetails";
 const Auth = React.lazy(() => import("./pages/auth/Auth"));
 const Client = React.lazy(() => import("./pages/main/client/Client"));
 const Admin = React.lazy(() => import("./pages/main/admin/Admin"));
@@ -155,6 +157,22 @@ function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <Pictures />
+              </Suspense>
+            }
+          />
+          <Route
+            path="pictures/:id"
+            element={
+              <Suspense fallback={<Loading />}>
+                <PictureDetails />
+              </Suspense>
+            }
+          />
+          <Route
+            path="categories"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Categories />
               </Suspense>
             }
           />
