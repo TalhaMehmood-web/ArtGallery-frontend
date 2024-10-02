@@ -28,7 +28,7 @@ const PictureDetails = () => {
           <img
             src={selectedPicture?.picture}
             alt={selectedPicture?.title}
-            className="object-cover object-center w-full h-96 "
+            className="object-cover object-center w-full mx-auto rounded-md max-w-[800px] aspect-auto h-[30rem] "
           />
           <div className="p-6">
             <div className="flex items-start justify-between mb-4">
