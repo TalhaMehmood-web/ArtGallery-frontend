@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { useMutation, useQueryClient } from "react-query";
 import { updateData } from "@/api/updateData";
-import Loading from "@/components/miscellaneous/loading/Loading";
+
 import { useEffect } from "react";
 import { toast } from "sonner";
 import {
@@ -24,12 +24,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useGlobalContext } from "@/context/UserContext";
 
-const EditPictureDetails = ({ editPicture, setEditPicture, pictureId }) => {
+const EditPictureDetails = ({ editPicture, setEditPicture, picture }) => {
   const queryClient = useQueryClient();
-  const data = queryClient.getQueryData(["pictures", "all", "all"]);
+  const { setSelectedPicture } = useGlobalContext();
   const categories = queryClient.getQueryData("categories");
-  const picture = data?.find((item) => item._id === pictureId);
+
   const { handleSubmit, register, reset, setValue } = useForm({
     defaultValues: {
       description: "",
@@ -47,16 +48,15 @@ const EditPictureDetails = ({ editPicture, setEditPicture, pictureId }) => {
     }
   }, [picture, reset]);
   const editPictureMutation = useMutation(
-    (data) => updateData(`admin/picture/${pictureId}`, data),
+    (data) => updateData(`admin/picture/${picture?._id}`, data),
     {
-      onMutate: () => {
-        setEditPicture(false);
-      },
       onError: (error) => {
         console.log(error);
       },
       onSuccess: (data) => {
         if (data.status === 200) {
+          setSelectedPicture(data.data);
+          setEditPicture(false);
           queryClient.invalidateQueries([
             "pictures",
             picture?.category?.name,
@@ -84,7 +84,7 @@ const EditPictureDetails = ({ editPicture, setEditPicture, pictureId }) => {
           <form
             onSubmit={handleSubmit(onSubmit)}
             noValidate
-            className="flex flex-1 flex-col justify-around "
+            className="flex flex-col justify-around flex-1 "
           >
             <div className="flex flex-col space-y-1">
               <label className="font-semibold" htmlFor="description">
@@ -121,7 +121,7 @@ const EditPictureDetails = ({ editPicture, setEditPicture, pictureId }) => {
                 <SelectTrigger className="w-full bg-transparent border border-yellow-500">
                   <SelectValue placeholder="Picture Category" />
                 </SelectTrigger>
-                <SelectContent className="bg-black text-white border border-yellow-500 outline-none ">
+                <SelectContent className="text-white bg-black border border-yellow-500 outline-none ">
                   <SelectGroup className="bg-transparent">
                     <SelectLabel>Select Picture Category</SelectLabel>
                     {categories?.map((category) => (
@@ -133,11 +133,12 @@ const EditPictureDetails = ({ editPicture, setEditPicture, pictureId }) => {
                 </SelectContent>
               </Select>
             </div>
-            <Button type="submit">Save Changes</Button>
+            <Button type="submit">
+              {isLoading ? "Saving Changes..." : "Save Changes"}
+            </Button>
           </form>
         </DialogContent>
       </Dialog>
-      {isLoading && <Loading />}
     </>
   );
 };
