@@ -9,7 +9,6 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import LogoutButton from "../miscellaneous/auth/LogoutButton";
 import { useGlobalContext } from "@/context/UserContext";
-import { routeStorage } from "@/utils/routeStorage";
 
 const ResNav = ({ openSheet, setOpenSheet, navLinks, height }) => {
   const navigate = useNavigate();
@@ -42,7 +41,6 @@ const ResNav = ({ openSheet, setOpenSheet, navLinks, height }) => {
                 navigate(item.link);
                 setOpenSheet(false);
                 setRoute(item?.link);
-                routeStorage.saveRoute(item?.link);
               }}
             >
               {item.title}

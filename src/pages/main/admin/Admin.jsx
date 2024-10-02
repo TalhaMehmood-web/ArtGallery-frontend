@@ -6,7 +6,7 @@ import ResNav from "@/components/ui/ResNav";
 import { adminNavLinks } from "@/lib/navLinks";
 
 import { useGlobalContext } from "@/context/UserContext";
-import { routeStorage } from "@/utils/routeStorage";
+
 import UserInfo from "@/components/ui/UserInfo";
 const Admin = () => {
   const navigate = useNavigate();
@@ -41,7 +41,6 @@ const Admin = () => {
                 onClick={() => {
                   navigate(link.link);
                   setRoute(link.link);
-                  routeStorage.saveRoute(link.link);
                 }}
               >
                 {link.title}

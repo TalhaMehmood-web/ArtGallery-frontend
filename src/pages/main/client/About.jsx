@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGlobalContext } from "@/context/UserContext";
-import { routeStorage } from "@/utils/routeStorage";
+
 import { useNavigate } from "react-router-dom";
 import { IoPersonSharp } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
@@ -56,7 +55,6 @@ const About = () => {
             onClick={() => {
               navigate("/client/gallery");
               setRoute("/client/gallery");
-              routeStorage.saveRoute("/client/gallery");
             }}
             className="block text-white bg-yellow-500 w-fit hover:bg-transparent hover:text-yellow-500"
           >

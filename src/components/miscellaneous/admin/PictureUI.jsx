@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/context/UserContext";
-import { routeStorage } from "@/utils/routeStorage";
+
 const PictureUI = ({ picURL, id, picture }) => {
   const queryClient = useQueryClient();
 
@@ -43,9 +43,7 @@ const PictureUI = ({ picURL, id, picture }) => {
         <img
           onClick={() => {
             navigate(`/admin/pictures/${id}`);
-            setRoute(`/admin/pictures/${id}`),
-              routeStorage.saveRoute(`/admin/pictures/${id}`);
-            setSelectedPicture(picture);
+            setRoute(`/admin/pictures/${id}`), setSelectedPicture(picture);
           }}
           src={picURL}
           alt="pic"

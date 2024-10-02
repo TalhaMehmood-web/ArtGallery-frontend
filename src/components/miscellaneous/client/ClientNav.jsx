@@ -6,7 +6,6 @@ import { clientNavLinks } from "@/lib/navLinks";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useGlobalContext } from "@/context/UserContext";
-import { routeStorage } from "@/utils/routeStorage";
 
 import UserInfo from "@/components/ui/UserInfo";
 const ClientNav = () => {
@@ -44,7 +43,6 @@ const ClientNav = () => {
               onClick={() => {
                 navigate(item?.link);
                 setRoute(item?.link);
-                routeStorage.saveRoute(item?.link);
               }}
               key={item?.link + index}
             >
