@@ -151,47 +151,54 @@ const Orders = () => {
 
   return (
     <div className="w-full p-5">
-      <div className="flex items-center py-4">
-        <div className="flex items-center flex-1 space-x-4 ">
-          <Input
-            placeholder="Filter by name or email..."
-            onChange={(event) => filterByEmailOrName(event.target.value)}
-            className="max-w-sm border border-yellow-500 "
-          />
-          <div className="flex justify-end py-2">
-            <Button
-              className={`text-sm text-white bg-yellow-500 ${
-                !selectedAuction
-                  ? " opacity-50 hover:bg-yellow-500 hover:text-white focus:text-white focus:bg-yellow-500 "
-                  : ""
-              }`}
-              onClick={handleViewAllBiddersClick}
+      <div className="grid grid-cols-4 gap-4 p-4">
+        <Input
+          placeholder="Filter by name or email..."
+          onChange={(event) => filterByEmailOrName(event.target.value)}
+          className=" md:max-w-full border border-yellow-500 col-span-4 md:col-span-2 "
+        />
+        {/* button for sheet */}
+
+        <Button
+          className={`text-sm w-fit text-white col-span-1  bg-yellow-500 ${
+            !selectedAuction
+              ? " opacity-50 hover:bg-yellow-500 hover:text-white focus:text-white focus:bg-yellow-500 "
+              : ""
+          }`}
+          onClick={handleViewAllBiddersClick}
+        >
+          View All Bidders
+        </Button>
+
+        {/* columns */}
+        <div className="col-span-3 md:col-span-1 flex justify-end items-end ">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Columns <ChevronDown className="w-4 h-4 ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="border  1  border-yellow-500"
+              align="end"
             >
-              View All Bidders
-            </Button>
-          </div>
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.columnDef.header}
+                  </DropdownMenuCheckboxItem>
+                ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="w-4 h-4 ml-2" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="border border-yellow-500" align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => (
-                <DropdownMenuCheckboxItem
-                  key={column.id}
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                >
-                  {column.columnDef.header}
-                </DropdownMenuCheckboxItem>
-              ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
 
       <Table>

@@ -11,7 +11,6 @@ import about from "@/assets/about.jpg"; // Import the image directly
 const About = () => {
   const navigate = useNavigate();
   const { setRoute } = useGlobalContext();
-  const [isLoading, setIsLoading] = useState(true); // State to manage loading status
 
   return (
     <div className="relative flex text-white ">
