@@ -1,25 +1,11 @@
-# Redirect all routes to index.html (for SPA behavior)
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+from = "/*"
+to = "/index.html"
+status = 200
 
-# Custom headers if needed (optional)
-# [[headers]]
-#   for = "/*"
-#   [headers.values]
-#     Content-Security-Policy = "default-src 'self'; img-src 'self' https://*.cloudinary.com data:;"
-
-# Environment variables for production
-[build]
-  publish = "dist"
-  command = "npm run build"  # Adjust this based on your build process
-
-# Set production environment variables
-[context.production.environment]
-  VITE_PRODUCTION_API_URL = "https://artgallery-backend-production.up.railway.app/api/v1/"
-  # Any other production environment variables
-
-# Set dev environment (optional for local development via Netlify CLI)
-[context.development.environment]
-  VITE_DEV_API_URL = "http://localhost:5000/api/v1/"
+# Netlify proxy to avoid CORS issues during development
+[[redirects]]
+from = "/api/*"
+to = "https://artgallery-backend-production.up.railway.app/api/:splat"
+status = 200
+force = true
