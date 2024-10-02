@@ -1,81 +1,71 @@
 import { useState } from "react";
 import { FiEdit, FiTrash2, FiEye, FiAward } from "react-icons/fi";
-import { format } from "date-fns";
 import { useGlobalContext } from "@/context/UserContext";
 import { formatDate } from "@/utils/formatDate";
-
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 const PictureDetails = () => {
   const { selectedPicture } = useGlobalContext();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const handleViewDetails = () => {
-    console.log("Viewing product details");
-  };
-
-  const handleEditProduct = () => {
-    console.log("Editing product");
-  };
-
-  const handleDeleteProduct = () => {
-    console.log("Deleting product");
-  };
-
-  const handleActivateAuction = () => {
-    console.log("Activating auction");
-  };
 
   return (
     <div className="flex-1 p-4 bg-white sm:p-6 lg:p-8">
-      <div className="max-w-3xl mx-auto overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
+      <div className="max-w-6xl mx-auto overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
         <img
           src={selectedPicture?.picture}
           alt={selectedPicture?.title}
-          className="object-cover object-center w-full h-64"
+          className="object-cover object-center w-full h-96 "
         />
         <div className="p-6">
           <div className="flex items-start justify-between mb-4">
             <h1 className="text-3xl font-bold text-gray-900">
               {selectedPicture?.title}
             </h1>
-            <div className="relative">
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="px-4 py-2 text-black transition-colors duration-200 bg-yellow-400 rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
-                aria-label="Product actions"
-              >
-                Actions
-              </button>
-              {isDropdownOpen && (
-                <div className="absolute right-0 z-10 w-48 mt-2 bg-white rounded-md shadow-lg">
-                  <div className="py-1">
-                    <button
-                      onClick={handleViewDetails}
-                      className="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-yellow-100"
-                    >
-                      <FiEye className="mr-2" /> View Details
-                    </button>
-                    <button
-                      onClick={handleEditProduct}
-                      className="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-yellow-100"
-                    >
-                      <FiEdit className="mr-2" /> Edit Product
-                    </button>
-                    <button
-                      onClick={handleDeleteProduct}
-                      className="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-yellow-100"
-                    >
-                      <FiTrash2 className="mr-2" /> Delete Product
-                    </button>
-                    <button
-                      onClick={handleActivateAuction}
-                      className="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-yellow-100"
-                    >
-                      <FiAward className="mr-2" /> Activate Auction
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button className="text-white bg-yellow-500 focus:text-white focus:bg-yellow-500 hover:text-yellow-500 hover:bg-transparent ">
+                  Actions
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel> Picture Actions</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <FiEye className="mr-2" />
+                    <span>View Details</span>
+                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <FiEdit className="mr-2" />
+                    <span>Edit Product</span>
+                    <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <FiTrash2 className="mr-2" />
+                    <span>Delete Product</span>
+                    <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <FiAward className="mr-2" />
+                    <span>Activate Auction</span>
+                    <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           <p className="mb-4 text-gray-600">{selectedPicture?.description}</p>
           <div className="flex flex-wrap mb-4 -mx-2">
