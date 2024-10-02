@@ -35,7 +35,7 @@ const Pictures = () => {
         `admin/pictures?category=${selectedCategory}&type=${selectedType}&page=${currentPage}&limit=${itemsPerPage}`
       )
   );
-
+  console.log(pictures);
   // Handle category change
   const handleCategoryChange = (categoryId) => {
     setSelectedCategory(categoryId);
