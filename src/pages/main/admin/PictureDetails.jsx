@@ -2,11 +2,12 @@ import { useState } from "react";
 import { FiEdit, FiTrash2, FiEye, FiAward } from "react-icons/fi";
 import { format } from "date-fns";
 import { useGlobalContext } from "@/context/UserContext";
+import { formatDate } from "@/utils/formatDate";
 
 const PictureDetails = () => {
   const { selectedPicture } = useGlobalContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  console.log(selectedPicture);
+
   const handleViewDetails = () => {
     console.log("Viewing product details");
   };
@@ -97,7 +98,9 @@ const PictureDetails = () => {
             <h2 className="mb-2 text-lg font-semibold text-gray-900">
               Created At
             </h2>
-            <p className="text-gray-600">{selectedPicture?.createdAt}</p>
+            <p className="text-gray-600">
+              {formatDate(selectedPicture?.createdAt)}
+            </p>
           </div>
         </div>
       </div>
