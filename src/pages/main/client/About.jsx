@@ -14,32 +14,33 @@ const About = () => {
   const [isLoading, setIsLoading] = useState(true); // State to manage loading status
 
   return (
-    <div
-      style={{
-        minHeight: "calc(100vh - 5rem)",
-        width: "100%",
-      }}
-      className="relative flex text-white"
-    >
+    <div className="relative flex text-white ">
       {/* Image with onLoad to handle loading state */}
-      <img
-        src={about}
-        alt="about_picture"
-        className={`absolute object-cover w-full h-full brightness-[0.2] ${
-          isLoading ? "hidden" : "block"
-        }`}
-        onLoad={() => setIsLoading(false)} // Set loading to false when the image is loaded
-      />
-      {isLoading && (
-        <div className="absolute z-50 w-full h-full bg-black"></div>
-      )}
+      <div
+        className="md:h-full h-[130vh] sm:h-[120vh] "
+        style={{
+          backgroundImage: `url(${about})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
 
-      <div className="z-50 flex flex-1 h-full p-10 space-x-5 text-white">
+          width: "100%",
+          position: "absolute",
+          top: "0px",
+          right: "0px",
+          objectFit: "cover",
+          filter: "brightness(20%)",
+        }}
+      ></div>
+
+      <div className="z-50 flex flex-col flex-1 h-full gap-4 p-6 text-white xl:space-x-5 lg:p-10 xl:flex-row">
         <div className="flex flex-col flex-[0.5] justify-center space-y-6">
-          <p className="pl-4 text-5xl font-extrabold border-l-8 border-yellow-500">
+          <p className="hidden pl-4 text-5xl font-extrabold border-l-8 border-yellow-500 lg:block">
             About Our <br /> Art & <br /> Social platform
           </p>
-          <p className="text-lg font-semibold">
+          <p className="block pl-4 text-5xl font-extrabold border-l-8 border-yellow-500 lg:hidden">
+            About Our Art & Social platform
+          </p>
+          <p className="text-sm italic md:text-base lg:font-semibold lg:text-lg text-slate-300">
             Welcome to Handmade Haven, your ultimate destination for artistic
             expression! Here, creativity flourishes as artists and art
             enthusiasts come together to celebrate their passion. Our platform
@@ -58,17 +59,21 @@ const About = () => {
               setRoute("/client/gallery");
               routeStorage.saveRoute("/client/gallery");
             }}
-            className="text-white bg-yellow-500 w-fit hover:bg-transparent hover:text-yellow-500"
+            className="block text-white bg-yellow-500 w-fit hover:bg-transparent hover:text-yellow-500"
           >
             View Our Work
           </Button>
         </div>
-        <div className="flex flex-[0.5] flex-col justify-between p-10 border border-black rounded-md shadow-md shadow-black w-full">
-          <div className="flex flex-col space-y-6">
+        <div className="flex flex-[0.5] flex-col  md:flex-row items-center lg:items-end xl:flex-col justify-between xl:p-10 xl:border xl:border-black rounded-md xl:shadow-md xl:shadow-black w-full">
+          <div className="flex flex-col space-y-6 ">
             <p className="text-5xl font-bold text-yellow-500"> What We Do</p>
-            <div className="text-2xl font-semibold">Host Art Auction</div>
-            <div className="text-2xl font-semibold">Make Art on Order</div>
-            <div className="text-2xl font-semibold">
+            <div className="text-lg font-semibold lg:text-2xl">
+              Host Art Auction
+            </div>
+            <div className="text-lg font-semibold lg:text-2xl">
+              Make Art on Order
+            </div>
+            <div className="text-lg font-semibold lg:text-2xl">
               Help artists to reach art lovers with their work
             </div>
           </div>

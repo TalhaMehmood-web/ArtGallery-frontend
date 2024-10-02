@@ -92,7 +92,7 @@ const UserInfo = () => {
         setOpenProfileDialog={setOpenProfileDialog}
       />
       {isLoading && (
-        <div className="absolute top-0 right-0 z-auto w-full min-h-screen overflow-hidden ">
+        <div className="absolute top-0 right-0 z-[9999] w-full min-h-screen  ">
           <Loading />
         </div>
       )}

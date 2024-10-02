@@ -12,7 +12,7 @@ const Client = () => {
         style={{
           height: "calc(100vh - 5rem )",
         }}
-        className="relative flex flex-grow max-h-full overflow-y-auto scroll-smooth "
+        className="relative flex flex-grow max-h-screen overflow-y-auto scroll-smooth "
       >
         {<Outlet />}
       </div>
