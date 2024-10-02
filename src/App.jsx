@@ -55,7 +55,7 @@ function App() {
     } else if (!user?.isAdmin) {
       navigate("/client");
     }
-  }, [user, navigate]);
+  }, [user, user?.isAdmin, navigate]);
 
   if (isLoading) {
     return <Loading />;
