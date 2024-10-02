@@ -19,7 +19,7 @@ import {
 const Pictures = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
-  const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; // Set items per page (6 in this case)
 
   // Fetch categories
