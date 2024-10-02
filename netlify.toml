@@ -12,11 +12,12 @@ to = "/assets/:splat"
 status = 200
 force = true
 
-# Redirect all other routes to index.html for SPA
+# Redirect all other routes to index.html for SPA routing
 [[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200
+force = true
 
 # Set headers for JavaScript files to ensure correct MIME type
 [[headers]]
