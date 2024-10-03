@@ -5,7 +5,7 @@ import { formatDate } from "@/utils/formatDate";
 
 import DisplayImageDialog from "@/components/miscellaneous/admin/DisplayImageDialog";
 import EditPictureDetails from "@/components/miscellaneous/admin/EditPictureDetails";
-import PictureAuctions from "@/components/miscellaneous/admin/PictureActions";
+import PictureAuctions from "@/components/miscellaneous/admin/PictureAuctions";
 
 import DeletePicture from "@/components/miscellaneous/admin/DeletePicture";
 import PictureActionButton from "@/components/miscellaneous/admin/PictureActionButton";

@@ -51,12 +51,13 @@ const DeletePicture = ({ deleteDialog, setDeleteDialog }) => {
     <AlertDialog open={deleteDialog} onOpenChange={setDeleteDialog}>
       <AlertDialogContent className={"bg-black text-white border-red-500"}>
         <AlertDialogHeader>
-          <AlertDialogTitle className=" text-center sm:text-left ">
+          <AlertDialogTitle className=" text-center sm:text-left text-red-500 ">
             Are you absolutely sure?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            1) This action cannot be undone. <br />
+            2) This will permanently delete your Picture. <br />
+            3) Picture will also be deleted from Auction as well
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className={"w-full flex justify-between"}>
