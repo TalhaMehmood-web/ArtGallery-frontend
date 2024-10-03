@@ -8,10 +8,10 @@ import { useMutation } from "react-query";
 import { postData } from "@/api/postData";
 import { useGlobalContext } from "@/context/UserContext";
 import Loading from "../loading/Loading";
-import { routeStorage } from "@/utils/routeStorage";
+
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser, setRoute } = useGlobalContext();
+  const { setUser } = useGlobalContext();
   const form = useForm({
     defaultValues: {
       email: "",
@@ -27,12 +27,8 @@ const Login = () => {
 
       if (data?.isAdmin) {
         navigate("/admin");
-        setRoute("/admin");
-        routeStorage.saveRoute("/admin");
       } else {
         navigate("/client");
-        setRoute("/client");
-        routeStorage.saveRoute("/client");
       }
       toast.success("Login Successfully", {
         description: `Logged in as ${data?.fullname}`,

@@ -5,7 +5,7 @@ import { postData } from "@/api/postData";
 const useLogout = () => {
   const { setUser } = useGlobalContext();
 
-  const logoutMutation = useMutation(() => postData("user/logout", null), {
+  const logoutMutation = useMutation(() => postData("user/logout", {}), {
     onSuccess: ({ data }) => {
       if (data) {
         setUser(null);

@@ -11,7 +11,7 @@ const useGlobalContext = () => {
 const GlobalContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isWildCard, setIsWildCard] = useState(false);
-  const [route, setRoute] = useState("/"); // Get route from localStorage
+
   const [selectedPicture, setSelectedPicture] = useState(null);
   return (
     <GlobalContext.Provider
@@ -20,8 +20,7 @@ const GlobalContextProvider = ({ children }) => {
         setUser,
         isWildCard,
         setIsWildCard,
-        route,
-        setRoute,
+
         selectedPicture,
         setSelectedPicture,
       }}

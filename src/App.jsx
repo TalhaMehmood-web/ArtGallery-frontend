@@ -48,14 +48,6 @@ function App() {
   }, [data, setUser]);
 
   // Navigate to the saved route from localStorage when user is set
-  useEffect(() => {
-    if (!user) return;
-    if (user && user?.isAdmin) {
-      navigate("/admin");
-    } else if (!user?.isAdmin) {
-      navigate("/client");
-    }
-  }, [user, user?.isAdmin, navigate]);
 
   if (isLoading) {
     return <Loading />;
