@@ -3,11 +3,37 @@
 from = "/api/*"
 to = "https://artgallery-backend-production.up.railway.app/api/:splat"
 status = 200
+force = true
 
-# SPA Routing (catch-all route)
+# Serve assets without redirection
+[[redirects]]
+from = "/assets/*"
+to = "/assets/:splat"
+status = 200
+force = true
+
+# Redirect all other routes to index.html for SPA routing
 [[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200
+force = true
 
-# Remove custom MIME type headers (Netlify sets them automatically)
+# Set headers for JavaScript files to ensure correct MIME type
+[[headers]]
+for = "/assets/*.js"
+[headers.values]
+Content-Type = "application/javascript"
+
+# Set headers for CSS files to ensure correct MIME type
+[[headers]]
+for = "/assets/*.css"
+[headers.values]
+Content-Type = "text/css"
+
+# Other headers if needed
+[[headers]]
+for = "/*"
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
