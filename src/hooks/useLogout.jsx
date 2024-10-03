@@ -9,6 +9,7 @@ const useLogout = () => {
     onSuccess: ({ data }) => {
       if (data) {
         setUser(null);
+        sessionStorage.removeItem("user");
       }
     },
   });

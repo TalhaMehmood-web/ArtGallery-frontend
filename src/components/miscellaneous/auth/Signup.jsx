@@ -29,6 +29,7 @@ const Signup = () => {
         description: `Signed up as ${data?.fullname}`,
       });
       setUser(data);
+      sessionStorage.setItem("user", JSON.stringify(data));
       if (data?.isAdmin) {
         navigate("/admin");
       } else {

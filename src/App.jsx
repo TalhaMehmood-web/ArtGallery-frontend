@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import React, { useEffect, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
@@ -22,25 +22,25 @@ const Pictures = React.lazy(() => import("./pages/main/admin/Pictures"));
 const Auction = React.lazy(() => import("./pages/main/client/Auction"));
 
 function App() {
-  const { user, setUser } = useGlobalContext();
-
-  const { data, isLoading } = useQuery(
+  const { user } = useGlobalContext();
+  const navigate = useNavigate();
+  const { isLoading, isFetched } = useQuery(
     "get-token",
     () => fetchData("user/get-token"),
     {
       enabled: user === null,
-      refetchOnMount: false,
-      staleTime: Infinity,
     }
   );
 
   useEffect(() => {
-    if (data) {
-      setUser(data);
+    if (isFetched && user && window.location.pathname === "/") {
+      if (user?.isAdmin) {
+        navigate("/admin");
+      } else {
+        navigate("/client");
+      }
     }
-  }, [data, setUser]);
-
-  // Navigate to the saved route from localStorage when user is set
+  }, [isFetched, navigate, user, user?.isAdmin]);
 
   if (isLoading) {
     return <Loading />;

@@ -10,7 +10,7 @@ const HomeCarousel = () => {
     ["pictures", "all", "homePage"],
     () => fetchData("admin/pictures?category=all&type=homePage")
   );
-
+  console.log(homePagePictures);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) =>
@@ -40,7 +40,7 @@ const HomeCarousel = () => {
       aria-label="Art Gallery Carousel"
       role="region"
     >
-      {homePagePictures?.map((artwork, index) => (
+      {homePagePictures?.data?.map((artwork, index) => (
         <div
           key={artwork._id}
           className={`absolute w-full h-full transition-opacity duration-1000 ease-in-out ${
@@ -74,7 +74,7 @@ const HomeCarousel = () => {
         <FaChevronRight />
       </button>
       <div className="absolute flex space-x-2 transform -translate-x-1/2 bottom-4 left-1/2">
-        {homePagePictures?.map((_, index) => (
+        {homePagePictures?.data?.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}

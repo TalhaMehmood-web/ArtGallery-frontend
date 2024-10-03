@@ -24,7 +24,7 @@ const Login = () => {
   const loginMutation = useMutation((data) => postData("user/login", data), {
     onSuccess: ({ data }) => {
       setUser(data);
-
+      sessionStorage.setItem("user", JSON.stringify(data));
       if (data?.isAdmin) {
         navigate("/admin");
       } else {

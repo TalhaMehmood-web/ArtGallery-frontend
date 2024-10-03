@@ -14,6 +14,7 @@ const HomeGallery = () => {
         `admin/pictures?category=${selectedCategory}&type=auction` // Fetch pictures by category and type
       )
   );
+  console.log(pictures);
   const { data: categories } = useQuery("categories", () =>
     fetchData("admin/category")
   );
@@ -58,11 +59,11 @@ const HomeGallery = () => {
       </div>
       {/* pictures section */}
       <section className="grid gap-4 mt-4 justify-items-center xl:mt-0 md:px-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-        {true &&
+        {isPicturesLoading &&
           Array.from({ length: 5 }).map((_, index) => (
             <PictureSkeleton key={index} />
           ))}
-        {pictures?.map((picture, index) => (
+        {pictures?.data?.map((picture, index) => (
           <img
             key={picture._id + index}
             src={picture.picture}
