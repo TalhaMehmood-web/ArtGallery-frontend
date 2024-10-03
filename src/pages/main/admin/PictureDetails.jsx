@@ -1,22 +1,14 @@
 import { useState } from "react";
-import { FiEdit, FiTrash2, FiEye, FiAward } from "react-icons/fi";
+
 import { useGlobalContext } from "@/context/UserContext";
 import { formatDate } from "@/utils/formatDate";
-import { Button } from "@/components/ui/button";
+
 import DisplayImageDialog from "@/components/miscellaneous/admin/DisplayImageDialog";
 import EditPictureDetails from "@/components/miscellaneous/admin/EditPictureDetails";
 import PictureAuctions from "@/components/miscellaneous/admin/PictureActions";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import DeletePicture from "@/components/miscellaneous/admin/DeletePicture";
+import PictureActionButton from "@/components/miscellaneous/admin/PictureActionButton";
 const PictureDetails = () => {
   const { selectedPicture } = useGlobalContext();
   const [displayImage, setDisplayImage] = useState(false);
@@ -37,39 +29,12 @@ const PictureDetails = () => {
               <h1 className="text-3xl font-bold text-gray-900">
                 {selectedPicture?.title}
               </h1>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button className="text-white bg-yellow-500 focus:text-white focus:bg-yellow-500 hover:text-yellow-500 hover:bg-transparent ">
-                    Actions
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel> Picture Actions</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={() => setDisplayImage(true)}>
-                      <FiEye className="mr-2" />
-                      <span>View Details</span>
-                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setEditPicture(true)}>
-                      <FiEdit className="mr-2" />
-                      <span>Edit Product</span>
-                      <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
-                      <FiTrash2 className="mr-2" />
-                      <span>Delete Product</span>
-                      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setOpenAuction(true)}>
-                      <FiAward className="mr-2" />
-                      <span>Activate Auction</span>
-                      <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <PictureActionButton
+                setDeleteDialog={setDeleteDialog}
+                setDisplayImage={setDisplayImage}
+                setEditPicture={setEditPicture}
+                setOpenAuction={setOpenAuction}
+              />
             </div>
             <p className="mb-4 text-gray-600">{selectedPicture?.description}</p>
             <div className="flex flex-wrap mb-4 -mx-2">
