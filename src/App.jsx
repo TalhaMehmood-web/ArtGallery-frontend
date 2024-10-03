@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import React, { useEffect, Suspense } from "react";
@@ -6,7 +5,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { useQuery } from "react-query";
 import { fetchData } from "./api/fetchData";
 import { useGlobalContext } from "./context/UserContext";
-import { useNavigate, Navigate } from "react-router-dom";
 import Loading from "./components/miscellaneous/loading/Loading";
 import UploadPictures from "./pages/main/admin/UploadPictures";
 import Home from "./pages/main/client/Home";
@@ -16,20 +14,15 @@ import About from "./pages/main/client/About";
 import Orders from "./pages/main/admin/Orders";
 import Categories from "./pages/main/admin/Categories";
 import PictureDetails from "./pages/main/admin/PictureDetails";
+import PrivateRoute from "./components/miscellaneous/auth/PrivateRoute";
 const Auth = React.lazy(() => import("./pages/auth/Auth"));
 const Client = React.lazy(() => import("./pages/main/client/Client"));
 const Admin = React.lazy(() => import("./pages/main/admin/Admin"));
 const Pictures = React.lazy(() => import("./pages/main/admin/Pictures"));
 const Auction = React.lazy(() => import("./pages/main/client/Auction"));
 
-const PrivateRoute = ({ children }) => {
-  const { user } = useGlobalContext();
-  return user ? children : <Navigate to="/" />;
-};
-
 function App() {
   const { user, setUser } = useGlobalContext();
-  const navigate = useNavigate();
 
   const { data, isLoading } = useQuery(
     "get-token",
