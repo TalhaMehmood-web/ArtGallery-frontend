@@ -9,9 +9,16 @@ const useGlobalContext = () => {
 };
 
 const GlobalContextProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(sessionStorage.getItem("user")) || null
-  );
+  const [user, setUser] = useState(() => {
+    try {
+      const storedUser = sessionStorage.getItem("user");
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch (error) {
+      console.error("Error parsing sessionStorage user:", error);
+      return null;
+    }
+  });
+
   const [isWildCard, setIsWildCard] = useState(false);
 
   const [selectedPicture, setSelectedPicture] = useState(null);
