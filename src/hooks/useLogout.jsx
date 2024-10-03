@@ -1,15 +1,17 @@
 import { useGlobalContext } from "@/context/UserContext";
 import { useMutation } from "react-query";
 import { postData } from "@/api/postData";
+import { useNavigate } from "react-router-dom";
 
 const useLogout = () => {
   const { setUser } = useGlobalContext();
-
+  const navigate = useNavigate();
   const logoutMutation = useMutation(() => postData("user/logout", {}), {
     onSuccess: ({ data }) => {
       if (data) {
         setUser(null);
         sessionStorage.removeItem("user");
+        navigate("/");
       }
     },
   });

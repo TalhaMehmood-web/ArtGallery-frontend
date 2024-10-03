@@ -16,11 +16,13 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import DeletePicture from "@/components/miscellaneous/admin/DeletePicture";
 const PictureDetails = () => {
   const { selectedPicture } = useGlobalContext();
   const [displayImage, setDisplayImage] = useState(false);
   const [editPicture, setEditPicture] = useState(false);
   const [openAuction, setOpenAuction] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
   return (
     <>
       <div className="flex-1 p-4 bg-white sm:p-6 lg:p-8">
@@ -55,7 +57,7 @@ const PictureDetails = () => {
                       <span>Edit Product</span>
                       <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setDeleteDialog(true)}>
                       <FiTrash2 className="mr-2" />
                       <span>Delete Product</span>
                       <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
@@ -113,6 +115,10 @@ const PictureDetails = () => {
         openAuction={openAuction}
         setOpenAuction={setOpenAuction}
         pictureId={selectedPicture?._id}
+      />
+      <DeletePicture
+        deleteDialog={deleteDialog}
+        setDeleteDialog={setDeleteDialog}
       />
     </>
   );

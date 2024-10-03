@@ -8,11 +8,28 @@ import { useMutation } from "react-query";
 import { postData } from "@/api/postData";
 import { useGlobalContext } from "@/context/UserContext";
 import Loading from "../loading/Loading";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// Define Zod schema for validation
+// const loginSchema = z.object({
+//   email: z
+//     .string()
+//     .email("Invalid email address")
+//     .nonempty("Email is required"),
+//   password: z
+//     .string()
+//     .min(6, "Password must be at least 6 characters")
+//     .nonempty("Password is required"),
+// });
 
 const Login = () => {
   const navigate = useNavigate();
   const { setUser } = useGlobalContext();
+
+  // Use useForm with zodResolver
   const form = useForm({
+    // resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -39,10 +56,6 @@ const Login = () => {
         toast.error("Login Error", {
           description: error?.response?.data?.message.toUpperCase(),
           duration: 2000,
-
-          action: {
-            label: "Undo",
-          },
         });
       }
     },
@@ -51,6 +64,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     await loginMutation.mutateAsync(data);
   };
+
   const { isLoading, isError } = loginMutation;
 
   return (
@@ -63,16 +77,24 @@ const Login = () => {
           </p>
         </div>
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit, (errors) => {
+            // Display validation errors in toast
+            for (const field in errors) {
+              toast.error("Validation Error", {
+                description: errors[field]?.message,
+                duration: 2000,
+              });
+            }
+          })}
           className="flex flex-col flex-1 space-y-5"
         >
           <div className="flex flex-col space-y-1">
-            <label className="font-semibold" htmlFor="email" type="email">
+            <label className="font-semibold" htmlFor="email">
               Email
             </label>
             <Input
               className="text-white bg-transparent border border-yellow-500"
-              placeholder="exapmle@gmai.com"
+              placeholder="example@gmail.com"
               type="email"
               {...register("email")}
             />

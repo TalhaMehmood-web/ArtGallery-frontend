@@ -1,6 +1,7 @@
 import axios from "../utils/AxiosConfig";
 
 export const postData = async (endpoint, dataToPost) => {
+
     try {
 
         const data = await axios.post(endpoint, dataToPost)

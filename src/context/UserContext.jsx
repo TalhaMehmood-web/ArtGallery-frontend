@@ -9,11 +9,7 @@ const useGlobalContext = () => {
 };
 
 const GlobalContextProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    // Load user from session storage if available
-    const storedUser = sessionStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+  const [user, setUser] = useState(sessionStorage.getItem("user") || null);
   const [isWildCard, setIsWildCard] = useState(false);
 
   const [selectedPicture, setSelectedPicture] = useState(null);

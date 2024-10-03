@@ -1,41 +1,11 @@
 /* eslint-disable react/prop-types */
-import { deleteData } from "@/api/deleteData";
-
-import { useMutation, useQueryClient } from "react-query";
-import Loading from "@/components/miscellaneous/loading/Loading";
-
-import { toast } from "sonner";
 
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/context/UserContext";
 
 const PictureUI = ({ picURL, id, picture }) => {
-  const queryClient = useQueryClient();
-
   const { setSelectedPicture } = useGlobalContext();
   const navigate = useNavigate();
-  const deletePictureMutation = useMutation(
-    async () =>
-      await deleteData(
-        `/admin/deletePicture/${id}/${encodeURIComponent(picURL)}`
-      ),
-    {
-      onSuccess: ({ data }) => {
-        if (data) {
-          toast.success("Picture Deleted Successfully", {
-            position: "top-right",
-          });
-        }
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries("pictures");
-      },
-    }
-  );
-  const { isLoading } = deletePictureMutation;
-  const handleDelete = async () => {
-    await deletePictureMutation.mutateAsync();
-  };
 
   return (
     <>
@@ -43,6 +13,7 @@ const PictureUI = ({ picURL, id, picture }) => {
         <img
           onClick={() => {
             navigate(`/admin/pictures/${id}`);
+            setSelectedPicture(picture);
           }}
           src={picURL}
           alt="pic"
@@ -50,8 +21,6 @@ const PictureUI = ({ picURL, id, picture }) => {
         />
         {/* <div className=" hover-effect-img"></div> */}
       </div>
-
-      {isLoading && <Loading />}
     </>
   );
 };

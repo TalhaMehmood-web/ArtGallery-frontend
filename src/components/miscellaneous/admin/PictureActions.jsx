@@ -54,6 +54,13 @@ const PictureAuctions = ({ openAuction, setOpenAuction, pictureId }) => {
       startDate: data.startDate,
       endDate: data.endDate,
     };
+    if (!auctionData.startDate || !auctionData?.endDate) {
+      toast.error("Error !!!", {
+        description: "All fields are required :)",
+        position: "top-center",
+      });
+      return;
+    }
     await createAuctionMutation.mutateAsync(auctionData);
   };
 
