@@ -5,33 +5,14 @@ to = "https://artgallery-backend-production.up.railway.app/api/:splat"
 status = 200
 force = true
 
-# Serve assets without redirection
-[[redirects]]
-from = "/assets/*"
-to = "/assets/:splat"
-status = 200
-force = true
-
-# Redirect all other routes to index.html for SPA routing
+# Redirect all routes to index.html for SPA routing
 [[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200
 force = true
 
-# Set headers for JavaScript files to ensure correct MIME type
-[[headers]]
-for = "/assets/*.js"
-[headers.values]
-Content-Type = "application/javascript"
-
-# Set headers for CSS files to ensure correct MIME type
-[[headers]]
-for = "/assets/*.css"
-[headers.values]
-Content-Type = "text/css"
-
-# Other headers if needed
+# Security headers (optional but recommended)
 [[headers]]
 for = "/*"
 [headers.values]
