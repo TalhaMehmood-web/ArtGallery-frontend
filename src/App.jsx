@@ -6,14 +6,18 @@ import { useQuery } from "react-query";
 import { fetchData } from "./api/fetchData";
 import { useGlobalContext } from "./context/UserContext";
 import Loading from "./components/miscellaneous/loading/Loading";
-import UploadPictures from "./pages/main/admin/UploadPictures";
-import Home from "./pages/main/client/Home";
-import NewsFeed from "./pages/main/client/NewsFeed";
-import Portfolio from "./pages/main/client/Portfolio";
-import About from "./pages/main/client/About";
-import Orders from "./pages/main/admin/Orders";
-import Categories from "./pages/main/admin/Categories";
-import PictureDetails from "./pages/main/admin/PictureDetails";
+const UploadPictures = React.lazy(() =>
+  import("./pages/main/admin/UploadPictures")
+);
+const NewsFeed = React.lazy(() => import("./pages/main/client/NewsFeed"));
+const Home = React.lazy(() => import("./pages/main/client/Home"));
+const Portfolio = React.lazy(() => import("./pages/main/client/Portfolio"));
+const About = React.lazy(() => import("./pages/main/client/About"));
+const Orders = React.lazy(() => import("./pages/main/admin/Orders"));
+const Categories = React.lazy(() => import("./pages/main/admin/Categories"));
+const PictureDetails = React.lazy(() =>
+  import("./pages/main/admin/PictureDetails")
+);
 import PrivateRoute from "./components/miscellaneous/auth/PrivateRoute";
 const Auth = React.lazy(() => import("./pages/auth/Auth"));
 const Client = React.lazy(() => import("./pages/main/client/Client"));
