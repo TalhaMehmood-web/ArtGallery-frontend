@@ -112,44 +112,51 @@ const UploadPictures = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className=" flex flex-col space-y-1 my-5 brightness-200 z-10 rounded-md  w-full lg:w-[85%] xl:w-[70%] h-full text-white p-2 lg:p-4"
+        className="flex flex-col space-y-1 my-5 brightness-200 z-10 rounded-md w-full lg:w-[85%] xl:w-[70%] h-full text-white p-2 lg:p-4"
       >
         <div className="flex-col hidden p-3 mb-5 space-y-3 shadow-md shadow-yellow-500 md:flex">
-          <p className="text-xl italic font-semibold ">
+          <p className="text-xl italic font-semibold">
             Upload Picture for Exhibition and Auction
           </p>
           <p>
             You can upload only one picture at a time and also you can add new
-            categories for diversification in your art
+            categories for diversification in your art.
           </p>
         </div>
-        <div className="flex flex-col justify-around flex-1">
-          {/* title */}
-          <div className="grid w-full grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-4 ">
-            <div className="flex flex-col space-y-2 ">
-              <label className="italic font-semibold" htmlFor="picture">
+        <div className="flex flex-col flex-1 justify-around">
+          {/* Title */}
+          <div className="grid w-full grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-4">
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="title" className="italic font-semibold">
                 Picture Title
               </label>
               <Input
+                id="title"
+                name="title"
                 placeholder="Picture Title"
                 className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer placeholder:text-white"
                 type="text"
                 {...register("title")}
+                autoComplete="off"
               />
               {errors.title && (
                 <p className="text-sm text-red-700">{errors.title.message}</p>
               )}
             </div>
-            <div className="flex flex-col space-y-2 ">
-              <label className="italic font-semibold" htmlFor="picture">
+
+            {/* Picture */}
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="picture" className="italic font-semibold">
                 Select one Picture at a time
               </label>
               <Input
+                id="picture"
                 name="picture"
                 className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer"
                 type="file"
                 accept="image/*"
                 {...register("picture")}
+                autoComplete="off"
               />
               {errors.picture && (
                 <p className="text-sm text-red-700">{errors.picture.message}</p>
@@ -157,15 +164,18 @@ const UploadPictures = () => {
             </div>
           </div>
 
-          {/* picture description */}
+          {/* Description */}
           <div className="flex flex-col space-y-2">
-            <label className="italic font-semibold" htmlFor="picture">
+            <label htmlFor="description" className="italic font-semibold">
               Picture Description
             </label>
             <Textarea
+              id="description"
+              name="description"
               placeholder="Describe your art"
               className="bg-transparent border border-yellow-500 placeholder:text-white"
               {...register("description")}
+              autoComplete="off"
             />
             {errors.description && (
               <p className="text-sm text-red-700">
@@ -174,42 +184,48 @@ const UploadPictures = () => {
             )}
           </div>
 
-          {/* picture price */}
+          {/* Price */}
           <div className="flex flex-col space-y-2">
-            <label className="italic font-semibold" htmlFor="picture">
+            <label htmlFor="price" className="italic font-semibold">
               Picture Price
             </label>
             <Input
-              placeholder="$ Picture price(in dollars)"
+              id="price"
+              name="price"
+              placeholder="$ Picture price (in dollars)"
               className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer placeholder:text-white"
               type="number"
               {...register("price")}
+              autoComplete="off"
             />
             {errors.price && (
               <p className="text-sm text-red-700">{errors.price.message}</p>
             )}
           </div>
+
+          {/* Type */}
           <div className="grid w-full grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-4">
-            <div className="flex flex-col space-y-2 ">
-              <label className="italic font-semibold" htmlFor="type">
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="type" className="italic font-semibold">
                 Select Picture Type
               </label>
               <Select
+                id="type"
+                name="type"
                 onValueChange={(value) => setValue("type", value)} // Use setValue to update form state
               >
                 <SelectTrigger className="w-full bg-transparent border border-yellow-500">
                   <SelectValue placeholder="Picture Type" />
                 </SelectTrigger>
                 <SelectContent className="text-white bg-black border border-yellow-500">
-                  <SelectGroup className="bg-transparent">
+                  <SelectGroup>
                     <SelectLabel>Select Picture Type</SelectLabel>
                     <SelectItem value="auction">Picture for Auction</SelectItem>
                     <SelectItem value="homePage">
-                      Picture to be displayed on the Home page of Client
+                      Picture to be displayed on the Home page
                     </SelectItem>
                     <SelectItem value="both">
-                      Picture to be displayed on both Auction and Home Page of
-                      Client
+                      Picture to be displayed on both Auction and Home Page
                     </SelectItem>
                   </SelectGroup>
                 </SelectContent>
@@ -218,22 +234,26 @@ const UploadPictures = () => {
                 <p className="text-sm text-red-700">{errors.type.message}</p>
               )}
             </div>
-            <div className="flex flex-col space-y-2 ">
-              <label className="italic font-semibold" htmlFor="category">
+
+            {/* Category */}
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="category" className="italic font-semibold">
                 Select Picture Category
               </label>
               <Select
+                id="category"
+                name="category"
                 onValueChange={(value) => setValue("category", value)} // Use setValue to update form state
               >
                 <SelectTrigger className="w-full bg-transparent border border-yellow-500">
                   <SelectValue placeholder="Picture Category" />
                 </SelectTrigger>
-                <SelectContent className="">
-                  <SelectGroup className="bg-transparent">
+                <SelectContent className="text-white bg-black border border-yellow-500">
+                  <SelectGroup>
                     <SelectLabel>Select Picture Category</SelectLabel>
                     {categories?.map((category) => (
                       <SelectItem key={category?._id} value={category?.name}>
-                        <p>{category?.name}</p>
+                        {category?.name}
                       </SelectItem>
                     ))}
                   </SelectGroup>
@@ -249,8 +269,8 @@ const UploadPictures = () => {
 
           <Button
             type="submit"
-            className=""
-            disabled={uploadPictureMutation.isLoading} // Disable button while uploading
+            className="mt-4"
+            disabled={uploadPictureMutation.isLoading}
           >
             {uploadPictureMutation.isLoading
               ? "Uploading..."

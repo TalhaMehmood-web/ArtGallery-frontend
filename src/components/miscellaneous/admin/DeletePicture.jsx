@@ -9,6 +9,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { deleteData } from "@/api/deleteData";
 import { toast } from "sonner";
@@ -16,7 +17,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/context/UserContext";
 
-const DeletePicture = ({ deleteDialog, setDeleteDialog }) => {
+const DeletePicture = ({ deleteDialog, setDeleteDialog, children }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { selectedPicture, setSelectedPicture } = useGlobalContext();
@@ -49,6 +50,7 @@ const DeletePicture = ({ deleteDialog, setDeleteDialog }) => {
   };
   return (
     <AlertDialog open={deleteDialog} onOpenChange={setDeleteDialog}>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent className={"bg-black text-white border-red-500"}>
         <AlertDialogHeader>
           <AlertDialogTitle className=" text-center sm:text-left text-red-500 ">

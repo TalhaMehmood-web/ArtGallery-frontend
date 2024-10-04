@@ -108,26 +108,34 @@ const Signup = () => {
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div className="flex flex-col space-y-1">
-            <label className="font-semibold" htmlFor="fullname" type="text">
+            <label className="font-semibold" htmlFor="fullname">
               Full Name
             </label>
             <Input
+              id="fullname"
+              name="fullname"
+              type="text"
               className="text-white bg-transparent border border-yellow-500"
               placeholder="John Doe"
               {...register("fullname")}
+              autocomplete="name" // Add autocomplete
             />
             {errors.fullname && (
               <p className="text-sm text-red-500">{errors.fullname.message}</p>
             )}
           </div>
           <div className="flex flex-col space-y-1">
-            <label className="font-semibold" htmlFor="username" type="text">
+            <label className="font-semibold" htmlFor="username">
               User Name
             </label>
             <Input
+              id="username"
+              name="username"
+              type="text"
               className="text-white bg-transparent border border-yellow-500"
               placeholder="john_doe"
               {...register("username")}
+              autocomplete="username" // Add autocomplete
             />
             {errors.username && (
               <p className="text-sm text-red-500">{errors.username.message}</p>
@@ -135,13 +143,17 @@ const Signup = () => {
           </div>
         </div>
         <div className="flex flex-col space-y-1">
-          <label className="font-semibold" htmlFor="email" type="email">
+          <label className="font-semibold" htmlFor="email">
             Email
           </label>
           <Input
+            id="email"
+            name="email"
+            type="email"
             className="text-white bg-transparent border border-yellow-500"
             placeholder="example@gmail.com"
             {...register("email")}
+            autocomplete="email" // Add autocomplete
           />
           {errors.email && (
             <p className="text-sm text-red-500">{errors.email.message}</p>
@@ -152,9 +164,12 @@ const Signup = () => {
             Profile Picture
           </label>
           <Input
+            id="profile"
+            name="profile"
             className="text-white bg-transparent border border-yellow-500 cursor-pointer"
             type="file"
             {...register("profile")}
+            // Profile picture doesn't need autocomplete
           />
           {errors.profile && (
             <p className="text-sm text-red-500">{errors.profile.message}</p>
@@ -166,10 +181,13 @@ const Signup = () => {
               Password
             </label>
             <Input
+              id="password"
+              name="password"
               className="text-white bg-transparent border border-yellow-500"
               placeholder="Your Password"
               type="password"
               {...register("password")}
+              autocomplete="new-password" // Add autocomplete
             />
             {errors.password && (
               <p className="text-sm text-red-500">{errors.password.message}</p>
@@ -180,10 +198,13 @@ const Signup = () => {
               Confirm Password
             </label>
             <Input
+              id="confirmPassword"
+              name="confirmPassword"
               className="text-white bg-transparent border border-yellow-500"
               placeholder="Re-Type Password"
               type="password"
               {...register("confirmPassword")}
+              autocomplete="new-password" // Add autocomplete for new passwords
             />
             {errors.confirmPassword && (
               <p className="text-sm text-red-500">

@@ -8,17 +8,28 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { format } from "date-fns";
+import { useState } from "react";
+
 const CalendarForm = ({ label, selectedDate, onDateChange }) => {
+  const [open, setOpen] = useState(false); // Manage popover open/close state
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  const handleDateSelect = (date) => {
+    if (date) {
+      onDateChange(date); // Update parent state
+      setOpen(false); // Close popover after selecting a date
+    }
+  };
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col  ">
       <label>{label}</label>
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             className="w-full pl-3 font-normal text-left text-white bg-black border border-yellow-500 hover:text-white focus:bg-transparent hover:bg-transparent"
+            onClick={() => setOpen(true)} // Manually control opening
           >
             {selectedDate
               ? format(selectedDate, "dd-MMM-yyyy").toUpperCase() // Format the date
@@ -31,10 +42,10 @@ const CalendarForm = ({ label, selectedDate, onDateChange }) => {
           align="start"
         >
           <Calendar
-            className={"bg-black text-white"}
+            className={"bg-black text-white  z-50 "}
             mode="single"
             selected={selectedDate}
-            onSelect={onDateChange}
+            onSelect={handleDateSelect} // Ensure popover closes after selecting
             disabled={(date) => date < today}
             initialFocus
           />

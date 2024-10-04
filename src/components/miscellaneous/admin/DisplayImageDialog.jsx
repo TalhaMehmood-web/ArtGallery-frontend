@@ -5,11 +5,18 @@ import {
   DialogTitle,
   DialogHeader,
   DialogDescription,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 
-const DisplayImageDialog = ({ displayImage, picURL, setDisplayImage }) => {
+const DisplayImageDialog = ({
+  displayImage,
+  picURL,
+  setDisplayImage,
+  children,
+}) => {
   return (
     <Dialog open={displayImage} onOpenChange={setDisplayImage}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[600px] h-[80%]  flex bg-black/90 text-white border-none justify-center items-center">
         {/* Add DialogTitle wrapped with VisuallyHidden to make it accessible */}
         <DialogHeader className={"hidden"}>

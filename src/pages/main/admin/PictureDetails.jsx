@@ -1,20 +1,11 @@
-import { useState } from "react";
-
 import { useGlobalContext } from "@/context/UserContext";
 import { formatDate } from "@/utils/formatDate";
 
-import DisplayImageDialog from "@/components/miscellaneous/admin/DisplayImageDialog";
-import EditPictureDetails from "@/components/miscellaneous/admin/EditPictureDetails";
-import PictureAuctions from "@/components/miscellaneous/admin/PictureAuctions";
-
-import DeletePicture from "@/components/miscellaneous/admin/DeletePicture";
 import PictureActionButton from "@/components/miscellaneous/admin/PictureActionButton";
+
 const PictureDetails = () => {
   const { selectedPicture } = useGlobalContext();
-  const [displayImage, setDisplayImage] = useState(false);
-  const [editPicture, setEditPicture] = useState(false);
-  const [openAuction, setOpenAuction] = useState(false);
-  const [deleteDialog, setDeleteDialog] = useState(false);
+
   return (
     <>
       <div className="flex-1 p-4 bg-white sm:p-6 lg:p-8">
@@ -29,12 +20,7 @@ const PictureDetails = () => {
               <h1 className="text-3xl font-bold text-gray-900">
                 {selectedPicture?.title}
               </h1>
-              <PictureActionButton
-                setDeleteDialog={setDeleteDialog}
-                setDisplayImage={setDisplayImage}
-                setEditPicture={setEditPicture}
-                setOpenAuction={setOpenAuction}
-              />
+              <PictureActionButton />
             </div>
             <p className="mb-4 text-gray-600">{selectedPicture?.description}</p>
             <div className="flex flex-wrap mb-4 -mx-2">
@@ -66,25 +52,6 @@ const PictureDetails = () => {
           </div>
         </div>
       </div>
-      <DisplayImageDialog
-        displayImage={displayImage}
-        picURL={selectedPicture?.picture}
-        setDisplayImage={setDisplayImage}
-      />
-      <EditPictureDetails
-        picture={selectedPicture}
-        editPicture={editPicture}
-        setEditPicture={setEditPicture}
-      />
-      <PictureAuctions
-        openAuction={openAuction}
-        setOpenAuction={setOpenAuction}
-        pictureId={selectedPicture?._id}
-      />
-      <DeletePicture
-        deleteDialog={deleteDialog}
-        setDeleteDialog={setDeleteDialog}
-      />
     </>
   );
 };

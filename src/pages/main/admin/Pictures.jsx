@@ -56,42 +56,44 @@ const Pictures = () => {
   return (
     <div className="flex flex-col flex-1">
       {/* Category and type filters */}
-      <div className="flex justify-between w-full gap-4 px-2 py-5 xl:items-center xl:flex-row sm:px-10 xl:py-0">
-        <div className="items-center justify-center flex-1 hidden w-full px-2 py-10 space-x-4 xl:flex xl:p-10">
-          <p
-            className={`cursor-pointer font-semibold italic ${
-              selectedCategory === "all" ? "text-yellow-500" : ""
-            } hover:text-yellow-500 duration-300 transition-all`}
-            onClick={() => handleCategoryChange("all")}
-          >
-            All
-          </p>
-          {categories?.map((category) => (
+      {!picturesLoading && (
+        <div className="flex justify-between w-full gap-4 px-2 py-5 xl:items-center xl:flex-row sm:px-10 xl:py-0">
+          <div className="items-center justify-center flex-1 hidden w-full px-2 py-10 space-x-4 xl:flex xl:p-10">
             <p
-              key={category._id}
               className={`cursor-pointer font-semibold italic ${
-                selectedCategory === category._id ? "text-yellow-500" : ""
+                selectedCategory === "all" ? "text-yellow-500" : ""
               } hover:text-yellow-500 duration-300 transition-all`}
-              onClick={() => handleCategoryChange(category._id)}
+              onClick={() => handleCategoryChange("all")}
             >
-              {category.name.toUpperCase()}
+              All
             </p>
-          ))}
-        </div>
-        {/* Combobox for smaller screens */}
-        <div className="block xl:hidden w-fit">
-          <CategoryCombobox
-            categories={categories}
-            selectedCategory={selectedCategory}
-            handleCategoryChange={handleCategoryChange}
-          />
-        </div>
-        {/* Filter by picture type */}
-        <div>
-          <FilterPictureType onChange={handleTypeChange} />
-        </div>
-      </div>
+            {categories?.map((category) => (
+              <p
+                key={category._id}
+                className={`cursor-pointer font-semibold italic ${
+                  selectedCategory === category._id ? "text-yellow-500" : ""
+                } hover:text-yellow-500 duration-300 transition-all`}
+                onClick={() => handleCategoryChange(category._id)}
+              >
+                {category.name.toUpperCase()}
+              </p>
+            ))}
+          </div>
 
+          {/* Combobox for smaller screens */}
+          <div className="block xl:hidden w-fit">
+            <CategoryCombobox
+              categories={categories}
+              selectedCategory={selectedCategory}
+              handleCategoryChange={handleCategoryChange}
+            />
+          </div>
+          {/* Filter by picture type */}
+          <div className="z-50">
+            <FilterPictureType onChange={handleTypeChange} />
+          </div>
+        </div>
+      )}
       {/* Display pictures */}
       <div className="grid gap-4 px-3 md:px-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {isLoading || picturesLoading

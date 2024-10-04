@@ -93,6 +93,9 @@ const Login = () => {
               Email
             </label>
             <Input
+              autocomplete="email"
+              id="email" // Add id attribute
+              name="email"
               className="text-white bg-transparent border border-yellow-500"
               placeholder="example@gmail.com"
               type="email"
@@ -104,6 +107,9 @@ const Login = () => {
               Password
             </label>
             <Input
+              autocomplete="new-password"
+              id="password" // Add id attribute
+              name="password"
               className="text-white bg-transparent border border-yellow-500"
               placeholder="Your Password - min 6 characters"
               type="password"

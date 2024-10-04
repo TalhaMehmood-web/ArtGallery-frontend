@@ -14,6 +14,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Select,
@@ -26,7 +27,12 @@ import {
 } from "@/components/ui/select";
 import { useGlobalContext } from "@/context/UserContext";
 
-const EditPictureDetails = ({ editPicture, setEditPicture, picture }) => {
+const EditPictureDetails = ({
+  editPicture,
+  setEditPicture,
+  picture,
+  children,
+}) => {
   const queryClient = useQueryClient();
   const { setSelectedPicture } = useGlobalContext();
   const categories = queryClient.getQueryData("categories");
@@ -74,6 +80,7 @@ const EditPictureDetails = ({ editPicture, setEditPicture, picture }) => {
   return (
     <>
       <Dialog open={editPicture} onOpenChange={setEditPicture}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="sm:max-w-[600px] h-[70%] bg-black/90 text-white border-none  flex flex-col ">
           <DialogHeader>
             <DialogTitle>Edit Picture Details</DialogTitle>

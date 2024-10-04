@@ -6,6 +6,7 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
+  DrawerTrigger,
 } from "@/components/ui/drawer";
 import CalendarForm from "@/components/ui/CalenderForm"; // Ensure correct import
 import { useMutation } from "react-query";
@@ -15,7 +16,13 @@ import { useState } from "react";
 import Loading from "../loading/Loading";
 import { toast } from "sonner";
 
-const PictureAuctions = ({ openAuction, setOpenAuction, pictureId }) => {
+const PictureAuctions = ({
+  openAuction,
+  setOpenAuction,
+  pictureId,
+  children,
+  setOpenActionButton,
+}) => {
   const { handleSubmit, setValue } = useForm();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -78,6 +85,7 @@ const PictureAuctions = ({ openAuction, setOpenAuction, pictureId }) => {
   return (
     <>
       <Drawer open={openAuction} onOpenChange={setOpenAuction}>
+        <DrawerTrigger asChild>{children}</DrawerTrigger>
         <DrawerContent className="  md:p-0 p-3 h-[60%] bg-black text-white border-yellow-500">
           <div className="w-full h-full max-w-xl mx-auto">
             <DrawerHeader>
@@ -91,11 +99,13 @@ const PictureAuctions = ({ openAuction, setOpenAuction, pictureId }) => {
               className="flex flex-col min-h-[80%] justify-around"
             >
               <CalendarForm
+                setOpenActionButton={setOpenActionButton}
                 label={"Auction Start Date"}
                 selectedDate={startDate} // Pass selected date
                 onDateChange={handleStartDateChange} // Update state
               />
               <CalendarForm
+                setOpenActionButton={setOpenActionButton}
                 label={"Auction End Date"}
                 selectedDate={endDate} // Pass selected date
                 onDateChange={handleEndDateChange} // Update state
