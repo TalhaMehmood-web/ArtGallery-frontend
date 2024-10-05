@@ -28,7 +28,7 @@ const DisplayImageDialog = ({ displayImage, setDisplayImage, children }) => {
               : import.meta.env.VITE_DEV_API_URL
           }admin/pictures/proxy/${selectedPicture?._id}`}
           alt="picture"
-          className="object-cover w-full h-full p-4 m-4 border-4 border-yellow-500 rounded-md aspect-square "
+          className="object-cover w-full max-h-full p-4 m-4 border-4 border-yellow-500 rounded-md aspect-square "
         />
       </DialogContent>
     </Dialog>

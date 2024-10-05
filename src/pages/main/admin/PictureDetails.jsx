@@ -12,11 +12,11 @@ const PictureDetails = () => {
   return (
     <>
       <div className="flex-1 p-4 bg-white sm:p-6 lg:p-8">
-        <div className="max-w-6xl mx-auto overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
+        <div className="max-w-6xl  mx-auto overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
           {/* Adjusting the layout to use flex */}
-          <div className="flex border">
+          <div className="flex  md:flex-row flex-col">
             {/* Image Section */}
-            <div className="w-1/3">
+            <div className="md:w-1/2 w-full ">
               <img
                 src={`${
                   import.meta.env.MODE === "production"
@@ -28,7 +28,7 @@ const PictureDetails = () => {
               />
             </div>
             {/* Text (Title & Description) Section */}
-            <div className="flex flex-col justify-around w-2/3 p-4">
+            <div className="flex flex-col justify-around w-full md:w-1/2 p-4">
               <h1 className="mb-2 text-3xl font-bold text-gray-900">
                 {selectedPicture?.title}
               </h1>
