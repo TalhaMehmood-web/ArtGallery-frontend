@@ -3,10 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from "path"
 
 export default defineConfig({
-  base: './', // Add this line
-  server: {
-    historyApiFallback: true,
-  },
+  base: '/', // Add this line
   plugins: [react()],
   resolve: {
     alias: {
