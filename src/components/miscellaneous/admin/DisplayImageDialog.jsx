@@ -7,13 +7,10 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useGlobalContext } from "@/context/UserContext";
 
-const DisplayImageDialog = ({
-  displayImage,
-  picURL,
-  setDisplayImage,
-  children,
-}) => {
+const DisplayImageDialog = ({ displayImage, setDisplayImage, children }) => {
+  const { selectedPicture } = useGlobalContext();
   return (
     <Dialog open={displayImage} onOpenChange={setDisplayImage}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -25,9 +22,13 @@ const DisplayImageDialog = ({
         </DialogHeader>
 
         <img
-          src={picURL}
+          src={`${
+            import.meta.env.MODE === "production"
+              ? import.meta.env.VITE_PRODUCTION_API_URL
+              : import.meta.env.VITE_DEV_API_URL
+          }admin/pictures/proxy/${selectedPicture?._id}`}
           alt="picture"
-          className="object-cover border-4 m-4 border-yellow-500  p-4 rounded-md w-full h-full  aspect-square "
+          className="object-cover w-full h-full p-4 m-4 border-4 border-yellow-500 rounded-md aspect-square "
         />
       </DialogContent>
     </Dialog>

@@ -93,7 +93,7 @@ const Login = () => {
               Email
             </label>
             <Input
-              autocomplete="email"
+              autoComplete="email"
               id="email" // Add id attribute
               name="email"
               className="text-white bg-transparent border border-yellow-500"
@@ -107,7 +107,7 @@ const Login = () => {
               Password
             </label>
             <Input
-              autocomplete="new-password"
+              autoComplete="new-password"
               id="password" // Add id attribute
               name="password"
               className="text-white bg-transparent border border-yellow-500"

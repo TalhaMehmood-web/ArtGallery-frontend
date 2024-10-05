@@ -9,10 +9,10 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { FiEdit, FiTrash2, FiEye, FiAward } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiEye,  } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import { useGlobalContext } from "@/context/UserContext";
-import PictureAuctions from "./PictureAuctions";
+
 import DisplayImageDialog from "./DisplayImageDialog";
 import EditPictureDetails from "./EditPictureDetails";
 import DeletePicture from "./DeletePicture";
@@ -20,7 +20,7 @@ import DeletePicture from "./DeletePicture";
 const PictureActionButton = () => {
   const [displayImage, setDisplayImage] = useState(false);
   const [editPicture, setEditPicture] = useState(false);
-  const [openAuction, setOpenAuction] = useState(false);
+ 
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [openActionButton, setOpenActionButton] = useState(false);
 
@@ -74,13 +74,7 @@ const PictureActionButton = () => {
             </DropdownMenuItem>
 
             {/* Activate Auction */}
-            <DropdownMenuItem
-              onClick={() => handleMenuItemClick(() => setOpenAuction(true))}
-            >
-              <FiAward className="mr-2" />
-              <span>Activate Auction</span>
-              <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-            </DropdownMenuItem>
+           
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -103,11 +97,7 @@ const PictureActionButton = () => {
         setDeleteDialog={setDeleteDialog}
       />
 
-      <PictureAuctions
-        openAuction={openAuction}
-        setOpenAuction={setOpenAuction}
-        pictureId={selectedPicture?._id}
-      />
+     
     </>
   );
 };

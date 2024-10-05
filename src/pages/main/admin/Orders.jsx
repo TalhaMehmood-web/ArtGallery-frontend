@@ -144,8 +144,6 @@ const Orders = () => {
   const filterByEmailOrName = (value) => {
     table.getColumn("highestBidderEmail")?.setFilterValue(value);
     table.getColumn("highestBidderName")?.setFilterValue(value);
-    table.getColumn("startDate")?.setFilterValue(value);
-    table.getColumn("endDate")?.setFilterValue(value);
   };
 
   if (isLoading) return <Loading />;
@@ -157,7 +155,7 @@ const Orders = () => {
         <Input
           placeholder="Filter by name or email..."
           onChange={(event) => filterByEmailOrName(event.target.value)}
-          className=" md:max-w-full border border-yellow-500 col-span-4 md:col-span-2 "
+          className="col-span-4 border border-yellow-500  md:max-w-full md:col-span-2"
         />
         {/* button for sheet */}
 
@@ -173,7 +171,7 @@ const Orders = () => {
         </Button>
 
         {/* columns */}
-        <div className="col-span-3 md:col-span-1 flex justify-end items-end ">
+        <div className="flex items-end justify-end col-span-3 md:col-span-1 ">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -181,7 +179,7 @@ const Orders = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="border  1  border-yellow-500"
+              className="border border-yellow-500 1"
               align="end"
             >
               {table

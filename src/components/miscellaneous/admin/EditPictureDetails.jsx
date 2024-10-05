@@ -26,7 +26,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useGlobalContext } from "@/context/UserContext";
-
+import { useQuery } from "react-query";
+import { fetchData } from "@/api/fetchData";
 const EditPictureDetails = ({
   editPicture,
   setEditPicture,
@@ -35,7 +36,13 @@ const EditPictureDetails = ({
 }) => {
   const queryClient = useQueryClient();
   const { setSelectedPicture } = useGlobalContext();
-  const categories = queryClient.getQueryData("categories");
+  const { data: categories } = useQuery(
+    "categories",
+    () => fetchData("admin/category"),
+    {
+      staleTime: Infinity,
+    }
+  );
 
   const { handleSubmit, register, reset, setValue } = useForm({
     defaultValues: {
