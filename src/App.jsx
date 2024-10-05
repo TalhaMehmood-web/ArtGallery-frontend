@@ -48,6 +48,7 @@ function App() {
     () => fetchData("user/get-token"),
     {
       enabled: !user,
+      refetchOnMount: false,
     }
   );
   useEffect(() => {

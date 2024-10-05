@@ -8,6 +8,7 @@ import { FiAward } from "react-icons/fi";
 const PictureDetails = () => {
   const { selectedPicture } = useGlobalContext();
   const [openAuction, setOpenAuction] = useState(false);
+
   return (
     <>
       <div className="flex-1 p-4 bg-white sm:p-6 lg:p-8">
@@ -79,8 +80,8 @@ const PictureDetails = () => {
                 <h2 className="mb-2 text-lg font-semibold text-gray-900">
                   Type
                 </h2>
-                <p className="text-gray-600">
-                  {selectedPicture?.category?.name}
+                <p className="text-gray-600 text-sm italic font-extrabold">
+                  {selectedPicture?.type.toUpperCase()}
                 </p>
               </div>
             </div>

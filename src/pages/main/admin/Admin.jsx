@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { AlignJustify } from "lucide-react";
 import { useState } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import ResNav from "@/components/ui/ResNav";
 import { adminNavLinks } from "@/lib/navLinks";
 
 import UserInfo from "@/components/ui/UserInfo";
 const Admin = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const [openSheet, setOpenSheet] = useState(false);
   const handleWildCard = () => {};
   return (
@@ -35,7 +35,9 @@ const Admin = () => {
             {adminNavLinks?.map((link, index) => (
               <Button
                 key={index + link?.link}
-                className="italic "
+                className={`italic  ${
+                  location.pathname === link?.link && "bg-white text-yellow-500"
+                } `}
                 onClick={() => {
                   navigate(link.link);
                 }}
