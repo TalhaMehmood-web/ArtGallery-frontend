@@ -14,7 +14,7 @@ const HomeGallery = () => {
         `admin/pictures?category=${selectedCategory}&type=auction` // Fetch pictures by category and type
       )
   );
-  console.log(pictures);
+
   const { data: categories } = useQuery("categories", () =>
     fetchData("admin/category")
   );
@@ -66,7 +66,11 @@ const HomeGallery = () => {
         {pictures?.data?.map((picture, index) => (
           <img
             key={picture._id + index}
-            src={picture.picture}
+            src={`${
+              import.meta.env.MODE === "production"
+                ? import.meta.env.VITE_PRODUCTION_API_URL
+                : import.meta.env.VITE_DEV_API_URL
+            }admin/pictures/proxy/${picture._id}`}
             alt={picture.title}
             className=" w-full h-full  object-cover rounded-md aspect-square border-[6px] p-2  border-black "
           />
