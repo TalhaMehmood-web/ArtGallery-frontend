@@ -107,7 +107,7 @@ const Pictures = () => {
                   import.meta.env.MODE === "production"
                     ? import.meta.env.VITE_PRODUCTION_API_URL
                     : import.meta.env.VITE_DEV_API_URL
-                }pictures/proxy/${picture._id}`}
+                }admin/pictures/proxy/${picture._id}`}
                 picture={picture}
                 id={picture._id}
               />
