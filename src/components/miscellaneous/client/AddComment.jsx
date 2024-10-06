@@ -11,54 +11,60 @@ const AddComment = ({ postId, className = "" }) => {
   const { user } = useGlobalContext();
   const { handleSubmit, register, reset } = useForm({
     defaultValues: {
-      postId,
       text: "",
     },
   });
 
-  const addCommentMutation = useMutation((data) => postData("comment", data), {
-    onMutate: async (newComment) => {
-      // Cancel any outgoing refetch (so they don't overwrite our optimistic update)
-      await queryClient.cancelQueries("comments");
+  const addCommentMutation = useMutation(
+    (data) => postData(`comment/${postId}`, data),
+    {
+      onMutate: async (newComment) => {
+        await queryClient.cancelQueries(["comments", postId]);
 
-      // Snapshot the previous value
-      const previousComments = queryClient.getQueryData(["comments", postId]);
+        const previousComments = queryClient.getQueryData(["comments", postId]);
 
-      // Optimistically update the cache with the new comment
-      queryClient.setQueryData(["comments", postId], (oldComments = []) => [
-        ...(oldComments || []),
-        {
-          _id: uuidv4(), // Temporary ID for the new comment
-          text: newComment.text,
+        const optimisticComment = {
+          _id: uuidv4(), // Temporary unique ID
+          text: newComment.text, // The comment's content
           commentedBy: {
             _id: user?._id,
-            fullname: user?.fullname,
+            fullname: user?.fullname || "Anonymous",
             email: user?.email,
-            username: user?.username,
+            profile: user?.profile,
           },
           post: postId,
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
           replies: [],
-        },
-      ]);
-      reset();
+        };
 
-      return { previousComments };
-    },
-    onError: (err, newComment, context) => {
-      // Rollback to the previous value if the mutation fails
-      queryClient.setQueryData(["comments", postId], context.previousComments);
-    },
-    onSettled: () => {
-      // Always refetch comments after mutation success/failure to ensure data consistency
-      queryClient.invalidateQueries(["comments", postId]);
-    },
-  });
+        // Optimistically add the new comment to the cache
+        queryClient.setQueryData(["comments", postId], (oldComments = []) => [
+          ...oldComments,
+          optimisticComment,
+        ]);
 
+        reset();
+
+        return { previousComments };
+      },
+      onError: (err, newComment, context) => {
+        // Revert the cache update on error
+        queryClient.setQueryData(
+          ["comments", postId],
+          context.previousComments
+        );
+      },
+      onSettled: () => {
+        // Always refetch comments to get the latest data from the server
+        queryClient.invalidateQueries(["comments", postId]);
+      },
+    }
+  );
   const onSubmit = async (data) => {
+    console.log(data);
     if (data.text.trim() === "") {
-      return;
+      return; // Prevent submission of empty comments
     }
     await addCommentMutation.mutateAsync(data);
   };
@@ -66,6 +72,7 @@ const AddComment = ({ postId, className = "" }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <Input
+        autofocus={false}
         className={className}
         type="text"
         placeholder="Add a comment"

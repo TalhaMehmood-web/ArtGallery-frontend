@@ -8,14 +8,20 @@ import ViewCommentsDialog from "./ViewCommentsDialog";
 import { useQuery } from "react-query";
 import { fetchData } from "@/api/fetchData";
 import CommentSkeleton from "@/skeleton/CommentSkeleton";
+import getInitials from "@/utils/getInitials";
 
 const Post = ({ post }) => {
   const [openCommentDialog, setOpenCommentDialog] = useState(false);
 
   // Fetch comments for the post
-  const { data: comments, isLoading: isCommentsLoading } = useQuery(
+  const { data: comments = [], isLoading: isCommentsLoading } = useQuery(
     ["comments", post._id],
-    () => fetchData(`comment/${post._id}`)
+    () => fetchData(`comment/${post._id}`),
+    {
+      staleTime: Infinity,
+      refetchOnMount: false,
+      keepPreviousData: true,
+    }
   );
 
   return (
@@ -23,11 +29,17 @@ const Post = ({ post }) => {
       <div className="flex flex-col w-full p-4 space-y-3 rounded-md shadow-xl shadow-black/20 ">
         <div className="flex items-center ">
           <Avatar className="rounded-full">
-            <AvatarImage src="" alt="avatar" />
-            <AvatarFallback className="rounded-full">CN</AvatarFallback>
+            <AvatarImage
+              className="object-cover"
+              src={post?.postedBy?.profile}
+              alt={post?.postedBy?.fullname}
+            />
+            <AvatarFallback className="rounded-full">
+              {getInitials(post?.postedBy?.fullname)}
+            </AvatarFallback>
           </Avatar>
           <p className="mx-4 text-lg italic font-semibold">
-            {post.postedBy.fullname}
+            {post?.postedBy?.fullname}
           </p>
         </div>
 
@@ -54,7 +66,7 @@ const Post = ({ post }) => {
         </div>
         <div className="flex items-center space-x-3">
           <FaHeart size={20} />
-          <p>{post.likes} likes</p>
+          <p>{post?.likes?.length} likes</p>
         </div>
         <div className="flex items-center space-x-2">
           {post.hashTags.map((tag, index) => (

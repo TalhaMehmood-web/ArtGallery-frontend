@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 const SingleComment = ({ comment }) => {
   const [timeAgo, setTimeAgo] = useState("");
-
+  const commentRef = useRef(null);
   useEffect(() => {
     const updateTimeAgo = () => {
       if (comment?.createdAt) {
@@ -22,12 +22,17 @@ const SingleComment = ({ comment }) => {
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
   }, [comment?.createdAt]);
-
+  useEffect(() => {
+    commentRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [commentRef]);
   return (
-    <div className="flex flex-row items-start space-x-3">
+    <div ref={commentRef} className="flex flex-row items-start space-x-3">
       <Avatar className="rounded-full">
-        <AvatarImage src="" alt="avatar" />
-        <AvatarFallback className="text-black rounded-full">CN</AvatarFallback>
+        <AvatarImage
+          className="object-cover"
+          src={comment?.commentedBy?.profile}
+          alt={comment?.commentedBy?.fullname}
+        />
       </Avatar>
       <div className="flex flex-col space-y-4">
         <div>

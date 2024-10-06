@@ -5,6 +5,7 @@ import AddComment from "./AddComment";
 import SingleComment from "./SingleComment";
 
 import CommentSkeleton from "@/skeleton/CommentSkeleton";
+import getInitials from "@/utils/getInitials";
 const CommentSection = ({ postId, isCommentsLoading, comments }) => {
   const { user } = useGlobalContext();
 
@@ -13,9 +14,13 @@ const CommentSection = ({ postId, isCommentsLoading, comments }) => {
       {/* header */}
       <div className="flex items-center pb-3 space-x-4 border-b border-slate-700 ">
         <Avatar className="rounded-full">
-          <AvatarImage src="" alt="avatar" />
+          <AvatarImage
+            className="object-cover"
+            src={user?.profile}
+            alt={user?.fullname}
+          />
           <AvatarFallback className="text-black rounded-full">
-            CN
+            {getInitials(user?.fullname)}
           </AvatarFallback>
         </Avatar>
         <p>{user?.fullname}</p>

@@ -12,17 +12,47 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { useMutation, useQueryClient } from "react-query";
-import { postData } from "@/api/postData"; // assuming you have a postData function for making API calls
+import { postData } from "@/api/postData"; // Assuming you have a postData function for making API calls
 import { toast } from "sonner";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"; // Import Zod resolver for react-hook-form
+
+// Define your Zod schema for validation
+const schema = z.object({
+  picture: z
+    .any()
+    .refine((files) => files?.[0]?.size <= 2 * 1024 * 1024, {
+      message: "Picture size should not be greater than 2MB",
+    })
+    .refine((files) => files.length > 0, "A picture is required"),
+  description: z.string().min(1, "Description is required"),
+  hashTags: z
+    .string()
+    .min(1, " A  Hash tags is required")
+    .max(60, "Maximum limit for hashtags is 60 characters") // Maximum limit for the entire string
+    .refine((value) => {
+      const tags = value.split(",").map((tag) => tag.trim());
+      return tags.length <= 3; // Ensure no more than 3 tags
+    }, "You can only provide a maximum of 3 tags.")
+    .refine((value) => {
+      const tags = value.split(",").map((tag) => tag.trim());
+      return tags.every((tag) => tag.length <= 20); // Ensure each tag is less than or equal to 20 characters
+    }, "Each hashtag must be 20 characters or less.")
+    .refine((value) => {
+      const regex = /^[\w\s]+(,[\w\s]+)*$/; // Regex pattern for comma-separated hashtags
+      return regex.test(value); // Test against the regex
+    }, "Hashtags should be comma-separated"),
+});
 
 const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: {
-      picture: "",
-      description: "",
-      hashTags: "",
-    },
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema), // Integrate Zod schema here
   });
 
   // Mutation to post the data
@@ -40,13 +70,6 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
 
   const onSubmit = async (data) => {
     const { picture, description, hashTags } = data;
-    if (!/^[\w\s]+(,[\w\s]+)*$/.test(hashTags)) {
-      // Show an error if the format is wrong
-      toast.error(
-        "Hashtags should be comma-separated, e.g., art, painting, oil painting."
-      );
-      return;
-    }
 
     // Prepare the form data to send
     const formData = new FormData();
@@ -55,10 +78,12 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
     formData.append("hashTags", hashTags.split(",")); // Assuming hashTags are comma-separated
     await createPostMutation.mutateAsync(formData);
   };
+
   const { isLoading } = createPostMutation;
+
   return (
     <Dialog open={openPostPicture} onOpenChange={setOpenPostPicture}>
-      <DialogContent className="sm:max-w-[600px] flex flex-col rounded-md text-white border-none  h-[70%]  bg-black/80  ">
+      <DialogContent className="sm:max-w-[600px] flex flex-col rounded-md text-white border-none  bg-black/80">
         <DialogHeader>
           <DialogTitle>Create a Post</DialogTitle>
           <DialogDescription>
@@ -68,43 +93,63 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
         <form
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          className="flex flex-1 flex-col space-y-3"
+          className="flex flex-col flex-1 space-y-3"
         >
           <div className="flex flex-col space-y-2">
-            <label className="font-semibold italic" htmlFor="picture">
+            <label className="italic font-semibold" htmlFor="picture">
               Select Picture from device
             </label>
             <Input
-              className="text-white bg-transparent cursor-pointer z-10 border border-yellow-500"
+              id="picture"
+              name="picture"
+              className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer"
               type="file"
-              {...register("picture", { required: true })}
+              {...register("picture")}
             />
+            {errors.picture && (
+              <p className="text-sm font-semibold text-red-500 sm:font-normal sm:text-sm ">
+                {errors.picture.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col space-y-2">
-            <label className="font-semibold italic" htmlFor="description">
+            <label className="italic font-semibold" htmlFor="description">
               Picture Description
             </label>
             <Textarea
+              id="description"
+              name="description"
               rows={6}
               placeholder="Describe your art"
               className="bg-transparent border border-yellow-500 placeholder:text-white"
-              {...register("description", { required: true })}
+              {...register("description")}
             />
+            {errors.description && (
+              <p className="text-sm font-semibold text-red-500 sm:font-normal sm:text-sm ">
+                {errors.description.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col space-y-2">
-            <label className="font-semibold italic" htmlFor="hashTags">
+            <label className="italic font-semibold" htmlFor="hashTags">
               Type your Hash Tags
             </label>
             <Input
+              id="hashTags"
+              name="hashTags"
               placeholder="max-limit = 3 example: art,painting,oil painting"
-              className="text-white placeholder:text-slate-600 bg-transparent  z-10 border border-yellow-500"
+              className="z-10 text-white bg-transparent border border-yellow-500 placeholder:text-slate-600"
               type="text"
-              {...register("hashTags", { required: true })}
+              {...register("hashTags")}
             />
+            {errors.hashTags && (
+              <p className="text-sm font-semibold text-red-500 sm:font-normal sm:text-sm ">
+                {errors.hashTags.message}
+              </p>
+            )}
           </div>
-          {/* display hash tags here ...... */}
           <Button
-            className="bg-white/90 text-yellow-500 hover:bg-transparent hover:text-white"
+            className="text-yellow-500 bg-white/90 hover:bg-transparent hover:text-white"
             type="submit"
             disabled={isLoading}
           >

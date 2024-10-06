@@ -7,9 +7,15 @@ import { useQuery } from "react-query";
 import PostSkeleton from "@/skeleton/PostSkeleton";
 const NewsFeed = () => {
   const [openPostPicture, setOpenPostPicture] = useState(false);
-  const { data: posts, isLoading: postsLoading } = useQuery("posts", () =>
-    fetchData("post")
+  const { data: posts, isLoading: postsLoading } = useQuery(
+    "posts",
+    () => fetchData("post"),
+    {
+      refetchOnMount: false,
+      staleTime: 500000,
+    }
   );
+
   return (
     <>
       <div className="flex flex-col flex-1 px-4 py-4 sm:px-10 ">
@@ -22,13 +28,21 @@ const NewsFeed = () => {
           </Button>
         </div>
         {/* display post */}
-        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 sm:gap-4 justify-items-center ">
-          {postsLoading
-            ? Array.from({ length: 6 }).map((_, index) => (
-                <PostSkeleton key={index} />
-              ))
-            : posts?.map((post) => <Post key={post._id} post={post} />)}
-        </div>
+        {posts?.length === 0 ? (
+          <div className="flex items-center justify-center flex-1">
+            <p className="text-2xl italic font-semibold md:text-4xl ">
+              Be the first one to add a post
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 sm:gap-4 justify-items-center ">
+            {postsLoading
+              ? Array.from({ length: 6 }).map((_, index) => (
+                  <PostSkeleton key={index} />
+                ))
+              : posts?.map((post) => <Post key={post._id} post={post} />)}
+          </div>
+        )}
       </div>
       {/* child components */}
       <PostPictureDialog
