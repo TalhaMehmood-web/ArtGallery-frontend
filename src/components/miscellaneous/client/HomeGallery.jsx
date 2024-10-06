@@ -12,11 +12,20 @@ const HomeGallery = () => {
     () =>
       fetchData(
         `admin/pictures?category=${selectedCategory}&type=auction` // Fetch pictures by category and type
-      )
+      ),
+    {
+      staleTime: 500000,
+      refetchOnMount: false,
+    }
   );
 
-  const { data: categories } = useQuery("categories", () =>
-    fetchData("admin/category")
+  const { data: categories } = useQuery(
+    "categories",
+    () => fetchData("admin/category"),
+    {
+      staleTime: 500000,
+      refetchOnMount: false,
+    }
   );
   const handleCategoryChange = (categoryId) => {
     setSelectedCategory(categoryId);
@@ -70,7 +79,7 @@ const HomeGallery = () => {
               import.meta.env.MODE === "production"
                 ? import.meta.env.VITE_PRODUCTION_API_URL
                 : import.meta.env.VITE_DEV_API_URL
-            }admin/pictures/proxy/${picture._id}`}
+            }admin/pictures/proxy/${picture?._id}`}
             alt={picture.title}
             className=" w-full h-full  object-cover rounded-md aspect-square border-[6px] p-2  border-black "
           />

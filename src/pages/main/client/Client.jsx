@@ -11,6 +11,7 @@ const Client = () => {
       <div
         style={{
           height: "calc(100vh - 5rem )",
+          scrollBehavior: "smooth",
         }}
         className="relative flex flex-grow max-h-screen overflow-y-auto scroll-smooth "
       >
