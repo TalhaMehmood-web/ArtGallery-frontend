@@ -27,7 +27,7 @@ const CategoryCombobox = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <div className="flex items-center px-2 rounded-md border border-yellow-500">
+        <div className="flex items-center px-2 border border-yellow-500 rounded-md">
           <Button
             variant="outline"
             role="combobox"
@@ -39,7 +39,7 @@ const CategoryCombobox = ({
                   .name
               : "Select Category..."}
           </Button>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50 cursor-pointer text-yellow-500" />
+          <ChevronsUpDown className="w-4 h-4 ml-2 text-yellow-500 opacity-50 cursor-pointer shrink-0" />
         </div>
       </PopoverTrigger>
       <PopoverContent className=" w-[200px] p-0">
