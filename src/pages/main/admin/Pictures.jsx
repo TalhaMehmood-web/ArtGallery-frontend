@@ -23,8 +23,13 @@ const Pictures = () => {
   const itemsPerPage = 6; // Set items per page (6 in this case)
 
   // Fetch categories
-  const { data: categories, isLoading } = useQuery("categories", () =>
-    fetchData("admin/category")
+  const { data: categories, isLoading } = useQuery(
+    "categories",
+    () => fetchData("admin/category"),
+    {
+      refetchOnMount: false,
+      staleTime: Infinity,
+    }
   );
 
   // Fetch pictures with pagination
@@ -33,7 +38,11 @@ const Pictures = () => {
     () =>
       fetchData(
         `admin/pictures?category=${selectedCategory}&type=${selectedType}&page=${currentPage}&limit=${itemsPerPage}`
-      )
+      ),
+    {
+      refetchOnMount: false,
+      staleTime: Infinity,
+    }
   );
 
   // Handle category change
@@ -103,11 +112,7 @@ const Pictures = () => {
           : pictures?.data?.map((picture) => (
               <PictureUI
                 key={picture._id}
-                picURL={`${
-                  import.meta.env.MODE === "production"
-                    ? import.meta.env.VITE_PRODUCTION_API_URL
-                    : import.meta.env.VITE_DEV_API_URL
-                }admin/pictures/proxy/${picture._id}`}
+                picURL={picture?.picture}
                 picture={picture}
                 id={picture._id}
               />

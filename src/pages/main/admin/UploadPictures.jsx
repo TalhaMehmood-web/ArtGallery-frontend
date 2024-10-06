@@ -79,7 +79,7 @@ const UploadPictures = () => {
       },
       onSuccess: (data) => {
         if (data.status === 201) {
-          queryClient.invalidateQueries("pictures");
+          queryClient.invalidateQueries(["pictures", "all", "both"]);
           toast.success("Picture uploaded successfully");
 
           reset();
@@ -123,7 +123,7 @@ const UploadPictures = () => {
             categories for diversification in your art.
           </p>
         </div>
-        <div className="flex flex-col flex-1 justify-around">
+        <div className="flex flex-col justify-around flex-1">
           {/* Title */}
           <div className="grid w-full grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-4">
             <div className="flex flex-col space-y-2">

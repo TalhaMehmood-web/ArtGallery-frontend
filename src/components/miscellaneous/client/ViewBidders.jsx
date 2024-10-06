@@ -15,6 +15,7 @@ const ViewBidders = ({ openSheet, setOpenSheet, auctionId, picture }) => {
   const { data: bidders } = useQuery(["bidders", auctionId], () =>
     fetchData(`auction/bidders/${auctionId}`)
   );
+
   return (
     <Sheet open={openSheet} onOpenChange={setOpenSheet}>
       <SheetContent
@@ -32,19 +33,19 @@ const ViewBidders = ({ openSheet, setOpenSheet, auctionId, picture }) => {
             Make changes to your profile here. Click save when you are done.
           </SheetDescription>
         </SheetHeader>
-        <div className="flex w-full max-h-full   ">
-          <div className="flex flex-col  mt-4 p-2 space-y-3  ">
-            <div className="border border-yellow-500 rounded-md p-2 ">
+        <div className="flex w-full max-h-full ">
+          <div className="flex flex-col p-2 mt-4 space-y-3 ">
+            <div className="p-2 border border-yellow-500 rounded-md ">
               <img
                 src={picture}
                 alt="picture"
-                className="rounded-md object-cover   aspect-square "
+                className="object-cover rounded-md aspect-square "
               />
             </div>
             {/* highest bidder */}
             <BidItem bidItem={bidders?.highestBid} isHighestBidder={true} />
             {/* other bidders */}
-            <div className="flex flex-col space-y-3 border-t border-slate-800 pt-3">
+            <div className="flex flex-col space-y-3 border-slate-800">
               {bidders?.allBids?.map((bid) => (
                 <BidItem bidItem={bid} isHighestBidder={false} key={bid?._id} />
               ))}

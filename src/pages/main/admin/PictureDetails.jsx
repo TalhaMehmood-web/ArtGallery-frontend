@@ -12,23 +12,19 @@ const PictureDetails = () => {
   return (
     <>
       <div className="flex-1 p-4 bg-white sm:p-6 lg:p-8">
-        <div className="max-w-6xl  mx-auto overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
+        <div className="max-w-6xl mx-auto overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
           {/* Adjusting the layout to use flex */}
-          <div className="flex  md:flex-row flex-col">
+          <div className="flex flex-col md:flex-row">
             {/* Image Section */}
-            <div className="md:w-1/2 w-full ">
+            <div className="w-full md:w-1/2 ">
               <img
-                src={`${
-                  import.meta.env.MODE === "production"
-                    ? import.meta.env.VITE_PRODUCTION_API_URL
-                    : import.meta.env.VITE_DEV_API_URL
-                }admin/pictures/proxy/${selectedPicture?._id}`}
+                src={selectedPicture?.picture}
                 alt={selectedPicture?.title}
                 className="object-cover object-center w-full h-full rounded-md aspect-square"
               />
             </div>
             {/* Text (Title & Description) Section */}
-            <div className="flex flex-col justify-around w-full md:w-1/2 p-4">
+            <div className="flex flex-col justify-around w-full p-4 md:w-1/2">
               <h1 className="mb-2 text-3xl font-bold text-gray-900">
                 {selectedPicture?.title}
               </h1>
@@ -80,7 +76,7 @@ const PictureDetails = () => {
                 <h2 className="mb-2 text-lg font-semibold text-gray-900">
                   Type
                 </h2>
-                <p className="text-gray-600 text-sm italic font-extrabold">
+                <p className="text-sm italic font-extrabold text-gray-600">
                   {selectedPicture?.type.toUpperCase()}
                 </p>
               </div>

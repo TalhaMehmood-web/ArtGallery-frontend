@@ -5,7 +5,6 @@
   "type": "module",
   "homepage": "https://artgallery-frontend-production.up.railway.app",
   "scripts": {
-    "start": "npx http-server ./dist",
     "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",

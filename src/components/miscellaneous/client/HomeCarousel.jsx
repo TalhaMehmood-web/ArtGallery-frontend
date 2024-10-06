@@ -46,7 +46,7 @@ const HomeCarousel = () => {
 
   return (
     <div
-      className="w-full h-full relative overflow-hidden"
+      className="relative w-full h-full overflow-hidden"
       ref={carouselRef}
       aria-label="Art Gallery Carousel"
       role="region"
@@ -62,7 +62,7 @@ const HomeCarousel = () => {
         >
           <img
             src={artwork?.picture}
-            alt={artwork.title}
+            alt={artwork?.title}
             className="object-cover w-full h-full bg-center bg-no-repeat bg-cover aspect-square"
           />
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white bg-black bg-opacity-50">

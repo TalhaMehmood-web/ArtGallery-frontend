@@ -75,11 +75,7 @@ const HomeGallery = () => {
         {pictures?.data?.map((picture, index) => (
           <img
             key={picture._id + index}
-            src={`${
-              import.meta.env.MODE === "production"
-                ? import.meta.env.VITE_PRODUCTION_API_URL
-                : import.meta.env.VITE_DEV_API_URL
-            }admin/pictures/proxy/${picture?._id}`}
+            src={picture?.picture}
             alt={picture.title}
             className=" w-full h-full  object-cover rounded-md aspect-square border-[6px] p-2  border-black "
           />

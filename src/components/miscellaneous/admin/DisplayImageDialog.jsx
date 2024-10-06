@@ -22,11 +22,7 @@ const DisplayImageDialog = ({ displayImage, setDisplayImage, children }) => {
         </DialogHeader>
 
         <img
-          src={`${
-            import.meta.env.MODE === "production"
-              ? import.meta.env.VITE_PRODUCTION_API_URL
-              : import.meta.env.VITE_DEV_API_URL
-          }admin/pictures/proxy/${selectedPicture?._id}`}
+          src={selectedPicture?.picture}
           alt="picture"
           className="object-cover w-full max-h-full p-4 m-4 border-4 border-yellow-500 rounded-md aspect-square "
         />
