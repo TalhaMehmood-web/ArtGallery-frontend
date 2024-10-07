@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState, useRef } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import getInitials from "@/utils/getInitials";
 
 const SingleComment = ({ comment }) => {
   const [timeAgo, setTimeAgo] = useState("");
@@ -33,6 +34,9 @@ const SingleComment = ({ comment }) => {
           src={comment?.commentedBy?.profile}
           alt={comment?.commentedBy?.fullname}
         />
+        <AvatarFallback className="text-black rounded-full">
+          {getInitials(comment?.commentedBy?.fullname)}
+        </AvatarFallback>
       </Avatar>
       <div className="flex flex-col space-y-4">
         <div>
