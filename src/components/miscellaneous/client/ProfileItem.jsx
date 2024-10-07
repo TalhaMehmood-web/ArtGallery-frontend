@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 const ProfileItem = ({ header, content }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-1 p-1 text-white border border-green-600 rounded-md bg-green-600/50 ">

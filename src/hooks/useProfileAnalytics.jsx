@@ -10,7 +10,8 @@ const useProfileAnalytics = () => {
     ["profile-data", user?._id],
     () => fetchData("user/data"),
     {
-      enabled: !profileData,
+      staleTime: 50000,
+      refetchOnMount: false,
     }
   );
 
