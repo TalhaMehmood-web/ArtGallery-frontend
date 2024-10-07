@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { fetchData } from "./api/fetchData";
 import { useGlobalContext } from "./context/UserContext";
 import Loading from "./components/miscellaneous/loading/Loading";
+import ProfileAnalytics from "./pages/main/client/ProfileAnalytics";
 const UploadPictures = React.lazy(() =>
   import("./pages/main/admin/UploadPictures")
 );
@@ -49,6 +50,7 @@ function App() {
     {
       enabled: !user,
       refetchOnMount: false,
+      staleTime: Infinity,
     }
   );
   useEffect(() => {
@@ -127,9 +129,7 @@ function App() {
             path="about"
             element={
               <PrivateRoute>
-                <Suspense
-                  fallback={() => <div className="text-black">loading....</div>}
-                >
+                <Suspense fallback={<Loading />}>
                   <About />
                 </Suspense>
               </PrivateRoute>
@@ -187,6 +187,16 @@ function App() {
             }
           />
         </Route>
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Suspense fallback={<Loading />}>
+                <ProfileAnalytics />
+              </Suspense>
+            </PrivateRoute>
+          }
+        />
       </Routes>
       <Toaster />
     </>

@@ -72,7 +72,7 @@ const AddComment = ({ postId, className = "" }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <Input
-        autofocus={false}
+        autoFocus={false}
         className={className}
         type="text"
         placeholder="Add a comment"

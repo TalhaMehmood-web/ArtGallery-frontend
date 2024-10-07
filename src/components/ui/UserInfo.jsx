@@ -9,13 +9,15 @@ import { useGlobalContext } from "@/context/UserContext";
 import useLogout from "@/hooks/useLogout";
 import { FaEdit } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-
+import { IoMdAnalytics } from "react-icons/io";
 import EditProfile from "../miscellaneous/auth/EditProfile";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import getInitials from "@/utils/getInitials";
 import Loading from "../miscellaneous/loading/Loading";
+import { useNavigate } from "react-router-dom";
 const UserInfo = () => {
+  const navigate = useNavigate();
   const { user } = useGlobalContext();
   const { handleLogout, isLoading } = useLogout();
   const [openProfileDialog, setOpenProfileDialog] = useState(false);
@@ -43,7 +45,9 @@ const UserInfo = () => {
 
       <Sheet open={userSheet} onOpenChange={setUserSheet}>
         <SheetContent
-          className={"bg-black flex text-white border-none flex-col "}
+          className={
+            "bg-black flex text-white border-none flex-col overflow-auto "
+          }
         >
           <SheetHeader>
             <SheetTitle className="text-white">Your Profile</SheetTitle>
@@ -69,6 +73,20 @@ const UserInfo = () => {
             {/* analytics to be added here */}
 
             <div className="flex flex-col w-full gap-4">
+              {!user?.isAdmin && (
+                <div
+                  onClick={() => {
+                    navigate("/profile");
+                    setUserSheet(false);
+                  }}
+                  className="flex items-center w-full p-3 transition-all duration-300 border-yellow-600 rounded-md cursor-pointer hover:bg-yellow-800/40 gap-x-3 bg-yellow-800/60 "
+                >
+                  <IoMdAnalytics size={30} className="text-yellow-500" />
+                  <p className="text-xl italic font-semibold ">
+                    Profile Analytics
+                  </p>
+                </div>
+              )}
               <div
                 onClick={() => setOpenProfileDialog(true)}
                 className="flex items-center w-full p-3 transition-all duration-300 border-blue-600 rounded-md cursor-pointer hover:bg-blue-800/40 gap-x-3 bg-blue-800/60 "

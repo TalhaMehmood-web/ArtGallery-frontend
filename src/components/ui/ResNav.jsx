@@ -7,7 +7,6 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { useLocation, useNavigate } from "react-router-dom";
-import LogoutButton from "../miscellaneous/auth/LogoutButton";
 
 const ResNav = ({ openSheet, setOpenSheet, navLinks, height }) => {
   const navigate = useNavigate();
@@ -44,7 +43,6 @@ const ResNav = ({ openSheet, setOpenSheet, navLinks, height }) => {
               {item.title}
             </p>
           ))}
-          <LogoutButton logoutOutText={true} />
         </div>
       </SheetContent>
     </Sheet>
