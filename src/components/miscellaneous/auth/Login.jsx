@@ -52,7 +52,7 @@ const Login = () => {
       });
     },
     onError: (error) => {
-      if (error?.response.data.message) {
+      if (error?.response?.data?.message) {
         toast.error("Login Error", {
           description: error?.response?.data?.message.toUpperCase(),
           duration: 2000,

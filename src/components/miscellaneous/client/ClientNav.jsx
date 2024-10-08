@@ -53,7 +53,7 @@ const ClientNav = () => {
           navLinks={clientNavLinks}
           openSheet={openSheet}
           setOpenSheet={setOpenSheet}
-          height={"  h-[70%] sm:h-[60%]"}
+          height={"  h-[70%] sm:h-[60%] "}
         />
       </div>
     </>

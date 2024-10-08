@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import useTogglePostLikes from "@/hooks/useTogglePostLikes";
 import { useGlobalContext } from "@/context/UserContext";
+import { toast } from "sonner";
 const Post = ({ post }) => {
   const { user } = useGlobalContext();
   const [openCommentDialog, setOpenCommentDialog] = useState(false);
@@ -39,7 +40,19 @@ const Post = ({ post }) => {
       keepPreviousData: true,
     }
   );
+  const copyToClipboard = async () => {
+    if (!navigator.clipboard) {
+      toast.error("Clipboard API not supported");
+      return;
+    }
 
+    try {
+      await navigator.clipboard.writeText(post.picture); // Copy the image URL
+      toast.success("Post picture copied to clipboard!"); // Show toast notification
+    } catch (error) {
+      toast.error("Failed to copy to clipboard. Please try again.");
+    }
+  };
   return (
     <>
       <div className="flex flex-col w-full p-4 space-y-3 rounded-md shadow-xl shadow-black/20 ">
@@ -107,6 +120,7 @@ const Post = ({ post }) => {
             onClick={() => setOpenCommentDialog(true)}
           />
           <IoIosShareAlt
+            onClick={copyToClipboard}
             size={25}
             className="transition-all duration-300 cursor-pointer hover:text-yellow-500"
           />

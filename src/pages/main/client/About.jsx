@@ -1,90 +1,89 @@
+import { FaPhone, FaEnvelope, FaUser } from "react-icons/fa";
+import about from "@/assets/about.jpg";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import { IoPersonSharp } from "react-icons/io5";
-import { MdEmail } from "react-icons/md";
-import { FaPhoneAlt } from "react-icons/fa";
-import about from "@/assets/about.jpg"; // Import the image directly
-
 const About = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="relative flex flex-col  h-[130vh] sm:h-[110vh] md:h-[100vh] lg:h-full lg:flex-row text-white w-full ">
-      {/* Image with onLoad to handle loading state */}
-      <div
-        className="absolute inset-0   flex h-[130vh] sm:h-[110vh] md:h-[100vh] lg:h-full bg-cover bg-center brightness-50"
-        style={{
-          backgroundImage: `url(${about})`,
-        }}
-      ></div>
+    <div className="relative flex-1 flex-grow min-h-full ">
+      <img
+        src={about}
+        className="absolute top-0 w-full h-full brightness-75 "
+        alt="about"
+      />
 
-      {/* Content Wrapper */}
-      <div className="relative z-10 flex flex-col lg:flex-row flex-1 justify-between gap-6 p-2 sm:p-6 lg:p-10 text-white w-full">
-        {/* Left Side (Text Section) */}
-        <div className="flex flex-col justify-center space-y-6 w-full lg:w-1/2">
-          <p className="hidden lg:block text-5xl font-extrabold border-l-8 border-yellow-500 pl-4">
-            About Our <br /> Art & <br /> Social Platform
-          </p>
-          <p className="block lg:hidden text-3xl sm:text-5xl font-extrabold border-l-8 border-yellow-500 pl-4">
-            About Our Art & Social Platform
-          </p>
-          <p className="text-sm italic md:text-base lg:font-semibold lg:text-lg text-slate-300">
+      <div className="absolute inset-0 bg-black bg-opacity-70"></div>
+      <div className="container relative z-10 min-h-full px-4 py-16 mx-auto text-white">
+        <h1
+          className="mb-8 text-4xl font-bold text-center text-yellow-400 md:text-5xl"
+          aria-label="Page Title"
+        >
+          About Our Art & Social Platform
+        </h1>
+
+        <div className="p-6 mb-12 bg-white rounded-lg shadow-lg bg-opacity-10 ">
+          <p
+            className="mb-6 text-lg leading-relaxed"
+            aria-label="Page Description"
+          >
             Welcome to Handmade Haven, your ultimate destination for artistic
             expression! Here, creativity flourishes as artists and art
             enthusiasts come together to celebrate their passion. Our platform
             allows users to share their unique creations, connect with fellow
             creatives, and dive into inspiring discussions about all things art.
-            <br />
             Each month, we host thrilling art auctions where talented artists
             showcase their masterpieces, and art lovers have the chance to bid
             on stunning pieces. The highest bidder walks away with a unique work
-            of art, making each auction an exhilarating experience.
-            <br />
-            Join us at Handmade Haven, where every stroke tells a story, and
-            creativity knows no limits!
+            of art, making each auction an exhilarating experience. Join us at
+            Handmade Haven, where every stroke tells a story, and creativity
+            knows no limits!
           </p>
-          <Button
-            onClick={() => {
-              navigate("/client/gallery");
-            }}
-            className="block bg-yellow-500 text-white w-fit hover:bg-transparent hover:text-yellow-500"
-          >
-            View Our Work
-          </Button>
+
+          <div className="flex items-start text-center ">
+            <Button className="text-white transition-all duration-300 bg-yellow-500 hover:bg-white hover:text-yellow-500 ">
+              View Our Work
+            </Button>
+          </div>
         </div>
 
-        {/* Right Side (Info Section) */}
-        <div className="flex h-min flex-col flex-1 flex-grow  md:h-auto md:flex-row lg:flex-col justify-around md:justify-between gap-6 lg:p-10 lg:border lg:border-black lg:rounded lg:shadow lg:shadow-black w-full lg:w-1/2 bg-opacity-60">
-          {/* What We Do Section */}
-          <div className="flex flex-col space-y-6">
-            <p className="text-4xl lg:text-5xl font-bold text-yellow-500">
+        <div className="grid gap-8 mb-12 md:grid-cols-2">
+          <div className="p-6 transition-transform duration-300 transform bg-white rounded-lg shadow-lg bg-opacity-10 backdrop-blur-sm hover:scale-105">
+            <h2 className="mb-4 text-2xl font-semibold text-yellow-400">
               What We Do
-            </p>
-            <div className=" text-sm sm:text-lg font-semibold xl:text-2xl">
-              Host Art Auction
-            </div>
-            <div className=" text-sm sm:text-lg font-semibold xl:text-2xl">
-              Make Art on Order
-            </div>
-            <div className=" text-sm sm:text-lg font-semibold xl:text-2xl">
-              Help artists to reach art lovers with their work
-            </div>
+            </h2>
+            <ul className="space-y-2 list-disc list-inside">
+              <li>Host Art Auctions</li>
+              <li>Make Art on Order</li>
+              <li>Help artists to reach art lovers with their work</li>
+            </ul>
           </div>
 
-          {/* Contact Information Section */}
-          <div className="flex flex-col space-y-4">
-            <div className="flex items-center gap-2">
-              <IoPersonSharp />
-              <p className="text-yellow-500">Tehryym Sheraz</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <MdEmail />
-              <p className="text-yellow-500">talhamehmood991@gmail.com</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaPhoneAlt />
-              <p className="text-yellow-500">+(92) 3176747465</p>
-            </div>
+          <div className="p-6 transition-transform duration-300 transform bg-white rounded-lg shadow-lg bg-opacity-10 backdrop-blur-sm hover:scale-105">
+            <h2 className="mb-4 text-2xl font-semibold text-yellow-400">
+              Contact Information
+            </h2>
+            <ul className="space-y-2">
+              <li className="flex items-center">
+                <FaUser className="mr-2 text-yellow-400" />
+                <span>Tehryym Sheraz Talhamehmood</span>
+              </li>
+              <li className="flex items-center">
+                <FaEnvelope className="mr-2 text-yellow-400" />
+                <a
+                  href="mailto:talhamehmood991@gmail.com"
+                  className="transition-colors duration-300 hover:text-yellow-400"
+                >
+                  talhamehmood991@gmail.com
+                </a>
+              </li>
+              <li className="flex items-center">
+                <FaPhone className="mr-2 text-yellow-400" />
+                <a
+                  href="tel:+923176747465"
+                  className="transition-colors duration-300 hover:text-yellow-400"
+                >
+                  +(92) 3176747465
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

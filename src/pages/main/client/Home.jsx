@@ -36,12 +36,12 @@ const Home = () => {
   return (
     <>
       <div
-        className={`flex relative flex-col flex-1 ${
+        className={`flex relative flex-col flex-1   ${
           (isPicturesLoading || galleryImagesLoading) &&
           "overflow-hidden pointer-events-none "
         } `}
       >
-        <div className=" w-full min-h-[85vh] ">
+        <div className=" w-full h-[85vh] ">
           <HomeCarousel homePagePictures={homePagePictures} />
         </div>
         <HomeGallery
