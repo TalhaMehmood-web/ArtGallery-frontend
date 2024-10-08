@@ -12,12 +12,8 @@ import {
 import { IoPersonSharp } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
-import { useState } from "react";
-import Loading from "@/components/miscellaneous/loading/Loading";
 
 const Portfolio = () => {
-  const [imageLoading, setImageLoading] = useState(true);
-
   return (
     <div className="relative flex flex-col-reverse flex-1 flex-grow w-full min-h-full text-white bg-black lg:h-full lg:overflow-hidden lg:flex-row">
       {/* Text Section */}
@@ -94,13 +90,7 @@ const Portfolio = () => {
           className="object-cover w-full md:h-1/2 lg:h-4/5"
           src={portfolio}
           alt="portfolio"
-          onLoad={() => setImageLoading(false)}
         />
-        {imageLoading && (
-          <div className="absolute top-0 right-0 w-full h-full bg-black">
-            <Loading />
-          </div>
-        )}
       </div>
     </div>
   );
