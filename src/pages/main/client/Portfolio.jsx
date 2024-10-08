@@ -13,12 +13,13 @@ import { IoPersonSharp } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useState } from "react";
+import Loading from "@/components/miscellaneous/loading/Loading";
 
 const Portfolio = () => {
   const [imageLoading, setImageLoading] = useState(true);
 
   return (
-    <div className="flex flex-col-reverse flex-1 flex-grow w-full min-h-full text-white bg-black lg:h-full lg:overflow-hidden lg:flex-row">
+    <div className="relative flex flex-col-reverse flex-1 flex-grow w-full min-h-full text-white bg-black lg:h-full lg:overflow-hidden lg:flex-row">
       {/* Text Section */}
       <div className="flex flex-col justify-center flex-1 p-6 space-y-6 lg:justify-around">
         <div className="text-2xl font-semibold sm:text-3xl text-slate-300">
@@ -96,7 +97,9 @@ const Portfolio = () => {
           onLoad={() => setImageLoading(false)}
         />
         {imageLoading && (
-          <div className="absolute w-full h-full bg-black"></div>
+          <div className="absolute top-0 right-0 w-full h-full bg-black">
+            <Loading />
+          </div>
         )}
       </div>
     </div>
