@@ -1,7 +1,9 @@
 import { FaPhone, FaEnvelope, FaUser } from "react-icons/fa";
 import about from "@/assets/about.jpg";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 const About = () => {
+  const navigate = useNavigate();
   return (
     <div className="relative flex-1 flex-grow min-h-full ">
       <img
@@ -38,7 +40,10 @@ const About = () => {
           </p>
 
           <div className="flex items-start text-center ">
-            <Button className="text-white transition-all duration-300 bg-yellow-500 hover:bg-white hover:text-yellow-500 ">
+            <Button
+              onClick={() => navigate("/client/gallery")}
+              className="text-white transition-all duration-300 bg-yellow-500 hover:bg-white hover:text-yellow-500 "
+            >
               View Our Work
             </Button>
           </div>
