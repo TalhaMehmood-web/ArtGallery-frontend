@@ -91,9 +91,9 @@ const Portfolio = () => {
       </div>
 
       {/* Image Section */}
-      <div className="flex items-center justify-center flex-1 py-6">
+      <div className="flex items-center justify-center flex-1 py-4">
         <img
-          className="object-cover w-full md:h-1/2 lg:h-4/5"
+          className="object-contain w-full h-full aspect-square sm:h-1/3 lg:h-4/5"
           src={portfolio}
           alt="portfolio"
         />

@@ -1,8 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState } from "react";
-import { fetchData } from "@/api/fetchData";
-import { useQuery } from "react-query";
+import axiosInstance from "@/utils/AxiosConfig";
 import { useEffect } from "react";
 const GlobalContext = createContext();
 
@@ -15,28 +14,30 @@ const GlobalContextProvider = ({ children }) => {
     try {
       const storedUser = sessionStorage.getItem("user");
       return storedUser ? JSON.parse(storedUser) : null;
-    } catch (error) {
-      console.error("Error parsing sessionStorage user:", error);
+    } catch (_) {
       return null;
     }
   });
-  const logoutSession = JSON.parse(localStorage.getItem("loggedOut"));
-  const { data, isLoading: loadingUser } = useQuery(
-    "user",
-    () => fetchData("user"),
-    {
-      enabled: user === null && (!logoutSession?.isLoggedOut || true),
-    }
-  );
-  useEffect(() => {
-    if (data) {
-      setUser(data);
-      sessionStorage.setItem("user", JSON.stringify(data));
-    }
-  }, [data]);
   const [isWildCard, setIsWildCard] = useState(false);
 
   const [selectedPicture, setSelectedPicture] = useState(null);
+  const [loadingUser, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get("user"); // Adjust to your API endpoint
+        setUser(response.data);
+      } catch (error) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   return (
     <GlobalContext.Provider
       value={{

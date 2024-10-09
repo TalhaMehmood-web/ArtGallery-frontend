@@ -49,8 +49,8 @@ const AuthRoute = ({ children }) => {
   );
 };
 function App() {
-  const { LoadingUser } = useGlobalContext();
-  if (LoadingUser) {
+  const { loadingUser } = useGlobalContext();
+  if (loadingUser || false) {
     return <Loading />;
   }
   return (
