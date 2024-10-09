@@ -15,7 +15,7 @@ const FilterPictureType = ({ onChange }) => {
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Filter by Picture Type" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="z-50">
         <SelectGroup>
           <SelectLabel>Picture Type</SelectLabel>
           <SelectItem value="all">All Types</SelectItem>

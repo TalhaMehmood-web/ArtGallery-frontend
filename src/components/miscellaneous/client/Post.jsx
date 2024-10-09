@@ -45,9 +45,8 @@ const Post = ({ post }) => {
       toast.error("Clipboard API not supported");
       return;
     }
-
-    await navigator.clipboard.writeText(post.picture); // Copy the image URL
-    toast.success("Post picture copied to clipboard!"); // Show toast notification
+    await navigator.clipboard.writeText(post.picture);
+    toast.success("Post picture copied to clipboard!");
   };
   return (
     <>

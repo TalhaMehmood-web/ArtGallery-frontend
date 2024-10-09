@@ -98,9 +98,8 @@ const Pictures = () => {
             />
           </div>
           {/* Filter by picture type */}
-          <div className="z-50">
-            <FilterPictureType onChange={handleTypeChange} />
-          </div>
+
+          <FilterPictureType onChange={handleTypeChange} />
         </div>
       )}
       {/* Display pictures */}
