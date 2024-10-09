@@ -27,11 +27,16 @@ const UploadPictures = React.lazy(() =>
   import("./pages/main/admin/UploadPictures")
 );
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children, isAdmin }) => {
   const { user } = useGlobalContext();
   const isAuthenticated = !!user;
 
-  return isAuthenticated ? children : <Navigate to={"/"} />;
+  // Check if the user is authenticated and if isAdmin is required, check if the user is an admin
+  if (isAuthenticated && (!isAdmin || (isAdmin && user.isAdmin))) {
+    return children;
+  }
+
+  return <Navigate to="/" />;
 };
 
 const AuthRoute = ({ children }) => {
@@ -121,7 +126,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <PrivateRoute>
+            <PrivateRoute isAdmin>
               <Suspense fallback={<Loading />}>
                 <Admin />
               </Suspense>
