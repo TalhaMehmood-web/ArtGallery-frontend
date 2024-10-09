@@ -62,6 +62,7 @@ const Signup = () => {
       });
       setUser(data);
       sessionStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("loggedOut", JSON.stringify({ isLoggedOut: false }));
       if (data?.isAdmin) {
         navigate("/admin");
       } else {

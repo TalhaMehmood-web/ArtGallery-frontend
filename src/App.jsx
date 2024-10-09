@@ -49,6 +49,10 @@ const AuthRoute = ({ children }) => {
   );
 };
 function App() {
+  const { LoadingUser } = useGlobalContext();
+  if (LoadingUser) {
+    return <Loading />;
+  }
   return (
     <>
       <Routes>

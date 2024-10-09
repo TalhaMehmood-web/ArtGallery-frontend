@@ -9,6 +9,10 @@ const useLogout = () => {
   const logoutMutation = useMutation(() => postData("user/logout", {}), {
     onSuccess: ({ data }) => {
       if (data) {
+        localStorage.setItem(
+          "loggedOut",
+          JSON.stringify({ isLoggedOut: true })
+        );
         setUser(null);
         sessionStorage.removeItem("user");
         navigate("/");

@@ -1,7 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState } from "react";
-
+import { fetchData } from "@/api/fetchData";
+import { useQuery } from "react-query";
+import { useEffect } from "react";
 const GlobalContext = createContext();
 
 const useGlobalContext = () => {
@@ -18,7 +20,20 @@ const GlobalContextProvider = ({ children }) => {
       return null;
     }
   });
-
+  const logoutSession = JSON.parse(localStorage.getItem("loggedOut"));
+  const { data, isLoading: loadingUser } = useQuery(
+    "user",
+    () => fetchData("user"),
+    {
+      enabled: user === null && !logoutSession.isLoggedOut,
+    }
+  );
+  useEffect(() => {
+    if (data) {
+      setUser(data);
+      sessionStorage.setItem("user", JSON.stringify(data));
+    }
+  }, [data]);
   const [isWildCard, setIsWildCard] = useState(false);
 
   const [selectedPicture, setSelectedPicture] = useState(null);
@@ -29,7 +44,7 @@ const GlobalContextProvider = ({ children }) => {
         setUser,
         isWildCard,
         setIsWildCard,
-
+        loadingUser,
         selectedPicture,
         setSelectedPicture,
       }}
