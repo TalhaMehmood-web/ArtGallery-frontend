@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/sheet";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const ResNav = ({ openSheet, setOpenSheet, navLinks, height }) => {
+const ResNav = ({ openSheet, setOpenSheet, navLinks }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   return (
     <Sheet open={openSheet} onOpenChange={setOpenSheet}>
       <SheetContent
-        className={` ${height}  bg-black/90 text-white border-none `}
+        className={`  bg-black/90 text-white border-none `}
         side="top"
       >
         <SheetHeader className="text-white">

@@ -30,6 +30,7 @@ const DeletePicture = ({ deleteDialog, setDeleteDialog, children }) => {
       ),
     {
       onSuccess: ({ data }) => {
+        console.log(data);
         if (data) {
           toast.success("Picture Deleted Successfully", {
             position: "top-right",
@@ -53,7 +54,7 @@ const DeletePicture = ({ deleteDialog, setDeleteDialog, children }) => {
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent className={"bg-black text-white border-red-500"}>
         <AlertDialogHeader>
-          <AlertDialogTitle className=" text-center sm:text-left text-red-500 ">
+          <AlertDialogTitle className="text-center text-red-500  sm:text-left">
             Are you absolutely sure?
           </AlertDialogTitle>
           <AlertDialogDescription>
@@ -64,13 +65,13 @@ const DeletePicture = ({ deleteDialog, setDeleteDialog, children }) => {
         </AlertDialogHeader>
         <AlertDialogFooter className={"w-full flex justify-between"}>
           <AlertDialogCancel
-            className="border-green-500 bg-green-600/70 text-white hover:bg-green-600  focus:bg-green-600 hover:text-white focus:text-white"
+            className="text-white border-green-500 bg-green-600/70 hover:bg-green-600 focus:bg-green-600 hover:text-white focus:text-white"
             onClick={() => setDeleteDialog(false)}
           >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
-            className="border-red-500 bg-red-600/70 text-white hover:bg-red-600  focus:bg-red-600 hover:text-white focus:text-white "
+            className="text-white border-red-500 bg-red-600/70 hover:bg-red-600 focus:bg-red-600 hover:text-white focus:text-white "
             onClick={handleDelete}
           >
             {isLoading ? "Deleting Picture" : "Delete"}

@@ -38,5 +38,4 @@ export const clientNavLinks = [
         title: "About Us",
         link: "/client/about",
     },
-
 ]

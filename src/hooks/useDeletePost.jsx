@@ -11,7 +11,6 @@ const useDeletePost = () => {
     {
       onSuccess: ({ data }) => {
         if (data) {
-          console.log(data);
           toast.success(data.message);
           queryClient.invalidateQueries(["profile-data", user?._id]);
         }

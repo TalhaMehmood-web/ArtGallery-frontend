@@ -71,8 +71,11 @@ const Categories = () => {
   const deleteCategoryMutation = useMutation(
     (id) => deleteData(`admin/category/${id}`),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries("categories");
+      onSuccess: ({ data }) => {
+        if (data) {
+          toast.success(data.message);
+          queryClient.invalidateQueries("categories");
+        }
       },
     }
   );
@@ -99,7 +102,7 @@ const Categories = () => {
           "pointer-events-none overflow-hidden"
         } max-w-full   mx-auto xl:mx-0   gap-4  xl:flex-row xl:justify-around xl:flex xl:flex-1 w-full px-4 py-4 relative `}
       >
-        <div className="p-6 mb-8 xl:flex-1 xl:h-fit bg-white rounded-lg shadow-md">
+        <div className="p-6 mb-8 bg-white rounded-lg shadow-md xl:flex-1 xl:h-fit">
           <h2 className="mb-4 text-2xl font-semibold text-gray-700">
             Add New Category
           </h2>
@@ -172,7 +175,7 @@ const Categories = () => {
           </form>
         </div>
 
-        <div className="p-6 xl:flex-1  bg-white  rounded-lg shadow-md">
+        <div className="p-6 bg-white rounded-lg shadow-md xl:flex-1">
           <h2 className="mb-4 text-2xl font-semibold text-gray-700">
             Categories
           </h2>
@@ -188,7 +191,7 @@ const Categories = () => {
                 style={{
                   maxHeight: "calc(100vh - 12rem)",
                 }}
-                className="  space-y-4 overflow-y-auto"
+                className="space-y-4 overflow-y-auto "
               >
                 {categories.map((category) => (
                   <motion.li
@@ -245,7 +248,7 @@ const Categories = () => {
         <div id="aria-live" className="sr-only" aria-live="polite"></div>
       </div>
       {addCategoryMutation?.isLoading && (
-        <div className="absolute top-0 right-0  w-full h-full">
+        <div className="absolute top-0 right-0 w-full h-full">
           <Loading />
         </div>
       )}

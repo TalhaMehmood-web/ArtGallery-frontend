@@ -155,7 +155,7 @@ const Orders = () => {
         <Input
           placeholder="Filter by name or email..."
           onChange={(event) => filterByEmailOrName(event.target.value)}
-          className="col-span-4 border border-yellow-500  md:max-w-full md:col-span-2"
+          className="col-span-4 border border-yellow-500 md:max-w-full md:col-span-2"
         />
         {/* button for sheet */}
 

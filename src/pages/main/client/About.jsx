@@ -1,9 +1,11 @@
 import { FaPhone, FaEnvelope, FaUser } from "react-icons/fa";
-import about from "@/assets/about.jpg";
+// import about from "@/assets/about.jpg";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 const About = () => {
   const navigate = useNavigate();
+  const about =
+    "https://res.cloudinary.com/codetogrow/image/upload/v1728463139/yum70x0dkkgha5i1f7ok.jpg";
   return (
     <div className="relative flex-1 flex-grow min-h-full ">
       <img
