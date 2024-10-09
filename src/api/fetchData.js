@@ -6,6 +6,7 @@ export const fetchData = async (endpoint) => {
     } catch (error) {
 
         console.log(error);
+        throw error
 
     }
 };

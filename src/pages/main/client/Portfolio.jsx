@@ -65,18 +65,24 @@ const Portfolio = () => {
                     <MdEmail size={20} />
                     <p className="text-xl font-semibold">Email</p>
                   </div>
-                  <p className="text-xl italic font-bold sm:text-2xl">
+                  <a
+                    href="mailto:talhamehmood991@gmail.com"
+                    className="transition-colors duration-300 hover:text-yellow-400"
+                  >
                     talhamehmood991@gmail.com
-                  </p>
+                  </a>
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="flex items-start space-x-2 text-yellow-500 ">
                     <FaPhoneAlt size={20} />
                     <p className="text-xl font-semibold">Phone No</p>
                   </div>
-                  <p className="text-xl italic font-bold sm:text-2xl">
-                    +92 3176747465
-                  </p>
+                  <a
+                    href="tel:+923176747465"
+                    className="transition-colors duration-300 hover:text-yellow-400"
+                  >
+                    +(92) 3176747465
+                  </a>
                 </div>
               </div>
             </div>

@@ -70,7 +70,7 @@ const About = () => {
             <ul className="space-y-2">
               <li className="flex items-center">
                 <FaUser className="mr-2 text-yellow-400" />
-                <span>Tehryym Sheraz Talhamehmood</span>
+                <span>Tehryym Sheraz </span>
               </li>
               <li className="flex items-center">
                 <FaEnvelope className="mr-2 text-yellow-400" />
