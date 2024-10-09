@@ -45,5 +45,5 @@
   background-color: #f1c95048;
 }
 .height {
-  height: calc(100vh - 5rem);
+  min-height: calc(100vh - 5rem);
 }

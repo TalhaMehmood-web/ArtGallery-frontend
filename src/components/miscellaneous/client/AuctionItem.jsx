@@ -12,15 +12,16 @@ const AuctionItem = ({ item }) => {
   const [imageLoading, setImageLoading] = useState(true);
   return (
     <>
-      <div className="flex flex-col items-start w-full p-2 space-y-4 border-b rounded-md lg:space-x-8 lg:flex-row">
-        <div className="flex w-full">
+      <div className="grid w-full grid-cols-1 gap-4 p-2 border-b rounded-md md:grid-cols-6 lg:grid-cols-5 ">
+        {/* Image section: Takes 2 columns on medium and larger screens */}
+        <div className="flex items-center col-span-1 md:col-span-3 lg:col-span-2 ">
           {imageLoading && (
             <div className="flex flex-1">
-              <Skeleton className={"w-full h-[500px] bg-slate-600"} />
+              <Skeleton className="w-full h-[500px] bg-slate-600" />
             </div>
           )}
           <img
-            className={`object-cover rounded-md sm:min-w-[450px] aspect-square ${
+            className={`object-cover rounded-md   aspect-square ${
               imageLoading ? "hidden" : "block"
             } `}
             src={item?.picture?.picture}
@@ -29,7 +30,8 @@ const AuctionItem = ({ item }) => {
           />
         </div>
 
-        <div className="flex flex-col h-full gap-4 lg:gap-0 lg:justify-around">
+        {/* Content section: Takes 3 columns on medium and larger screens */}
+        <div className="flex flex-col w-full h-full col-span-1 gap-4 md:col-span-3 md:justify-around">
           <div className="flex flex-col p-3 space-y-2 border rounded-md border-slate-400 ">
             <p className="text-3xl font-bold">{item?.picture.title}</p>
             <p className="text-xl italic text-pretty ">
@@ -43,7 +45,6 @@ const AuctionItem = ({ item }) => {
           </div>
 
           <div>
-            {/* Timer Component */}
             <AuctionTimer endDate={item.endDate} />
           </div>
 

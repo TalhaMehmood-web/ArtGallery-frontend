@@ -18,7 +18,7 @@ const NewsFeed = () => {
 
   return (
     <>
-      <div className="flex flex-col flex-1 px-4 py-4 sm:px-10 ">
+      <div className="flex flex-col flex-1 p-2 ">
         <div className="flex justify-end w-full my-2">
           <Button
             onClick={() => setOpenPostPicture(true)}
@@ -35,7 +35,7 @@ const NewsFeed = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 sm:gap-4 justify-items-center ">
+          <div className="container grid max-w-4xl grid-cols-1 gap-2 mx-auto justify-items-center ">
             {postsLoading
               ? Array.from({ length: 6 }).map((_, index) => (
                   <PostSkeleton key={index} />

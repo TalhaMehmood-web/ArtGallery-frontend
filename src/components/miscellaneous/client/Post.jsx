@@ -46,12 +46,8 @@ const Post = ({ post }) => {
       return;
     }
 
-    try {
-      await navigator.clipboard.writeText(post.picture); // Copy the image URL
-      toast.success("Post picture copied to clipboard!"); // Show toast notification
-    } catch (error) {
-      toast.error("Failed to copy to clipboard. Please try again.");
-    }
+    await navigator.clipboard.writeText(post.picture); // Copy the image URL
+    toast.success("Post picture copied to clipboard!"); // Show toast notification
   };
   return (
     <>
