@@ -25,7 +25,7 @@ const GlobalContextProvider = ({ children }) => {
     "user",
     () => fetchData("user"),
     {
-      enabled: user === null && !logoutSession.isLoggedOut,
+      enabled: user === null && (!logoutSession?.isLoggedOut || true),
     }
   );
   useEffect(() => {
