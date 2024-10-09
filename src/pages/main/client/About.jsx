@@ -10,7 +10,7 @@ const About = () => {
     <div className="relative flex-1 flex-grow min-h-full ">
       <img
         src={about}
-        className="absolute top-0 w-full h-full brightness-75 "
+        className="absolute top-0 object-cover w-full h-full sm:aspect-auto aspect-square brightness-75 "
         alt="about"
       />
 
