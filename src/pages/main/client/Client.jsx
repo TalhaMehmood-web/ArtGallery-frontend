@@ -3,13 +3,13 @@ import { Outlet } from "react-router-dom";
 
 const Client = () => {
   return (
-    <div className="flex flex-col w-full h-screen text-black">
+    <div className="flex flex-col w-full h-screen min-h-screen text-black">
       {/* Static Navbar */}
       <div className="h-[5rem]">
         <ClientNav />
       </div>
       {/* Scrollable Outlet */}
-      <div className="flex-grow overflow-y-auto">
+      <div className="flex flex-grow overflow-y-auto">
         <Outlet />
       </div>
     </div>

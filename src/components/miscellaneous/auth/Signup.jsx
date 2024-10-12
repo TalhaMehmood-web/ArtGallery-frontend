@@ -8,6 +8,7 @@ import { useGlobalContext } from "@/context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Loading from "../loading/Loading";
 
 // Zod schema for form validation
 const signupSchema = z
@@ -95,132 +96,145 @@ const Signup = () => {
   };
 
   return (
-    <form
-      noValidate
-      onSubmit={handleSubmit(onSubmit)}
-      className="p-4 text-white rounded-md shadow-xl shadow-black/10 bg-black/60 "
-    >
-      <div className="flex flex-col space-y-4">
-        <div className="flex flex-col px-10 py-1 mb-4 space-y-4 shadow-md bg-black/80 shadow-slate-500">
-          <p className="text-3xl font-bold ">Signup</p>
-          <p className="mb-5 font-semibold text-blue-300 cursor-pointer hover:underline">
-            Already have an account? Login
-          </p>
-        </div>
-        <div className="grid grid-cols-2 gap-2">
+    <>
+      <form
+        noValidate
+        onSubmit={handleSubmit(onSubmit)}
+        className="p-4 text-white rounded-md shadow-xl shadow-black/10 bg-black/60 "
+      >
+        <div className="flex flex-col space-y-4">
+          <div className="flex flex-col px-10 py-1 mb-4 space-y-4 shadow-md bg-black/80 shadow-slate-500">
+            <p className="text-3xl font-bold ">Signup</p>
+            <p className="mb-5 font-semibold text-blue-300 cursor-pointer hover:underline">
+              Already have an account? Login
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="flex flex-col space-y-1">
+              <label className="font-semibold" htmlFor="fullname">
+                Full Name
+              </label>
+              <Input
+                id="fullname"
+                name="fullname"
+                type="text"
+                className="text-white bg-transparent border border-yellow-500"
+                placeholder="John Doe"
+                {...register("fullname")}
+                autoComplete="name" // Add autoComplete
+              />
+              {errors.fullname && (
+                <p className="text-sm text-red-500">
+                  {errors.fullname.message}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col space-y-1">
+              <label className="font-semibold" htmlFor="username">
+                User Name
+              </label>
+              <Input
+                id="username"
+                name="username"
+                type="text"
+                className="text-white bg-transparent border border-yellow-500"
+                placeholder="john_doe"
+                {...register("username")}
+                autoComplete="username" // Add autoComplete
+              />
+              {errors.username && (
+                <p className="text-sm text-red-500">
+                  {errors.username.message}
+                </p>
+              )}
+            </div>
+          </div>
           <div className="flex flex-col space-y-1">
-            <label className="font-semibold" htmlFor="fullname">
-              Full Name
+            <label className="font-semibold" htmlFor="email">
+              Email
             </label>
             <Input
-              id="fullname"
-              name="fullname"
-              type="text"
+              id="email"
+              name="email"
+              type="email"
               className="text-white bg-transparent border border-yellow-500"
-              placeholder="John Doe"
-              {...register("fullname")}
-              autocomplete="name" // Add autocomplete
+              placeholder="example@gmail.com"
+              {...register("email")}
+              autoComplete="email" // Add autoComplete
             />
-            {errors.fullname && (
-              <p className="text-sm text-red-500">{errors.fullname.message}</p>
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email.message}</p>
             )}
           </div>
           <div className="flex flex-col space-y-1">
-            <label className="font-semibold" htmlFor="username">
-              User Name
+            <label className="font-semibold" htmlFor="profile">
+              Profile Picture
             </label>
             <Input
-              id="username"
-              name="username"
-              type="text"
-              className="text-white bg-transparent border border-yellow-500"
-              placeholder="john_doe"
-              {...register("username")}
-              autocomplete="username" // Add autocomplete
+              id="profile"
+              name="profile"
+              className="text-white bg-transparent border border-yellow-500 cursor-pointer"
+              type="file"
+              {...register("profile")}
+              // Profile picture doesn't need autoComplete
             />
-            {errors.username && (
-              <p className="text-sm text-red-500">{errors.username.message}</p>
+            {errors.profile && (
+              <p className="text-sm text-red-500">{errors.profile.message}</p>
             )}
           </div>
-        </div>
-        <div className="flex flex-col space-y-1">
-          <label className="font-semibold" htmlFor="email">
-            Email
-          </label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            className="text-white bg-transparent border border-yellow-500"
-            placeholder="example@gmail.com"
-            {...register("email")}
-            autocomplete="email" // Add autocomplete
-          />
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-        <div className="flex flex-col space-y-1">
-          <label className="font-semibold" htmlFor="profile">
-            Profile Picture
-          </label>
-          <Input
-            id="profile"
-            name="profile"
-            className="text-white bg-transparent border border-yellow-500 cursor-pointer"
-            type="file"
-            {...register("profile")}
-            // Profile picture doesn't need autocomplete
-          />
-          {errors.profile && (
-            <p className="text-sm text-red-500">{errors.profile.message}</p>
-          )}
-        </div>
-        <div className="grid grid-cols-2 gap-2">
-          <div className="flex flex-col space-y-1">
-            <label className="font-semibold" htmlFor="password">
-              Password
-            </label>
-            <Input
-              id="password"
-              name="password"
-              className="text-white bg-transparent border border-yellow-500"
-              placeholder="Your Password"
-              type="password"
-              {...register("password")}
-              autocomplete="new-password" // Add autocomplete
-            />
-            {errors.password && (
-              <p className="text-sm text-red-500">{errors.password.message}</p>
-            )}
-          </div>
-          <div className="flex flex-col space-y-1">
-            <label className="font-semibold" htmlFor="confirmPassword">
-              Confirm Password
-            </label>
-            <Input
-              id="confirmPassword"
-              name="confirmPassword"
-              className="text-white bg-transparent border border-yellow-500"
-              placeholder="Re-Type Password"
-              type="password"
-              {...register("confirmPassword")}
-              autocomplete="new-password" // Add autocomplete for new passwords
-            />
-            {errors.confirmPassword && (
-              <p className="text-sm text-red-500">
-                {errors.confirmPassword.message}
-              </p>
-            )}
+          <div className="grid grid-cols-2 gap-2">
+            <div className="flex flex-col space-y-1">
+              <label className="font-semibold" htmlFor="password">
+                Password
+              </label>
+              <Input
+                id="password"
+                name="password"
+                className="text-white bg-transparent border border-yellow-500"
+                placeholder="Your Password"
+                type="password"
+                {...register("password")}
+                autoComplete="new-password" // Add autoComplete
+              />
+              {errors.password && (
+                <p className="text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col space-y-1">
+              <label className="font-semibold" htmlFor="confirmPassword">
+                Confirm Password
+              </label>
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                className="text-white bg-transparent border border-yellow-500"
+                placeholder="Re-Type Password"
+                type="password"
+                {...register("confirmPassword")}
+                autoComplete="new-password" // Add autoComplete for new passwords
+              />
+              {errors.confirmPassword && (
+                <p className="text-sm text-red-500">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="mt-6">
-        <Button type="submit" className="w-full">
-          Sign up
-        </Button>
-      </div>
-    </form>
+        <div className="mt-6">
+          <Button type="submit" className="w-full">
+            {signupMutation.isLoading ? "Processing " : "Sign Up"}
+          </Button>
+        </div>
+      </form>
+      {signupMutation?.isLoading && (
+        <div className="absolute top-0 right-0 min-h-screen w-full">
+          <Loading />
+        </div>
+      )}
+    </>
   );
 };
 

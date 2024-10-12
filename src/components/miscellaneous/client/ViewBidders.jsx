@@ -12,8 +12,12 @@ import BidItem from "./BidItem";
 import { useGlobalContext } from "@/context/UserContext";
 const ViewBidders = ({ openSheet, setOpenSheet, auctionId, picture }) => {
   const { user } = useGlobalContext();
-  const { data: bidders } = useQuery(["bidders", auctionId], () =>
-    fetchData(`auction/bidders/${auctionId}`)
+  const { data: bidders } = useQuery(
+    ["bidders", auctionId],
+    () => fetchData(`auction/bidders/${auctionId}`),
+    {
+      refetchOnWindowFocus: false,
+    }
   );
 
   return (

@@ -251,11 +251,17 @@ const UploadPictures = () => {
                 <SelectContent className="text-white bg-black border border-yellow-500">
                   <SelectGroup>
                     <SelectLabel>Select Picture Category</SelectLabel>
-                    {categories?.map((category) => (
-                      <SelectItem key={category?._id} value={category?.name}>
-                        {category?.name}
+                    {categories?.length === 0 ? (
+                      <SelectItem disabled={true} value="null">
+                        Add a category first
                       </SelectItem>
-                    ))}
+                    ) : (
+                      categories?.map((category) => (
+                        <SelectItem key={category?._id} value={category?.name}>
+                          {category?.name}
+                        </SelectItem>
+                      ))
+                    )}
                   </SelectGroup>
                 </SelectContent>
               </Select>

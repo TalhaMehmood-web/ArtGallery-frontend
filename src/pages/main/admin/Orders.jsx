@@ -37,7 +37,9 @@ const Orders = () => {
     data: auctions,
     isLoading,
     error,
-  } = useQuery("bids", () => fetchData("auction/bids"));
+  } = useQuery("bids", () => fetchData("auction/bids"), {
+    refetchOnWindowFocus: false,
+  });
 
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -51,7 +53,7 @@ const Orders = () => {
       header: "Select", // Updated to display correctly
       cell: ({ row }) => (
         <Checkbox
-          checked={selectedAuction?._id === row.original._id} // Only one row can be selected at a time
+          checked={selectedAuction?._id === row.original._id}
           onCheckedChange={() => handleRowSelectionChange(row)}
         />
       ),
@@ -150,135 +152,150 @@ const Orders = () => {
   if (error) return <div>Error loading data</div>;
 
   return (
-    <div className="w-full p-5">
-      <div className="grid grid-cols-4 gap-4 p-4">
-        <Input
-          placeholder="Filter by name or email..."
-          onChange={(event) => filterByEmailOrName(event.target.value)}
-          className="col-span-4 border border-yellow-500 md:max-w-full md:col-span-2"
-        />
-        {/* button for sheet */}
+    <>
+      {auctions?.length === 0 ? (
+        <div className="flex items-center justify-center flex-1 ">
+          <p className="text-xl italic font-semibold md:font-bold md:text-3xl">
+            No Order placed yet
+          </p>
+        </div>
+      ) : (
+        <div className="w-full p-5">
+          <div className="grid grid-cols-4 gap-4 p-4">
+            <Input
+              placeholder="Filter by name or email..."
+              onChange={(event) => filterByEmailOrName(event.target.value)}
+              className="col-span-4 border border-yellow-500 md:max-w-full md:col-span-2"
+            />
+            {/* button for sheet */}
 
-        <Button
-          className={`text-sm w-fit text-white col-span-1  bg-yellow-500 ${
-            !selectedAuction
-              ? " opacity-50 hover:bg-yellow-500 hover:text-white focus:text-white focus:bg-yellow-500 "
-              : ""
-          }`}
-          onClick={handleViewAllBiddersClick}
-        >
-          View All Bidders
-        </Button>
-
-        {/* columns */}
-        <div className="flex items-end justify-end col-span-3 md:col-span-1 ">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto">
-                Columns <ChevronDown className="w-4 h-4 ml-2" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="border border-yellow-500 1"
-              align="end"
+            <Button
+              className={`text-sm w-fit text-white col-span-1  bg-yellow-500 ${
+                !selectedAuction
+                  ? " opacity-50 hover:bg-yellow-500 hover:text-white focus:text-white focus:bg-yellow-500 "
+                  : ""
+              }`}
+              onClick={handleViewAllBiddersClick}
             >
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
+              View All Bidders
+            </Button>
+
+            {/* columns */}
+            <div className="flex items-end justify-end col-span-3 md:col-span-1 ">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="ml-auto">
+                    Columns <ChevronDown className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="border border-yellow-500 1"
+                  align="end"
+                >
+                  {table
+                    .getAllColumns()
+                    .filter((column) => column.getCanHide())
+                    .map((column) => (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        {column.columnDef.header}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+
+          <Table>
+            <TableCaption>A list of auctions and highest bids</TableCaption>
+            <TableHeader className="bg-black">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                      {header.column.getCanSort() && (
+                        <ArrowUpDown
+                          onClick={() => header.column.toggleSorting()}
+                          size={15}
+                          className="text-center cursor-pointer"
+                        />
+                      )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.length > 0 ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    className={
+                      selectedAuction?._id === row.original._id
+                        ? "bg-gray-200"
+                        : ""
                     }
                   >
-                    {column.columnDef.header}
-                  </DropdownMenuCheckboxItem>
-                ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div>
-
-      <Table>
-        <TableCaption>A list of auctions and highest bids</TableCaption>
-        <TableHeader className="bg-black">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                  {header.column.getCanSort() && (
-                    <ArrowUpDown
-                      onClick={() => header.column.toggleSorting()}
-                      size={15}
-                      className="text-center cursor-pointer"
-                    />
-                  )}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows.length > 0 ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                className={
-                  selectedAuction?._id === row.original._id ? "bg-gray-200" : ""
-                }
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="text-center">
+                    No results.
                   </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="text-center">
-                No results.
-              </TableCell>
-            </TableRow>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+
+          {selectedAuction && (
+            <BiddersSheet
+              selectedAuction={selectedAuction}
+              isOpen={isSheetOpen}
+              onClose={handleSheetClose}
+            />
           )}
-        </TableBody>
-      </Table>
 
-      {selectedAuction && (
-        <BiddersSheet
-          selectedAuction={selectedAuction}
-          isOpen={isSheetOpen}
-          onClose={handleSheetClose}
-        />
+          <div className="flex items-center justify-end py-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
       )}
-
-      <div className="flex items-center justify-end py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
-    </div>
+    </>
   );
 };
 

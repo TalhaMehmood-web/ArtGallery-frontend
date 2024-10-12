@@ -26,7 +26,8 @@ const GlobalContextProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axiosInstance.get("user"); // Adjust to your API endpoint
+        const response = await axiosInstance.get("user");
+
         setUser(response.data);
       } catch (error) {
         setUser(null);

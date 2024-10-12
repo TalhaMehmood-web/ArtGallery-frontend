@@ -29,7 +29,7 @@ const NewsFeed = () => {
         </div>
         {/* display post */}
         {posts?.length === 0 ? (
-          <div className="flex items-center justify-center flex-1">
+          <div className="flex items-center justify-center flex-1 flex-grow max-h-full">
             <p className="text-2xl italic font-semibold md:text-4xl ">
               Be the first one to add a post
             </p>

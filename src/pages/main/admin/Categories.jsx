@@ -11,6 +11,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import Loading from "@/components/miscellaneous/loading/Loading";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 // Define Zod schema for validation
 const categorySchema = z.object({
@@ -30,6 +33,7 @@ const Categories = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(categorySchema),
@@ -57,6 +61,7 @@ const Categories = () => {
         if (data.status === 201) {
           queryClient.invalidateQueries("categories");
           toast.success("Category Added Successfully to our server");
+          reset();
         }
       },
       onError: (error) => {
@@ -102,7 +107,7 @@ const Categories = () => {
           "pointer-events-none overflow-hidden"
         } max-w-full   mx-auto xl:mx-0   gap-4  xl:flex-row xl:justify-around xl:flex xl:flex-1 w-full px-4 py-4 relative `}
       >
-        <div className="p-6 mb-8 bg-white rounded-lg shadow-md xl:flex-1 xl:h-fit">
+        <div className="p-6 mb-8 bg-white rounded-lg shadow-md xl:sticky xl:top-0 xl:right-0 xl:flex-1 xl:h-fit">
           <h2 className="mb-4 text-2xl font-semibold text-gray-700">
             Add New Category
           </h2>
@@ -118,12 +123,11 @@ const Categories = () => {
               >
                 Category Name
               </label>
-              <motion.input
-                whileFocus={{ scale: 1.02 }}
+              <Input
                 type="text"
                 id="name"
                 {...register("name")}
-                className={`mt-1 block w-full rounded-md p-2 border-yellow-500 shadow-sm focus:border-yellow-500 ${
+                className={`mt-1 block w-full rounded-md p-2 border border-gray-300 shadow-sm focus:border-yellow-500 ${
                   errors.name ? "border-red-500" : ""
                 }`}
                 aria-invalid={errors.name ? "true" : "false"}
@@ -142,9 +146,8 @@ const Categories = () => {
               >
                 Description
               </label>
-              <motion.textarea
+              <Textarea
                 type="text"
-                whileFocus={{ scale: 1.02 }}
                 id="description"
                 {...register("description")}
                 rows="3"
@@ -155,23 +158,19 @@ const Categories = () => {
                 aria-describedby={
                   errors.description ? "description-error" : undefined
                 }
-              ></motion.textarea>
+              ></Textarea>
               {errors.description && (
                 <p className="mt-2 text-sm text-red-600" id="description-error">
                   {errors.description.message}
                 </p>
               )}
             </div>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Button
               type="submit"
-              className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-yellow-500 border border-transparent rounded-md shadow-sm hover:bg-yellow-400 focus:outline-none "
+              className="w-full text-white bg-yellow-500 focus:bg-yellow-500 focus:text-white hover:bg-yellow-600/50 "
             >
               <FaPlus className="mr-2" /> Add Category
-            </motion.button>
-            {errors.name && <p>{errors.name.message}</p>}
-            {errors.description && <p>{errors.description.message}</p>}
+            </Button>
           </form>
         </div>
 

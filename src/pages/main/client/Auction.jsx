@@ -6,13 +6,16 @@ import Loading from "@/components/miscellaneous/loading/Loading";
 const Auction = () => {
   const { data: auctions, isLoading: auctionLoading } = useQuery(
     "auctions",
-    () => fetchData("auction")
+    () => fetchData("auction"),
+    {
+      refetchOnWindowFocus: false,
+    }
   );
 
   return (
     <>
       <div className="relative flex flex-1 p-4">
-        <div className="w-full grid-cols-1 gap-4  justify-items-center">
+        <div className="w-full grid-cols-1 gap-4 justify-items-center">
           {auctions?.map((item, index) => (
             <AuctionItem key={item?._id + index} item={item} />
           ))}

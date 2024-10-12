@@ -10,10 +10,10 @@ const Admin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [openSheet, setOpenSheet] = useState(false);
-  const handleWildCard = () => {};
+
   return (
     <>
-      <div className="flex flex-col w-full min-h-screen ">
+      <div className="flex flex-col w-full h-screen min-h-screen">
         {/* admin nav */}
         <div className="sticky top-0 z-50 flex items-center w-full h-16 px-4 text-white lg:justify-between md:h-20 bg-black/85 backdrop-opacity-10 ">
           <div className="block cursor-pointer lg:hidden">
@@ -24,7 +24,7 @@ const Admin = () => {
             />
           </div>
           <div className="hidden sm:block">
-            <p className="p-3 text-2xl italic font-bold text-yellow-500 rounded-lg lg:text-3xl animate-pulse ">
+            <p className="p-3 text-xl italic font-bold text-yellow-500 rounded-lg md:text-2xl lg:text-3xl animate-pulse ">
               HANDMADE HEAVEN
             </p>
           </div>
@@ -45,14 +45,12 @@ const Admin = () => {
                 {link.title}
               </Button>
             ))}
-            <Button className="italic" onClick={handleWildCard}>
-              Wild Card to Client
-            </Button>
+
             <UserInfo />
           </div>
         </div>
         {/* file upload card components */}
-        <div className="relative flex flex-grow overflow-y-auto height scroll-smooth ">
+        <div className="flex flex-grow overflow-y-auto ">
           <Outlet />
         </div>
       </div>
