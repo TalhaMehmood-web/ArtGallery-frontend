@@ -13,9 +13,9 @@ const Admin = () => {
 
   return (
     <>
-      <div className="flex flex-col w-full h-screen min-h-screen">
+      <div className="flex flex-col w-full h-screen ">
         {/* admin nav */}
-        <div className="sticky top-0 z-50 flex items-center w-full h-16 px-4 text-white lg:justify-between md:h-20 bg-black/85 backdrop-opacity-10 ">
+        <div className="sticky top-0 z-50 flex items-center w-full h-20 px-4 py-3 text-white sm:py-0 lg:justify-between bg-black/85 backdrop-opacity-10 ">
           <div className="block cursor-pointer lg:hidden">
             <AlignJustify
               size={32}
@@ -50,7 +50,7 @@ const Admin = () => {
           </div>
         </div>
         {/* file upload card components */}
-        <div className="flex flex-grow overflow-y-auto ">
+        <div className="flex flex-1 flex-grow overflow-y-auto ">
           <Outlet />
         </div>
       </div>

@@ -15,6 +15,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import PicturesFilterSheet from "@/components/miscellaneous/admin/PicturesFilterSheet";
 
 const Pictures = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -62,17 +63,11 @@ const Pictures = () => {
 
   return (
     <>
-      {pictures?.data?.length === 0 ? (
-        <div className="flex items-center justify-center flex-1">
-          <p className="text-xl italic font-semibold text-center md:font-bold md:text-3xl">
-            No Pictures uploaded yet
-          </p>
-        </div>
-      ) : (
-        <div className="flex flex-col flex-1">
-          {/* Category and type filters */}
-          {!picturesLoading && (
-            <div className="flex justify-between w-full gap-4 px-2 py-5 xl:items-center xl:flex-row sm:px-10 xl:py-0">
+      <div className="relative flex flex-col flex-1">
+        {/* Category and type filters */}
+        {!picturesLoading && (
+          <>
+            <div className="justify-between hidden w-full gap-4 px-2 py-5 sm:flex xl:items-center sm:flex-row sm:px-10 xl:py-0">
               <div className="items-center justify-center flex-1 hidden w-full px-2 py-10 space-x-4 xl:flex xl:p-10">
                 <p
                   className={`cursor-pointer font-semibold italic ${
@@ -107,9 +102,25 @@ const Pictures = () => {
 
               <FilterPictureType onChange={handleTypeChange} />
             </div>
-          )}
-          {/* Display pictures */}
-          <div className="grid gap-4 px-3 md:px-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className="sticky top-0 right-0 z-50 block p-4 bg-white sm:hidden ">
+              <PicturesFilterSheet
+                selectedCategory={selectedCategory}
+                selectedType={selectedType}
+                handleCategoryChange={handleCategoryChange}
+                handleTypeChange={handleTypeChange}
+              />
+            </div>
+          </>
+        )}
+        {/* Display pictures */}
+        {pictures?.data?.length === 0 ? (
+          <div className="flex items-center justify-center flex-1">
+            <p className="text-xl italic font-semibold text-center md:font-bold md:text-3xl">
+              No Pictures uploaded yet
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 px-3 md:px-10 md:grid-cols-2 lg:grid-cols-3">
             {isLoading || picturesLoading
               ? Array.from({ length: itemsPerPage }).map((_, index) => (
                   <PictureSkeleton key={index} />
@@ -123,50 +134,49 @@ const Pictures = () => {
                   />
                 ))}
           </div>
-
-          {/* Pagination */}
-          {!picturesLoading && (
-            <Pagination className={`p-8  flex w-full justify-center `}>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
+        )}
+        {/* Pagination */}
+        {!picturesLoading && (
+          <Pagination className={`p-8  flex w-full justify-center `}>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  href="#"
+                  onClick={() =>
+                    handlePageChange(currentPage > 1 ? currentPage - 1 : 1)
+                  }
+                />
+              </PaginationItem>
+              {[...Array(pictures?.totalPages)].map((_, index) => (
+                <PaginationItem key={index}>
+                  <PaginationLink
                     href="#"
-                    onClick={() =>
-                      handlePageChange(currentPage > 1 ? currentPage - 1 : 1)
-                    }
-                  />
+                    onClick={() => handlePageChange(index + 1)}
+                    isActive={currentPage === index + 1}
+                  >
+                    {index + 1}
+                  </PaginationLink>
                 </PaginationItem>
-                {[...Array(pictures?.totalPages)].map((_, index) => (
-                  <PaginationItem key={index}>
-                    <PaginationLink
-                      href="#"
-                      onClick={() => handlePageChange(index + 1)}
-                      isActive={currentPage === index + 1}
-                    >
-                      {index + 1}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
+              ))}
 
-                <PaginationItem>
-                  <PaginationNext
-                    href="#"
-                    onClick={() =>
-                      handlePageChange(
-                        currentPage < pictures?.totalPages
-                          ? currentPage + 1
-                          : pictures?.totalPages
-                      )
-                    }
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          )}
+              <PaginationItem>
+                <PaginationNext
+                  href="#"
+                  onClick={() =>
+                    handlePageChange(
+                      currentPage < pictures?.totalPages
+                        ? currentPage + 1
+                        : pictures?.totalPages
+                    )
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        )}
 
-          {(picturesLoading || isLoading) && <Loading />}
-        </div>
-      )}
+        {(picturesLoading || isLoading) && <Loading />}
+      </div>
     </>
   );
 };

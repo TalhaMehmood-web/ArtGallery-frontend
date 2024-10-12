@@ -19,7 +19,6 @@ const PictureUI = ({ picURL, id, picture }) => {
           alt="pic"
           className="object-cover w-full h-full transition-all duration-300 shadow-md cursor-pointer hover:scale-95 hover:brightness-90 shadow-yellow-200 aspect-square "
         />
-        {/* <div className=" hover-effect-img"></div> */}
       </div>
     </>
   );
