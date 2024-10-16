@@ -12,16 +12,16 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Define Zod schema for validation
-// const loginSchema = z.object({
-//   email: z
-//     .string()
-//     .email("Invalid email address")
-//     .nonempty("Email is required"),
-//   password: z
-//     .string()
-//     .min(6, "Password must be at least 6 characters")
-//     .nonempty("Password is required"),
-// });
+const loginSchema = z.object({
+  email: z
+    .string()
+    .email("Invalid email address")
+    .nonempty("Email is required"),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .nonempty("Password is required"),
+});
 
 const Login = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const Login = () => {
 
   // Use useForm with zodResolver
   const form = useForm({
-    // resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -71,7 +71,7 @@ const Login = () => {
   return (
     <>
       <div className="flex flex-col p-4 space-y-2 text-white rounded-md bg-black/60 ">
-        <div className="flex flex-col px-10 py-1 mb-5 space-y-4 shadow-md shadow-slate-500 bg-black/80">
+        <div className="flex flex-col px-10 py-1 mb-5 space-y-4 bg-black/20">
           <p className="text-3xl font-bold ">Login</p>
           <p className="mb-5 font-semibold text-blue-300 cursor-pointer hover:underline">
             Don't have an account? Signup

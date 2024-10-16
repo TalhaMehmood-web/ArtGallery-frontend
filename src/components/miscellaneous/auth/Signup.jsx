@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Loading from "../loading/Loading";
+import PasswordEye from "./PasswordEye";
 
 // Zod schema for form validation
 const signupSchema = z
@@ -103,7 +104,7 @@ const Signup = () => {
         className="p-4 text-white rounded-md shadow-xl shadow-black/10 bg-black/60 "
       >
         <div className="flex flex-col space-y-4">
-          <div className="flex flex-col px-10 py-1 mb-4 space-y-4 shadow-md bg-black/80 shadow-slate-500">
+          <div className="flex flex-col px-10 py-1 mb-4 space-y-4 bg-black/20">
             <p className="text-3xl font-bold ">Signup</p>
             <p className="mb-5 font-semibold text-blue-300 cursor-pointer hover:underline">
               Already have an account? Login
@@ -183,44 +184,20 @@ const Signup = () => {
             )}
           </div>
           <div className="grid grid-cols-2 gap-2">
-            <div className="flex flex-col space-y-1">
-              <label className="font-semibold" htmlFor="password">
-                Password
-              </label>
-              <Input
-                id="password"
-                name="password"
-                className="text-white bg-transparent border border-yellow-500"
-                placeholder="Your Password"
-                type="password"
-                {...register("password")}
-                autoComplete="new-password" // Add autoComplete
-              />
-              {errors.password && (
-                <p className="text-sm text-red-500">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-            <div className="flex flex-col space-y-1">
-              <label className="font-semibold" htmlFor="confirmPassword">
-                Confirm Password
-              </label>
-              <Input
-                id="confirmPassword"
-                name="confirmPassword"
-                className="text-white bg-transparent border border-yellow-500"
-                placeholder="Re-Type Password"
-                type="password"
-                {...register("confirmPassword")}
-                autoComplete="new-password" // Add autoComplete for new passwords
-              />
-              {errors.confirmPassword && (
-                <p className="text-sm text-red-500">
-                  {errors.confirmPassword.message}
-                </p>
-              )}
-            </div>
+            <PasswordEye
+              label={"Password"}
+              id={"password"}
+              placeholder={"Your password"}
+              errors={errors?.password}
+              register={register}
+            />
+            <PasswordEye
+              label={"Confirm Password"}
+              id={"confirmPassword"}
+              placeholder={"Retype-Password"}
+              errors={errors?.confirmPassword}
+              register={register}
+            />
           </div>
         </div>
         <div className="mt-6">
@@ -230,7 +207,7 @@ const Signup = () => {
         </div>
       </form>
       {signupMutation?.isLoading && (
-        <div className="absolute top-0 right-0 min-h-screen w-full">
+        <div className="absolute top-0 right-0 w-full min-h-screen">
           <Loading />
         </div>
       )}

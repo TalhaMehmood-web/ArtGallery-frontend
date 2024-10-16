@@ -1,27 +1,27 @@
 import Login from "@/components/miscellaneous/auth/Login";
 import Signup from "@/components/miscellaneous/auth/Signup";
-import background from "../../assets/app-bg.jpg";
+import SignUpImage from "../../assets/Signup.png";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Auth = () => {
   return (
     <div className="relative flex justify-center w-full min-h-screen text-black bg-slate-300 ">
       <img
-        src={background}
+        src={SignUpImage}
         alt="background"
         className="absolute object-cover w-full h-full brightness-50 "
       />
 
       <Tabs defaultValue="login" className="w-[700px] mt-5  z-10  ">
-        <TabsList className="grid w-full grid-cols-2 border h-fit border-black/20 ">
+        <TabsList className="grid w-full grid-cols-2 text-white bg-transparent h-fit border-black/20 ">
           <TabsTrigger
-            className="p-2 text-base data-[state=active]:bg-black/20  "
+            className="p-2 text-base border border-yellow-500  data-[state=active]:bg-yellow-500 data-[state=active]:text-white "
             value="login"
           >
             Login
           </TabsTrigger>
           <TabsTrigger
-            className="p-2 text-base data-[state=active]:bg-black/20 "
+            className="p-2 text-base border border-yellow-500 data-[state=active]:bg-yellow-500 data-[state=active]:text-white "
             value="signup"
           >
             Signup

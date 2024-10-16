@@ -106,13 +106,13 @@ const UploadPictures = () => {
 
   const { isLoading } = uploadPictureMutation;
   return (
-    <div className="relative flex flex-col items-center flex-1 w-full px-5 bg-black opacity-90 lg:px-10">
+    <div className="relative flex flex-col items-center flex-1 flex-grow w-full min-h-full px-5 bg-black opacity-90 lg:px-10">
       {/* Upload picture form */}
 
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="flex flex-col space-y-1 my-5 brightness-200 z-10 rounded-md w-full lg:w-[85%] xl:w-[70%] h-full text-white p-2 lg:p-4"
+        className="flex flex-col flex-grow  space-y-1 my-5 brightness-200 z-10 rounded-md w-full lg:w-[85%] xl:w-[70%] h-full text-white p-2 lg:p-4"
       >
         <div className="flex-col hidden p-3 mb-5 space-y-3 shadow-md shadow-yellow-500 md:flex">
           <p className="text-xl italic font-semibold">

@@ -18,8 +18,8 @@ const NewsFeed = () => {
 
   return (
     <>
-      <div className="flex flex-col flex-1 p-2 ">
-        <div className="flex justify-end w-full my-2">
+      <div className="flex flex-col flex-1 flex-grow min-h-full p-2 ">
+        <div className="sticky left-0 flex justify-end w-full my-2 top-2">
           <Button
             onClick={() => setOpenPostPicture(true)}
             className="text-white bg-yellow-500"

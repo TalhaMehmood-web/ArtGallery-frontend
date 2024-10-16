@@ -3,12 +3,18 @@ import { formatDate } from "@/utils/formatDate";
 import PictureActionButton from "@/components/miscellaneous/admin/PictureActionButton";
 import { Button } from "@/components/ui/button";
 import PictureAuctions from "@/components/miscellaneous/admin/PictureAuctions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiAward } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 const PictureDetails = () => {
+  const navigate = useNavigate();
   const { selectedPicture } = useGlobalContext();
   const [openAuction, setOpenAuction] = useState(false);
-
+  useEffect(() => {
+    if (!selectedPicture) {
+      navigate("/admin/pictures");
+    }
+  }, [navigate, selectedPicture]);
   return (
     <>
       <div className="flex-1 p-4 bg-white sm:p-6 lg:p-8">

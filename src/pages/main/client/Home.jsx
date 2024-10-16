@@ -6,6 +6,9 @@ import { useState } from "react";
 import Loading from "@/components/miscellaneous/loading/Loading";
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
   const { data: homePagePictures, isLoading: galleryImagesLoading } = useQuery(
     ["pictures", "all", "homePage"],
     () => fetchData("admin/pictures?category=all&type=homePage"),
@@ -14,10 +17,10 @@ const Home = () => {
     }
   );
   const { data: pictures, isLoading: isPicturesLoading } = useQuery(
-    ["pictures", selectedCategory, "auction"], // Query key array
+    ["pictures", selectedCategory, "all", currentPage], // Query key array
     () =>
       fetchData(
-        `admin/pictures?category=${selectedCategory}&type=auction` // Fetch pictures by category and type
+        `admin/pictures?category=${selectedCategory}&type=all&page=${currentPage}&limit=${itemsPerPage}`
       ),
     {
       staleTime: 500000,
@@ -50,6 +53,8 @@ const Home = () => {
           setSelectedCategory={setSelectedCategory}
           categories={categories}
           pictures={pictures}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
         />
       </div>
       {(galleryImagesLoading || isPicturesLoading) && (

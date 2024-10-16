@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState } from "react";
@@ -22,7 +23,7 @@ const GlobalContextProvider = ({ children }) => {
 
   const [selectedPicture, setSelectedPicture] = useState(null);
   const [loadingUser, setLoading] = useState(true);
-
+  const [openPictureDrawer, setOpenPictureDrawer] = useState(false);
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -49,6 +50,8 @@ const GlobalContextProvider = ({ children }) => {
         loadingUser,
         selectedPicture,
         setSelectedPicture,
+        openPictureDrawer,
+        setOpenPictureDrawer,
       }}
     >
       {children}
