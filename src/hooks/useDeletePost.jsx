@@ -1,9 +1,11 @@
 import { deleteData } from "@/api/deleteData";
 import { useGlobalContext } from "@/context/UserContext";
 import { useMutation, useQueryClient } from "react-query";
+import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 const useDeletePost = () => {
+  const location = useLocation();
   const { user } = useGlobalContext();
   const queryClient = useQueryClient();
   const deletePostMutation = useMutation(
@@ -13,6 +15,9 @@ const useDeletePost = () => {
         if (data) {
           toast.success(data.message);
           queryClient.invalidateQueries(["profile-data", user?._id]);
+          if (location.pathname === "/client/news") {
+            queryClient.invalidateQueries("posts");
+          }
         }
       },
     }

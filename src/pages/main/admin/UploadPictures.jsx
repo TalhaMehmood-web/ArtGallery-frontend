@@ -29,7 +29,10 @@ const uploadPictureSchema = z.object({
       message: "Picture size should not be greater than 2MB",
     })
     .refine((files) => files.length > 0, "A picture is required"),
-  description: z.string().min(1, "Description is required"),
+  description: z
+    .string()
+    .min(1, "Description is required")
+    .max(255, "Description should be less than 255 characters"),
   price: z
     .string()
     .min(1, "Price is required")

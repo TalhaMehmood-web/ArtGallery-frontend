@@ -5,7 +5,8 @@ import { postData } from "@/api/postData";
 import { useMutation, useQueryClient } from "react-query";
 import { v4 as uuidv4 } from "uuid"; // To generate a temporary ID for optimistic updates
 import { useGlobalContext } from "@/context/UserContext";
-
+import { IoSendSharp } from "react-icons/io5";
+import { Button } from "@/components/ui/button";
 const AddComment = ({ postId, className = "" }) => {
   const queryClient = useQueryClient();
   const { user } = useGlobalContext();
@@ -70,7 +71,11 @@ const AddComment = ({ postId, className = "" }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form
+      className="flex items-center w-full md:space-x-4"
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+    >
       <Input
         autoFocus={false}
         className={className}
@@ -78,6 +83,12 @@ const AddComment = ({ postId, className = "" }) => {
         placeholder="Add a comment"
         {...register("text")}
       />
+      <Button
+        className="border-none hover:bg-transparent focus:bg-transparent "
+        type="submit"
+      >
+        <IoSendSharp className="text-xl text-yellow-500 md:text-3xl hover:text-yellow-500/80" />
+      </Button>
     </form>
   );
 };

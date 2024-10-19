@@ -8,6 +8,7 @@ import { useGlobalContext } from "./context/UserContext";
 import Loading from "./components/miscellaneous/loading/Loading";
 
 import ProfileAnalytics from "./pages/main/client/ProfileAnalytics";
+
 const NewsFeed = React.lazy(() => import("./pages/main/client/NewsFeed"));
 const Home = React.lazy(() => import("./pages/main/client/Home"));
 const Portfolio = React.lazy(() => import("./pages/main/client/Portfolio"));

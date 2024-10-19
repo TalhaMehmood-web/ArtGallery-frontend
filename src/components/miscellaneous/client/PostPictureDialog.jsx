@@ -19,13 +19,20 @@ import { zodResolver } from "@hookform/resolvers/zod"; // Import Zod resolver fo
 
 // Define your Zod schema for validation
 const schema = z.object({
+  title: z
+    .string()
+    .min(1, "Post title is required")
+    .max(25, "Maximum 8 characters are allowed"),
   picture: z
     .any()
     .refine((files) => files?.[0]?.size <= 2 * 1024 * 1024, {
       message: "Picture size should not be greater than 2MB",
     })
     .refine((files) => files.length > 0, "A picture is required"),
-  description: z.string().min(1, "Description is required"),
+  description: z
+    .string()
+    .min(1, "Description is required")
+    .max(225, "Maximum 255 characters are allowed"),
   hashTags: z
     .string()
     .min(1, " A  Hash tags is required")
@@ -52,7 +59,7 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema), // Integrate Zod schema here
+    resolver: zodResolver(schema),
   });
 
   // Mutation to post the data
@@ -69,12 +76,14 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
   });
 
   const onSubmit = async (data) => {
-    const { picture, description, hashTags } = data;
+    const { picture, description, hashTags, title } = data;
 
     // Prepare the form data to send
     const formData = new FormData();
-    formData.append("picture", picture[0]); // File input provides an array, so take the first element
+    formData.append("title", title);
     formData.append("description", description);
+    formData.append("picture", picture[0]); // File input provides an array, so take the first element
+
     formData.append("hashTags", hashTags.split(",")); // Assuming hashTags are comma-separated
     await createPostMutation.mutateAsync(formData);
   };
@@ -96,22 +105,24 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
           className="flex flex-col flex-1 space-y-3"
         >
           <div className="flex flex-col space-y-2">
-            <label className="italic font-semibold" htmlFor="picture">
-              Select Picture from device
+            <label className="italic font-semibold" htmlFor="title">
+              Post Title
             </label>
             <Input
-              id="picture"
-              name="picture"
-              className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer"
-              type="file"
-              {...register("picture")}
+              id="title"
+              name="title"
+              className="z-10 text-white bg-transparent border border-yellow-500"
+              type="text"
+              placeholder="Post Title"
+              {...register("title")}
             />
-            {errors.picture && (
+            {errors.title && (
               <p className="text-sm font-semibold text-red-500 sm:font-normal sm:text-sm ">
-                {errors.picture.message}
+                {errors.title.message}
               </p>
             )}
           </div>
+
           <div className="flex flex-col space-y-2">
             <label className="italic font-semibold" htmlFor="description">
               Picture Description
@@ -127,6 +138,23 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
             {errors.description && (
               <p className="text-sm font-semibold text-red-500 sm:font-normal sm:text-sm ">
                 {errors.description.message}
+              </p>
+            )}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="italic font-semibold" htmlFor="picture">
+              Select Picture from device
+            </label>
+            <Input
+              id="picture"
+              name="picture"
+              className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer"
+              type="file"
+              {...register("picture")}
+            />
+            {errors.picture && (
+              <p className="text-sm font-semibold text-red-500 sm:font-normal sm:text-sm ">
+                {errors.picture.message}
               </p>
             )}
           </div>

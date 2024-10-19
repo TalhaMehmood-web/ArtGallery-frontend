@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { fetchData } from "@/api/fetchData";
@@ -16,6 +17,12 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import PicturesFilterSheet from "@/components/miscellaneous/admin/PicturesFilterSheet";
+const PicturesWrapper = ({ children, pictures }) => {
+  if (!pictures || pictures.data?.length === 0) {
+    return null; // Return null if there are no pictures
+  }
+  return children; // Render children if pictures exist
+};
 
 const Pictures = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -63,7 +70,7 @@ const Pictures = () => {
 
   return (
     <>
-      <div className="relative flex flex-col flex-1">
+      <div className="relative flex flex-col flex-1 flex-grow w-full min-h-full">
         {/* Category and type filters */}
         {!picturesLoading && (
           <>
@@ -113,8 +120,8 @@ const Pictures = () => {
           </>
         )}
         {/* Display pictures */}
-        {pictures?.data?.length === 0 ? (
-          <div className="flex items-center justify-center flex-1">
+        {pictures?.data?.length ===0 ? (
+          <div className="flex items-center justify-center flex-1 flex-grow">
             <p className="text-xl italic font-semibold text-center md:font-bold md:text-3xl">
               No Pictures uploaded yet
             </p>
@@ -136,6 +143,7 @@ const Pictures = () => {
           </div>
         )}
         {/* Pagination */}
+        <PicturesWrapper  pictures={pictures} >
         {!picturesLoading && (
           <Pagination className={`p-8  flex w-full justify-center `}>
             <PaginationContent>
@@ -174,7 +182,7 @@ const Pictures = () => {
             </PaginationContent>
           </Pagination>
         )}
-
+</PicturesWrapper>
         {(picturesLoading || isLoading) && <Loading />}
       </div>
     </>

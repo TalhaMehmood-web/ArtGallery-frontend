@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const PostSkeleton = () => {
   return (
-    <div className="w-[90%] h-[400px]  ">
+    <div className="w-[90%] h-[600px]  ">
       <Skeleton className="w-full h-full bg-slate-400 " />
     </div>
   );

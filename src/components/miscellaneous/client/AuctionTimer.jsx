@@ -37,17 +37,17 @@ const AuctionTimer = ({ endDate }) => {
   }
 
   return (
-    <div className="border border-yellow-500 flex flex-col space-y-4 w-fit p-4 rounded-md">
-      <p className="text-red-600 text-xl lg:text-3xl font-bold italic">
-        Bid closing Date:{" "}
+    <div className="flex flex-col p-4 space-y-4 border border-yellow-500 rounded-md w-fit">
+      <p className="text-sm italic font-bold text-red-600  md:text-xl lg:text-3xl">
+        Bid closing Date:
         {new Date(endDate).toLocaleDateString("en-GB", {
           day: "numeric",
           month: "long", // Displays the month in English (e.g., January)
           year: "numeric",
         })}
       </p>
-      <p className="text-xl italic font-bold">
-        Remaining Time :--- {remainingTime.totalHours} hours :{" "}
+      <p className="text-sm italic font-bold lg:text-xl">
+        Remaining Time {">"} {remainingTime.totalHours} hours :{" "}
         {remainingTime.minutes} minutes : {remainingTime.seconds} seconds
       </p>
     </div>

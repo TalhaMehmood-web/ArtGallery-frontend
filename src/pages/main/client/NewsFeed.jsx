@@ -11,18 +11,18 @@ const NewsFeed = () => {
     "posts",
     () => fetchData("post"),
     {
-      refetchOnMount: false,
+      refetchOnWindowFocus: false,
       staleTime: 500000,
     }
   );
 
   return (
     <>
-      <div className="flex flex-col flex-1 flex-grow min-h-full p-2 ">
-        <div className="sticky left-0 flex justify-end w-full my-2 top-2">
+      <div className="flex flex-col flex-1 flex-grow min-h-full">
+        <div className="sticky top-0 left-0 flex justify-end w-full p-2 bg-transparent">
           <Button
             onClick={() => setOpenPostPicture(true)}
-            className="text-white bg-yellow-500"
+            className="text-white bg-yellow-500 rounded-full "
           >
             Create Post +
           </Button>
@@ -37,7 +37,7 @@ const NewsFeed = () => {
         ) : (
           <div className="container grid max-w-4xl grid-cols-1 gap-2 mx-auto justify-items-center ">
             {postsLoading
-              ? Array.from({ length: 6 }).map((_, index) => (
+              ? Array.from({ length: 2 }).map((_, index) => (
                   <PostSkeleton key={index} />
                 ))
               : posts?.map((post) => <Post key={post._id} post={post} />)}

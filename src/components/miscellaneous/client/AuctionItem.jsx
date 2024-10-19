@@ -21,7 +21,7 @@ const AuctionItem = ({ item }) => {
             </div>
           )}
           <img
-            className={`object-cover rounded-md   aspect-square ${
+            className={`object-cover rounded-md border  aspect-square   w-full ${
               imageLoading ? "hidden" : "block"
             } `}
             src={item?.picture?.picture}
@@ -31,15 +31,15 @@ const AuctionItem = ({ item }) => {
         </div>
 
         {/* Content section: Takes 3 columns on medium and larger screens */}
-        <div className="flex flex-col w-full h-full col-span-1 gap-4 md:col-span-3 md:justify-around">
+        <div className="flex flex-col w-full h-full col-span-1 gap-2 lg:gap-4 md:col-span-3 md:justify-around">
           <div className="flex flex-col p-3 space-y-2 border rounded-md border-slate-400 ">
             <p className="text-3xl font-bold">{item?.picture.title}</p>
-            <p className="text-xl italic text-pretty ">
+            <p className="text-sm italic md:text-base lg:text-xl text-pretty">
               {item?.picture.description}
             </p>
           </div>
           <div className="px-4 py-4 text-white bg-black w-fit rounded-xl">
-            <p className="text-3xl italic font-extrabold ">
+            <p className="text-lg italic font-semibold md:font-bold lg:font-extrabold sm:text-xl md:text-2xl lg:text-3xl">
               Starting Bid Price: ${item?.picture.price}
             </p>
           </div>

@@ -1,28 +1,14 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState, useRef } from "react";
-import { formatDistanceToNow } from "date-fns";
+import { useEffect, useRef } from "react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import getInitials from "@/utils/getInitials";
+import useDateFormat from "@/hooks/useDateFormat";
 
 const SingleComment = ({ comment }) => {
-  const [timeAgo, setTimeAgo] = useState("");
+const {timeAgo} = useDateFormat(comment?.createdAt)
   const commentRef = useRef(null);
-  useEffect(() => {
-    const updateTimeAgo = () => {
-      if (comment?.createdAt) {
-        setTimeAgo(
-          formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })
-        );
-      }
-    };
 
-    // Update the timeAgo every minute to reflect time changes
-    updateTimeAgo();
-    const intervalId = setInterval(updateTimeAgo, 60000); // 60,000 ms = 1 minute
-
-    // Cleanup the interval on component unmount
-    return () => clearInterval(intervalId);
-  }, [comment?.createdAt]);
   useEffect(() => {
     commentRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [commentRef]);

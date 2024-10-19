@@ -16,7 +16,7 @@ const signupSchema = z
   .object({
     fullname: z.string().min(1, "Full Name is required"),
     username: z.string().min(1, "Username is required"),
-    email: z.string().email("Invalid email format").min(1, "Email is required"),
+    email: z.string().min(1, "Email is required").email("Invalid email format").min(1, "Email is required"),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -110,7 +110,7 @@ const Signup = () => {
               Already have an account? Login
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <div className="flex flex-col space-y-1">
               <label className="font-semibold" htmlFor="fullname">
                 Full Name
@@ -183,7 +183,7 @@ const Signup = () => {
               <p className="text-sm text-red-500">{errors.profile.message}</p>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <PasswordEye
               label={"Password"}
               id={"password"}

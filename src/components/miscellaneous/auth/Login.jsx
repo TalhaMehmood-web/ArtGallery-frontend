@@ -15,12 +15,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const loginSchema = z.object({
   email: z
     .string()
-    .email("Invalid email address")
-    .nonempty("Email is required"),
+    .min(1, "Email is required") 
+    .email("Invalid email address"),
+ 
   password: z
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .nonempty("Password is required"),
+    .string({
+      required_error: "Password is required",
+    })
+    .min(8, "Password must be at least 8 characters")
+      .max(20, "Password must be no more than 20 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(/[\W_]/, "Password must contain at least one special character"),
 });
 
 const Login = () => {
@@ -36,7 +43,7 @@ const Login = () => {
     },
   });
 
-  const { handleSubmit, register } = form;
+  const { handleSubmit, register, formState:{errors} } = form;
 
   const loginMutation = useMutation((data) => postData("user/login", data), {
     onSuccess: ({ data }) => {
@@ -50,6 +57,7 @@ const Login = () => {
       }
       toast.success("Login Successfully", {
         description: `Logged in as ${data?.fullname}`,
+        position: "top-right",
       });
     },
     onError: (error) => {
@@ -78,15 +86,8 @@ const Login = () => {
           </p>
         </div>
         <form
-          onSubmit={handleSubmit(onSubmit, (errors) => {
-            // Display validation errors in toast
-            for (const field in errors) {
-              toast.error("Validation Error", {
-                description: errors[field]?.message,
-                duration: 2000,
-              });
-            }
-          })}
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
           className="flex flex-col flex-1 space-y-5"
         >
           <div className="flex flex-col space-y-1">
@@ -102,6 +103,11 @@ const Login = () => {
               type="email"
               {...register("email")}
             />
+             {errors.email && (
+                <p className="text-sm text-red-500">
+                  {errors.email.message}
+                </p>
+              )}
           </div>
           <div className="flex flex-col space-y-1">
             <label className="font-semibold" htmlFor="password">
@@ -116,6 +122,11 @@ const Login = () => {
               type="password"
               {...register("password")}
             />
+             {errors.password && (
+                <p className="text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
           </div>
 
           <div className="w-full my-3">
