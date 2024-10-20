@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "@/context/UserContext";
-
+import Loading from "@/components/miscellaneous/loading/Loading"
 const DeletePicture = ({ deleteDialog, setDeleteDialog, children }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -30,7 +30,7 @@ const DeletePicture = ({ deleteDialog, setDeleteDialog, children }) => {
       ),
     {
       onSuccess: ({ data }) => {
-        console.log(data);
+        
         if (data) {
           toast.success("Picture Deleted Successfully", {
             position: "top-right",
@@ -50,11 +50,12 @@ const DeletePicture = ({ deleteDialog, setDeleteDialog, children }) => {
     await deletePictureMutation.mutateAsync();
   };
   return (
+    <>
     <AlertDialog open={deleteDialog} onOpenChange={setDeleteDialog}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent className={"bg-black text-white border-red-500"}>
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-center text-red-500  sm:text-left">
+          <AlertDialogTitle className="text-center text-red-500 sm:text-left">
             Are you absolutely sure?
           </AlertDialogTitle>
           <AlertDialogDescription>
@@ -79,6 +80,10 @@ const DeletePicture = ({ deleteDialog, setDeleteDialog, children }) => {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+    {
+      isLoading && <Loading color="#ef4444 "  message={"Deleting Picture"} />
+    }
+    </>
   );
 };
 

@@ -83,7 +83,7 @@ const PictureDetails = () => {
                   Type
                 </h2>
                 <p className="text-sm italic font-extrabold text-gray-600">
-                  {selectedPicture?.type.toUpperCase()}
+                  {selectedPicture?.type?.toUpperCase()}
                 </p>
               </div>
             </div>

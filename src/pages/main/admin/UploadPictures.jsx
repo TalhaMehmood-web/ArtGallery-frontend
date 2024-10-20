@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import AddNewCategory from "@/components/miscellaneous/admin/AddNewCategory";
+
 import { useMutation, useQuery } from "react-query";
 import { fetchData } from "@/api/fetchData";
 import { postData } from "@/api/postData"; // Import the postData function
@@ -21,6 +21,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Loading from "@/components/miscellaneous/loading/Loading";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 const uploadPictureSchema = z.object({
   title: z.string().min(1, "Title is required"),
   picture: z
@@ -43,16 +45,18 @@ const uploadPictureSchema = z.object({
   category: z.string().min(1, "Category is required"),
 });
 const UploadPictures = () => {
-  const [openDialog, setOpenDialog] = useState(false);
+
+  const [isBannerImage,setIsBannerImage]= useState(false)
   const queryClient = useQueryClient();
   const {
     handleSubmit,
     register,
     reset,
     setValue,
+    clearErrors,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(uploadPictureSchema),
+    resolver: !isBannerImage && zodResolver(uploadPictureSchema),
     defaultValues: {
       title: "",
       picture: "",
@@ -60,6 +64,7 @@ const UploadPictures = () => {
       price: "",
       type: "",
       category: "",
+      isBannerImage:false
     },
   });
 
@@ -95,21 +100,32 @@ const UploadPictures = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-
-    formData.append("picture", data.picture[0]);
-
+if(!data.picture[0]){
+  return toast.error("Picture is required",{
+    position:"top-center",
+    duration:2000
+  })
+}
+  
+if(!isBannerImage){
+  formData.append("picture", data.picture[0]);
     formData.append("type", data.type);
     formData.append("category", data.category);
     formData.append("description", data.description);
     formData.append("price", data.price);
     formData.append("title", data.title);
+  }else{
 
+    formData.append("picture", data.picture[0]);
+    formData.append("isBannerImage", data.isBannerImage);
+  }
+    console.log(formData)
     await uploadPictureMutation.mutateAsync(formData);
   };
 
   const { isLoading } = uploadPictureMutation;
   return (
-    <div className="relative flex flex-col items-center flex-1 flex-grow w-full min-h-full px-5 bg-black opacity-90 lg:px-10">
+    <div className="flex flex-col items-center flex-1 flex-grow w-full min-h-full px-5 bg-black  opacity-90 lg:px-10">
       {/* Upload picture form */}
 
       <form
@@ -141,13 +157,15 @@ const UploadPictures = () => {
                 type="text"
                 {...register("title")}
                 autoComplete="off"
+                disabled={isBannerImage}
               />
-              {errors.title && (
+              {errors.title && !isBannerImage  && (
                 <p className="text-sm text-red-700">{errors.title.message}</p>
               )}
             </div>
 
             {/* Picture */}
+            <div className="flex flex-col gap-2" >
             <div className="flex flex-col space-y-2">
               <label htmlFor="picture" className="italic font-semibold">
                 Select one Picture at a time
@@ -165,6 +183,22 @@ const UploadPictures = () => {
                 <p className="text-sm text-red-700">{errors.picture.message}</p>
               )}
             </div>
+            <div className="flex items-center space-x-2">
+            <Checkbox
+                id="isBannerImage"
+                name="isBannerImage"
+                onCheckedChange={(checked) => {
+                  setIsBannerImage(checked);
+                  if (checked) {
+                    clearErrors(); // Clear validation if banner is checked
+                  }
+                }}
+                {...register("isBannerImage")}
+              />
+              <Label htmlFor="isBannerImage">Is this a banner image?</Label>
+             
+            </div>
+            </div>
           </div>
 
           {/* Description */}
@@ -179,8 +213,9 @@ const UploadPictures = () => {
               className="bg-transparent border border-yellow-500 placeholder:text-white"
               {...register("description")}
               autoComplete="off"
+              disabled={isBannerImage}
             />
-            {errors.description && (
+            {errors.description && !isBannerImage && (
               <p className="text-sm text-red-700">
                 {errors.description.message}
               </p>
@@ -200,8 +235,9 @@ const UploadPictures = () => {
               type="number"
               {...register("price")}
               autoComplete="off"
+              disabled={isBannerImage}
             />
-            {errors.price && (
+            {errors.price && !isBannerImage && (
               <p className="text-sm text-red-700">{errors.price.message}</p>
             )}
           </div>
@@ -216,6 +252,7 @@ const UploadPictures = () => {
                 id="type"
                 name="type"
                 onValueChange={(value) => setValue("type", value)} // Use setValue to update form state
+                disabled={isBannerImage}
               >
                 <SelectTrigger className="w-full bg-transparent border border-yellow-500">
                   <SelectValue placeholder="Picture Type" />
@@ -233,7 +270,7 @@ const UploadPictures = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              {errors.type && (
+              {errors.type && !isBannerImage && (
                 <p className="text-sm text-red-700">{errors.type.message}</p>
               )}
             </div>
@@ -247,6 +284,7 @@ const UploadPictures = () => {
                 id="category"
                 name="category"
                 onValueChange={(value) => setValue("category", value)} // Use setValue to update form state
+                disabled={isBannerImage}
               >
                 <SelectTrigger className="w-full bg-transparent border border-yellow-500">
                   <SelectValue placeholder="Picture Category" />
@@ -268,7 +306,7 @@ const UploadPictures = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              {errors.category && (
+              {errors.category && !isBannerImage && (
                 <p className="text-sm text-red-700">
                   {errors.category.message}
                 </p>
@@ -278,7 +316,7 @@ const UploadPictures = () => {
 
           <Button
             type="submit"
-            className="mt-4"
+            className="mt-4 "
             disabled={uploadPictureMutation.isLoading}
           >
             {uploadPictureMutation.isLoading
@@ -287,9 +325,7 @@ const UploadPictures = () => {
           </Button>
         </div>
       </form>
-
-      <AddNewCategory openDialog={openDialog} setOpenDialog={setOpenDialog} />
-      {isLoading && <Loading />}
+      {isLoading && !uploadPictureMutation?.isError  &&  <Loading />}
     </div>
   );
 };

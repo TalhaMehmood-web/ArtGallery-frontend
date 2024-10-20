@@ -91,7 +91,7 @@ const PostImageDialog = ({
           <DialogTitle></DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <img src={picture} className="rounded-md" alt="post_picture" />
+        <img src={picture} className="object-cover rounded-md aspect-square" alt="post_picture" />
       </DialogContent>
     </Dialog>
   );

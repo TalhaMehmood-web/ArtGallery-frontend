@@ -60,7 +60,7 @@ const PictureActionButton = () => {
               onClick={() => handleMenuItemClick(() => setEditPicture(true))}
             >
               <FiEdit className="mr-2" />
-              <span>Edit Product</span>
+              <span>Edit Picture</span>
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </DropdownMenuItem>
 
@@ -69,7 +69,7 @@ const PictureActionButton = () => {
               onClick={() => handleMenuItemClick(() => setDeleteDialog(true))}
             >
               <FiTrash2 className="mr-2" />
-              <span>Delete Product</span>
+              <span>Delete Picture</span>
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
 
