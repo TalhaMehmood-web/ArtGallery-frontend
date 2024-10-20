@@ -15,6 +15,47 @@ const PictureDetails = () => {
       navigate("/admin/pictures");
     }
   }, [navigate, selectedPicture]);
+  if (selectedPicture?.isBannerImage) {
+    return (
+      <div className="flex flex-1 ">
+        <div className="flex flex-col max-w-6xl gap-4 p-4 mx-auto overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
+          <img
+            src={selectedPicture?.picture}
+            alt="banner_image"
+            className="  w-[700px] h-fit border  object-contain"
+          />
+          <div className="p-6">
+            <div className="flex flex-wrap mb-4 -mx-2">
+              <div className="w-full px-2 mb-4 sm:w-1/2 sm:mb-0">
+                <h2 className="mb-2 text-lg font-semibold text-gray-900">
+                  Type
+                </h2>
+                <p className="text-2xl font-bold text-yellow-500">
+                  Banner Image
+                </p>
+              </div>
+              <div className="w-full px-2 sm:w-1/2">
+                <h2 className="mb-2 text-lg font-semibold text-gray-900">
+                  Action
+                </h2>
+                <PictureActionButton />
+              </div>
+            </div>
+            <div className="flex flex-wrap mb-4 -mx-2">
+              <div className="w-full px-2 mb-4 sm:w-1/2 sm:mb-0">
+                <h2 className="mb-2 text-lg font-semibold text-gray-900">
+                  Created At
+                </h2>
+                <p className="text-gray-600">
+                  {formatDate(selectedPicture?.createdAt)}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <>
       <div className="flex-1 p-4 bg-white sm:p-6 lg:p-8">

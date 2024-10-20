@@ -71,28 +71,26 @@ const HomeGallery = ({
         </div>
 
         {/* pictures section */}
-        <section className="grid gap-4 mt-4 justify-items-center xl:mt-0 md:px-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-          {isPicturesLoading &&
-            Array.from({ length: 5 }).map((_, index) => (
-              <PictureSkeleton key={index} />
-            ))}
-          {pictures?.data?.map((picture, index) => (
-            <div
-              className="border-[6px]  p-2 rounded-sm  border-black"
-              key={picture._id + index}
-            >
-              <img
-                onClick={() => {
-                  setOpenPictureDrawer(true);
-                  setSelectedPicture(picture);
-                }}
-                src={picture?.picture}
-                alt={picture.title}
-                className="object-cover hover:z-0 w-full h-full transition-all duration-300 cursor-pointer hover:scale-[98%] aspect-square"
-              />
-            </div>
+
+        {isPicturesLoading &&
+          Array.from({ length: 5 }).map((_, index) => (
+            <PictureSkeleton key={index} />
           ))}
-        </section>
+        <div className="masonry-layout">
+          {pictures?.data?.map((picture, index) => (
+            <img
+              onClick={() => {
+                setOpenPictureDrawer(true);
+                setSelectedPicture(picture);
+              }}
+              key={picture?._id}
+              className="w-full mx-auto masonry-item"
+              src={picture.picture}
+              alt={`Image ${index}`}
+            />
+          ))}
+        </div>
+
         {/* pagination */}
         {!isPicturesLoading && (
           <Pagination className={`p-8  flex w-full justify-center `}>

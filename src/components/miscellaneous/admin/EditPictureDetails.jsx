@@ -49,6 +49,7 @@ const EditPictureDetails = ({
       description: "",
       price: "",
       category: "",
+      type: "",
     },
   });
   useEffect(() => {
@@ -73,7 +74,7 @@ const EditPictureDetails = ({
           queryClient.invalidateQueries([
             "pictures",
             picture?.category?.name,
-            "all",
+            picture?.type,
           ]);
           toast.success("Picture details updated Successfully");
         }
@@ -84,11 +85,12 @@ const EditPictureDetails = ({
     await editPictureMutation.mutateAsync(data);
   };
   const { isLoading } = editPictureMutation;
+
   return (
     <>
       <Dialog open={editPicture} onOpenChange={setEditPicture}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="sm:max-w-[600px] h-[70%] bg-black/90 text-white border-none  flex flex-col ">
+        <DialogContent className="sm:max-w-[600px] h-fit bg-black/90 text-white border-none  flex flex-col ">
           <DialogHeader>
             <DialogTitle>Edit Picture Details</DialogTitle>
             <DialogDescription>
@@ -98,7 +100,7 @@ const EditPictureDetails = ({
           <form
             onSubmit={handleSubmit(onSubmit)}
             noValidate
-            className="flex flex-col justify-around flex-1 "
+            className="flex flex-col justify-around flex-1 gap-4 "
           >
             <div className="flex flex-col space-y-1">
               <label className="font-semibold" htmlFor="description">
@@ -143,6 +145,29 @@ const EditPictureDetails = ({
                         {category?.name}
                       </SelectItem>
                     ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col space-y-1">
+              <label className="font-semibold" htmlFor="email" type="email">
+                Type
+              </label>
+              <Select
+                defaultValue={picture?.type}
+                onValueChange={(value) => setValue("type", value)}
+                className="border-none outline-none "
+              >
+                <SelectTrigger className="w-full bg-transparent border border-yellow-500">
+                  <SelectValue placeholder="Picture Category" />
+                </SelectTrigger>
+                <SelectContent className="text-white bg-black border border-yellow-500 outline-none ">
+                  <SelectGroup className="bg-transparent">
+                    <SelectLabel>Select Picture Type</SelectLabel>
+
+                    <SelectItem value="both">All Types</SelectItem>
+                    <SelectItem value="auction">Auction Picture</SelectItem>
+                    <SelectItem value="homePage">Home Page Pictures</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>

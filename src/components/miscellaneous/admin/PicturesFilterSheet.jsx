@@ -103,6 +103,12 @@ const PicturesFilterSheet = ({
                   {"Home Page Pictures"}
                 </Label>
               </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value={"bannerImage"} id={"bannerImage"} />
+                <Label className="uppercase" htmlFor={"bannerImage"}>
+                  {"Banner Pictures"}
+                </Label>
+              </div>
             </RadioGroup>
           </div>
         </div>

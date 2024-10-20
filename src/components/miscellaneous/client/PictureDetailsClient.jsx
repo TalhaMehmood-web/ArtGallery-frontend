@@ -20,11 +20,11 @@ const PictureDetailsClient = () => {
         </DrawerHeader>
         <div className="w-full h-full overflow-y-auto ">
           <div className="container grid w-full h-full max-w-5xl grid-cols-1 p-3 mx-auto">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 ">
+            <div className="grid grid-cols-1 gap-4 ">
               {/* image */}
 
               <img
-                className="object-cover w-full  md:w-[600px]  h-full rounded-md aspect-square"
+                className="object-contain  md:h-[500px] mx-auto rounded-md "
                 src={selectedPicture?.picture}
                 alt={selectedPicture?.title}
               />

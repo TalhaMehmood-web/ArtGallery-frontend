@@ -56,12 +56,8 @@ const HomeCarousel = ({ homePagePictures }) => {
             <img
               src={artwork?.picture}
               alt={artwork?.title}
-              className="object-cover w-full h-full bg-center bg-no-repeat bg-cover aspect-square"
+              className="object-cover w-full h-full bg-center bg-no-repeat bg-cover "
             />
-            <div className="absolute bottom-0 left-0 right-0 p-6 text-white bg-black bg-opacity-50">
-              <h2 className="mb-2 text-3xl font-bold">{artwork.title}</h2>
-              <p className="text-xl">by Admin</p>
-            </div>
           </div>
         ))}
 

@@ -2,7 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { useState, forwardRef } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-const PasswordEye = forwardRef(({ label, id, placeholder, errors }, ref) => {
+const PasswordEye = forwardRef(({ label, id, placeholder, errors ,register}, ref) => {
   const [isEyeClicked, setIsEyeClicked] = useState(false);
 
   return (
@@ -19,6 +19,7 @@ const PasswordEye = forwardRef(({ label, id, placeholder, errors }, ref) => {
           type={isEyeClicked ? "text" : "password"}
           autoComplete="new-password"
           ref={ref} // Attach the ref here
+          {...register(id)}
         />
         {isEyeClicked ? (
           <FaEyeSlash

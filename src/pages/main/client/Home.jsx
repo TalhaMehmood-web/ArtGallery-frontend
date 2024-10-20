@@ -11,16 +11,17 @@ const Home = () => {
   const itemsPerPage = 6;
   const { data: homePagePictures, isLoading: galleryImagesLoading } = useQuery(
     ["pictures", "all", "homePage"],
-    () => fetchData("admin/pictures?category=all&type=homePage"),
+    () => fetchData("admin/pictures?category=all&type=bannerImage"),
     {
+      refetchOnWindowFocus: false,
       staleTime: 500000,
     }
   );
   const { data: pictures, isLoading: isPicturesLoading } = useQuery(
-    ["pictures", selectedCategory, "all", currentPage], // Query key array
+    ["pictures", selectedCategory, "exceptBannerImage", currentPage], // Query key array
     () =>
       fetchData(
-        `admin/pictures?category=${selectedCategory}&type=all&page=${currentPage}&limit=${itemsPerPage}`
+        `admin/pictures?category=${selectedCategory}&type=exceptBannerImage&page=${currentPage}&limit=${itemsPerPage}`
       ),
     {
       staleTime: 500000,

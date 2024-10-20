@@ -154,7 +154,7 @@ const Orders = () => {
   return (
     <>
       {auctions?.length === 0 ? (
-        <div className="flex items-center justify-center flex-1 ">
+        <div className="flex items-center justify-center flex-1 flex-grow w-full min-h-full ">
           <p className="text-xl italic font-semibold md:font-bold md:text-3xl">
             No Order placed yet
           </p>

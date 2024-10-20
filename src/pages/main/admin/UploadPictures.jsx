@@ -45,8 +45,7 @@ const uploadPictureSchema = z.object({
   category: z.string().min(1, "Category is required"),
 });
 const UploadPictures = () => {
-
-  const [isBannerImage,setIsBannerImage]= useState(false)
+  const [isBannerImage, setIsBannerImage] = useState(false);
   const queryClient = useQueryClient();
   const {
     handleSubmit,
@@ -64,7 +63,7 @@ const UploadPictures = () => {
       price: "",
       type: "",
       category: "",
-      isBannerImage:false
+      isBannerImage: false,
     },
   });
 
@@ -100,32 +99,31 @@ const UploadPictures = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-if(!data.picture[0]){
-  return toast.error("Picture is required",{
-    position:"top-center",
-    duration:2000
-  })
-}
-  
-if(!isBannerImage){
-  formData.append("picture", data.picture[0]);
-    formData.append("type", data.type);
-    formData.append("category", data.category);
-    formData.append("description", data.description);
-    formData.append("price", data.price);
-    formData.append("title", data.title);
-  }else{
+    if (!data.picture[0]) {
+      return toast.error("Picture is required", {
+        position: "top-center",
+        duration: 2000,
+      });
+    }
 
-    formData.append("picture", data.picture[0]);
-    formData.append("isBannerImage", data.isBannerImage);
-  }
-    console.log(formData)
+    if (!isBannerImage) {
+      formData.append("picture", data.picture[0]);
+      formData.append("type", data.type);
+      formData.append("category", data.category);
+      formData.append("description", data.description);
+      formData.append("price", data.price);
+      formData.append("title", data.title);
+    } else {
+      formData.append("picture", data.picture[0]);
+      formData.append("isBannerImage", data.isBannerImage);
+    }
+    console.log(formData);
     await uploadPictureMutation.mutateAsync(formData);
   };
 
   const { isLoading } = uploadPictureMutation;
   return (
-    <div className="flex flex-col items-center flex-1 flex-grow w-full min-h-full px-5 bg-black  opacity-90 lg:px-10">
+    <div className="flex flex-col items-center flex-1 flex-grow w-full min-h-full px-5 bg-black opacity-90 lg:px-10">
       {/* Upload picture form */}
 
       <form
@@ -153,51 +151,52 @@ if(!isBannerImage){
                 id="title"
                 name="title"
                 placeholder="Picture Title"
-                className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer placeholder:text-white"
+                className="z-10 text-white bg-transparent border border-yellow-500 placeholder:text-white"
                 type="text"
                 {...register("title")}
                 autoComplete="off"
                 disabled={isBannerImage}
               />
-              {errors.title && !isBannerImage  && (
+              {errors.title && !isBannerImage && (
                 <p className="text-sm text-red-700">{errors.title.message}</p>
               )}
             </div>
 
             {/* Picture */}
-            <div className="flex flex-col gap-2" >
-            <div className="flex flex-col space-y-2">
-              <label htmlFor="picture" className="italic font-semibold">
-                Select one Picture at a time
-              </label>
-              <Input
-                id="picture"
-                name="picture"
-                className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer"
-                type="file"
-                accept="image/*"
-                {...register("picture")}
-                autoComplete="off"
-              />
-              {errors.picture && (
-                <p className="text-sm text-red-700">{errors.picture.message}</p>
-              )}
-            </div>
-            <div className="flex items-center space-x-2">
-            <Checkbox
-                id="isBannerImage"
-                name="isBannerImage"
-                onCheckedChange={(checked) => {
-                  setIsBannerImage(checked);
-                  if (checked) {
-                    clearErrors(); // Clear validation if banner is checked
-                  }
-                }}
-                {...register("isBannerImage")}
-              />
-              <Label htmlFor="isBannerImage">Is this a banner image?</Label>
-             
-            </div>
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col space-y-2">
+                <label htmlFor="picture" className="italic font-semibold">
+                  Select one Picture at a time
+                </label>
+                <Input
+                  id="picture"
+                  name="picture"
+                  className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer"
+                  type="file"
+                  accept="image/*"
+                  {...register("picture")}
+                  autoComplete="off"
+                />
+                {errors.picture && (
+                  <p className="text-sm text-red-700">
+                    {errors.picture.message}
+                  </p>
+                )}
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="isBannerImage"
+                  name="isBannerImage"
+                  onCheckedChange={(checked) => {
+                    setIsBannerImage(checked);
+                    if (checked) {
+                      clearErrors(); // Clear validation if banner is checked
+                    }
+                  }}
+                  {...register("isBannerImage")}
+                />
+                <Label htmlFor="isBannerImage">Is this a banner image?</Label>
+              </div>
             </div>
           </div>
 
@@ -231,7 +230,7 @@ if(!isBannerImage){
               id="price"
               name="price"
               placeholder="$ Picture price (in dollars)"
-              className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer placeholder:text-white"
+              className="z-10 text-white bg-transparent border border-yellow-500 placeholder:text-white"
               type="number"
               {...register("price")}
               autoComplete="off"
@@ -325,7 +324,7 @@ if(!isBannerImage){
           </Button>
         </div>
       </form>
-      {isLoading && !uploadPictureMutation?.isError  &&  <Loading />}
+      {isLoading && !uploadPictureMutation?.isError && <Loading />}
     </div>
   );
 };

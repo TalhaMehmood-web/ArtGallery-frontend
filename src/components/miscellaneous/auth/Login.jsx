@@ -10,6 +10,7 @@ import { useGlobalContext } from "@/context/UserContext";
 import Loading from "../loading/Loading";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import PasswordEye from "./PasswordEye";
 
 // Define Zod schema for validation
 const loginSchema = z.object({
@@ -109,25 +110,13 @@ const Login = () => {
                 </p>
               )}
           </div>
-          <div className="flex flex-col space-y-1">
-            <label className="font-semibold" htmlFor="password">
-              Password
-            </label>
-            <Input
-              autoComplete="new-password"
-              id="password" // Add id attribute
-              name="password"
-              className="text-white bg-transparent border border-yellow-500"
-              placeholder="Your Password - min 6 characters"
-              type="password"
-              {...register("password")}
+          <PasswordEye
+              label={"Password"}
+              id={"password"}
+              placeholder={"Your password"}
+              errors={errors?.password}
+              register={register}
             />
-             {errors.password && (
-                <p className="text-sm text-red-500">
-                  {errors.password.message}
-                </p>
-              )}
-          </div>
 
           <div className="w-full my-3">
             <Button className="w-full">

@@ -24,7 +24,7 @@ const DisplayImageDialog = ({ displayImage, setDisplayImage, children }) => {
         <img
           src={selectedPicture?.picture}
           alt="picture"
-          className="object-cover w-full max-h-full p-4 m-4 border-4 border-yellow-500 rounded-md aspect-square "
+          className="object-contain w-full max-h-full p-4 m-4 border-4 border-yellow-500 rounded-md aspect-square "
         />
       </DialogContent>
     </Dialog>
