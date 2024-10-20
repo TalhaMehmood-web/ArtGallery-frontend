@@ -15,7 +15,7 @@ const Admin = () => {
     <>
       <div className="flex flex-col w-full h-screen min-h-screen ">
         {/* admin nav */}
-        <div className="sticky top-0 z-50 flex items-center w-full h-20 px-4 py-3 text-white sm:py-0 lg:justify-between bg-black/85 backdrop-opacity-10 ">
+        <div className="sticky top-0 z-50 flex items-center w-full px-4 py-1 text-white lg:justify-between bg-black/85 backdrop-opacity-10 ">
           <div className="block cursor-pointer lg:hidden">
             <AlignJustify
               size={32}
