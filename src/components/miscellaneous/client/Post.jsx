@@ -22,19 +22,19 @@ import { useGlobalContext } from "@/context/UserContext";
 import { toast } from "sonner";
 import PostMenu from "./PostMenu";
 import useDateFormat from "@/hooks/useDateFormat";
+import PostFollowButton from "./PostFollowButton";
 const Post = ({ post }) => {
   const { user } = useGlobalContext();
   const { timeAgo } = useDateFormat(post?.createdAt);
   const [openCommentDialog, setOpenCommentDialog] = useState(false);
-
   const [isLiked, setIsLiked] = useState(post.likes.includes(user?._id));
   const { handleToggleLike, isLoading } = useTogglePostLikes(post._id);
-
   const toggleLike = () => {
     setIsLiked(!isLiked); // Optimistic update
     handleToggleLike(); // Call API to toggle like
   };
   // Fetch comments for the post
+
   const { data: comments = [], isLoading: isCommentsLoading } = useQuery(
     ["comments", post._id],
     () => fetchData(`comment/${post._id}`),
@@ -79,12 +79,17 @@ const Post = ({ post }) => {
               </p>
             </div>
           </div>
-          <PostMenu
-            picture={post?.picture}
-            setOpenCommentDialog={setOpenCommentDialog}
-            postedBy={post?.postedBy?._id}
-            postId={post?._id}
-          />
+          <div className="space-x-3 flex items-center  ">
+            {/* follow button */}
+            <PostFollowButton userIdToFollow={post?.postedBy._id} />
+            {/* post dropdown */}
+            <PostMenu
+              picture={post?.picture}
+              setOpenCommentDialog={setOpenCommentDialog}
+              postedBy={post?.postedBy?._id}
+              postId={post?._id}
+            />
+          </div>
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-base font-bold sm:text-lg"> {post?.title} </p>

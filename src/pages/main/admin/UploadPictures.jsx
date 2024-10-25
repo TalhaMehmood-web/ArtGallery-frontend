@@ -81,14 +81,9 @@ const UploadPictures = () => {
   const uploadPictureMutation = useMutation(
     (formData) => postData("admin/picture", formData),
     {
-      onError: () => {
-        toast.error("Error uploading picture");
-      },
       onSuccess: (data) => {
         if (data.status === 201) {
           queryClient.invalidateQueries(["pictures", "all", "both"]);
-          toast.success("Picture uploaded successfully");
-
           reset();
           setValue("category", "");
           setValue("type", "");
@@ -97,7 +92,7 @@ const UploadPictures = () => {
     }
   );
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     const formData = new FormData();
     if (!data.picture[0]) {
       return toast.error("Picture is required", {
@@ -117,8 +112,12 @@ const UploadPictures = () => {
       formData.append("picture", data.picture[0]);
       formData.append("isBannerImage", data.isBannerImage);
     }
-    console.log(formData);
-    await uploadPictureMutation.mutateAsync(formData);
+    toast.promise(uploadPictureMutation.mutateAsync(formData), {
+      loading: "Uploading Picture ...",
+      success: "Picture Uploaded Successfully",
+      error: (err) =>
+        err?.response?.data?.message || "Failed to upload Picture !",
+    });
   };
 
   const { isLoading } = uploadPictureMutation;

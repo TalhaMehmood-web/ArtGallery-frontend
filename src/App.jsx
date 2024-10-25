@@ -190,7 +190,13 @@ function App() {
           }
         />
       </Routes>
-      <Toaster />
+      <Toaster
+        position="top-right"
+        duration={2500}
+        richColors
+        theme="light"
+        invert={true}
+      />
     </>
   );
 }

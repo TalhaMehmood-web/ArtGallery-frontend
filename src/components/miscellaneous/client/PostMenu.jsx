@@ -20,7 +20,7 @@ import { useGlobalContext } from "@/context/UserContext";
 import useDeletePost from "@/hooks/useDeletePost";
 import Loading from "../loading/Loading";
 
-const PostMenu = ({ setOpenCommentDialog, picture, postedBy, postId }) => {
+const PostMenu = ({ picture, postedBy, postId }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [openPictureDialog, setOpenPictureDialog] = useState(false);
   const { user } = useGlobalContext();
@@ -38,33 +38,26 @@ const PostMenu = ({ setOpenCommentDialog, picture, postedBy, postId }) => {
           <DropdownMenuItem
             onClick={() => {
               setOpenDropdown(false);
-              setOpenCommentDialog(true);
-            }}
-            className="cursor-pointer"
-          >
-            Comment
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              setOpenDropdown(false);
               setOpenPictureDialog(true);
             }}
             className="cursor-pointer"
           >
             View Full Image
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
+
           {postedBy === user?._id && (
-            <DropdownMenuItem
-              onClick={() => {
-                setOpenDropdown(false);
-                deletePost(postId);
-              }}
-              className="cursor-pointer"
-            >
-              Delete Post
-            </DropdownMenuItem>
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {
+                  setOpenDropdown(false);
+                  deletePost(postId);
+                }}
+                className="cursor-pointer"
+              >
+                Delete Post
+              </DropdownMenuItem>
+            </>
           )}
         </DropdownMenuContent>
       </DropdownMenu>
@@ -91,7 +84,11 @@ const PostImageDialog = ({
           <DialogTitle></DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <img src={picture} className="object-cover rounded-md aspect-square" alt="post_picture" />
+        <img
+          src={picture}
+          className="object-contain rounded-md aspect-square"
+          alt="post_picture"
+        />
       </DialogContent>
     </Dialog>
   );

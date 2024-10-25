@@ -14,21 +14,18 @@ import PasswordEye from "./PasswordEye";
 
 // Define Zod schema for validation
 const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required") 
-    .email("Invalid email address"),
- 
+  email: z.string().min(1, "Email is required").email("Invalid email address"),
+
   password: z
     .string({
       required_error: "Password is required",
     })
     .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be no more than 20 characters")
-      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-      .regex(/[0-9]/, "Password must contain at least one number")
-      .regex(/[\W_]/, "Password must contain at least one special character"),
+    .max(20, "Password must be no more than 20 characters")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[\W_]/, "Password must contain at least one special character"),
 });
 
 const Login = () => {
@@ -44,35 +41,31 @@ const Login = () => {
     },
   });
 
-  const { handleSubmit, register, formState:{errors} } = form;
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = form;
 
   const loginMutation = useMutation((data) => postData("user/login", data), {
     onSuccess: ({ data }) => {
-      setUser(data);
-      sessionStorage.setItem("user", JSON.stringify(data));
+      setUser(data?.data);
+      sessionStorage.setItem("user", JSON.stringify(data?.data));
       localStorage.setItem("loggedOut", JSON.stringify({ isLoggedOut: false }));
-      if (data?.isAdmin) {
+      if (data?.data?.isAdmin) {
         navigate("/admin");
       } else {
         navigate("/client");
       }
-      toast.success("Login Successfully", {
-        description: `Logged in as ${data?.fullname}`,
-        position: "top-right",
-      });
-    },
-    onError: (error) => {
-      if (error?.response?.data?.message) {
-        toast.error("Login Error", {
-          description: error?.response?.data?.message.toUpperCase(),
-          duration: 2000,
-        });
-      }
     },
   });
 
-  const onSubmit = async (data) => {
-    await loginMutation.mutateAsync(data);
+  const onSubmit = (data) => {
+    toast.promise(loginMutation.mutateAsync(data), {
+      loading: "Logging you in ...",
+      success: ({ data }) => data?.message || "Login Successful",
+      error: (err) => err?.response?.data?.message || "Login Failed! Try Again",
+    });
   };
 
   const { isLoading, isError } = loginMutation;
@@ -104,19 +97,17 @@ const Login = () => {
               type="email"
               {...register("email")}
             />
-             {errors.email && (
-                <p className="text-sm text-red-500">
-                  {errors.email.message}
-                </p>
-              )}
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email.message}</p>
+            )}
           </div>
           <PasswordEye
-              label={"Password"}
-              id={"password"}
-              placeholder={"Your password"}
-              errors={errors?.password}
-              register={register}
-            />
+            label={"Password"}
+            id={"password"}
+            placeholder={"Your password"}
+            errors={errors?.password}
+            register={register}
+          />
 
           <div className="w-full my-3">
             <Button className="w-full">

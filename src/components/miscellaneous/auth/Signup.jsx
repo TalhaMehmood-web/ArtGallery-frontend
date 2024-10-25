@@ -176,7 +176,9 @@ const Signup = () => {
               name="profile"
               className="text-white bg-transparent border border-yellow-500 cursor-pointer"
               type="file"
+              accept="image/*"
               {...register("profile")}
+
               // Profile picture doesn't need autoComplete
             />
             {errors.profile && (
