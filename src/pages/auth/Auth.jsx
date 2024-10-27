@@ -1,6 +1,6 @@
 import Login from "@/components/miscellaneous/auth/Login";
 import Signup from "@/components/miscellaneous/auth/Signup";
-import SignUpImage from "@/assets/Signup.PNG";
+import SignUpImage from "@/assets/Signup.jpg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Auth = () => {
