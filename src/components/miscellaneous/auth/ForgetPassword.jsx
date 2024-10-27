@@ -56,10 +56,7 @@ const ForgetPassword = () => {
           <ul className="flex flex-col gap-1 list-disc list-inside">
             <li>Enter your Email and click on the submit button.</li>
             <li>
-              After verifying your email, a popup will open with OTP code.
-            </li>
-            <li>
-              You need to copy that OTP and click on the Reset Password page.
+              We will assign you a token and redirect you to Reset Password.
             </li>
           </ul>
         </div>

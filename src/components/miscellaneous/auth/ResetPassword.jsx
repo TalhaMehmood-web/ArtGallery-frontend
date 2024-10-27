@@ -67,21 +67,28 @@ const ResetPassword = () => {
         <div className="p-2 text-lg font-semibold text-center uppercase bg-yellow-500 rounded-md">
           <p>Reset Password</p>
         </div>
+        <div className="text-sm text-slate-400">
+          <ul className="flex flex-col gap-1 list-disc list-inside">
+            <li>Enter your New Password</li>
+            <li>Confirm your new password</li>
+            <li>Click on submit when you are done.</li>
+          </ul>
+        </div>
         <form
           className="flex flex-col space-y-5"
           noValidate
           onSubmit={handleSubmit(onSubmit)}
         >
           <PasswordEye
-            label={"Password"}
+            label={"New Password"}
             id={"password"}
-            placeholder={"Your password"}
+            placeholder={"New password"}
             errors={errors?.password}
             register={register}
             className="space-y-3"
           />
           <PasswordEye
-            label={"Confirm Password"}
+            label={"Confirm New Password"}
             id={"confirmPassword"}
             placeholder={"Retype-Password"}
             errors={errors?.confirmPassword}
