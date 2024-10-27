@@ -19,24 +19,24 @@ export const adminNavLinks = [
 export const clientNavLinks = [
     {
         title: "Portfolio",
-        link: "/client",
+        link: "/",
     },
     {
         title: "Gallery",
-        link: "/client/gallery",
+        link: "/gallery",
     },
     {
         title: "News Feed",
-        link: "/client/news",
+        link: "/news",
     },
 
     {
         title: "Auction",
-        link: "/client/auction",
+        link: "/auction",
     },
     {
         title: "About Us",
-        link: "/client/about",
+        link: "/about",
     },
 
 ]

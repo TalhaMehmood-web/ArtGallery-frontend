@@ -8,6 +8,8 @@ import { useGlobalContext } from "./context/UserContext";
 import Loading from "./components/miscellaneous/loading/Loading";
 
 import ProfileAnalytics from "./pages/main/client/ProfileAnalytics";
+import ForgetPassword from "./components/miscellaneous/auth/ForgetPassword";
+import ResetPassword from "./components/miscellaneous/auth/ResetPassword";
 
 const NewsFeed = React.lazy(() => import("./pages/main/client/NewsFeed"));
 const Home = React.lazy(() => import("./pages/main/client/Home"));
@@ -32,23 +34,17 @@ const PrivateRoute = ({ children, isAdmin }) => {
   const { user } = useGlobalContext();
   const isAuthenticated = !!user;
 
+  if (window.location.pathname === "/auth") {
+    return children; // Return the auth page directly
+  }
+
   // Check if the user is authenticated and if isAdmin is required, check if the user is an admin
   if (isAuthenticated && (!isAdmin || (isAdmin && user.isAdmin))) {
     return children;
   }
-
   return <Navigate to="/" />;
 };
 
-const AuthRoute = ({ children }) => {
-  const { user } = useGlobalContext();
-  const isAuthenticated = !!user;
-  return isAuthenticated ? (
-    <Navigate to={user?.isAdmin ? "/admin" : "/client"} />
-  ) : (
-    children
-  );
-};
 function App() {
   const { loadingUser } = useGlobalContext();
   if (loadingUser || false) {
@@ -58,73 +54,75 @@ function App() {
     <>
       <Routes>
         <Route
-          path="/"
+          path="/auth"
           element={
-            <AuthRoute>
-              <Suspense fallback={<Loading />}>
-                <Auth />
-              </Suspense>
-            </AuthRoute>
+            <Suspense fallback={<Loading />}>
+              <Auth />
+            </Suspense>
           }
         />
         <Route
-          path="/client"
+          path="/forget-password"
           element={
-            <PrivateRoute>
-              <Suspense fallback={<Loading />}>
-                <Client />
-              </Suspense>
-            </PrivateRoute>
+            <Suspense fallback={<Loading />}>
+              <ForgetPassword />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/reset-password/:token"
+          element={
+            <Suspense fallback={<Loading />}>
+              <ResetPassword />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<Loading />}>
+              <Client />
+            </Suspense>
           }
         >
           <Route
             path=""
             element={
-              <PrivateRoute>
-                <Suspense fallback={<Loading />}>
-                  <Portfolio />
-                </Suspense>
-              </PrivateRoute>
+              <Suspense fallback={<Loading />}>
+                <Portfolio />
+              </Suspense>
             }
           />
           <Route
             path="gallery"
             element={
-              <PrivateRoute>
-                <Suspense fallback={<Loading />}>
-                  <Home />
-                </Suspense>
-              </PrivateRoute>
+              <Suspense fallback={<Loading />}>
+                <Home />
+              </Suspense>
             }
           />
           <Route
             path="news"
             element={
-              <PrivateRoute>
-                <Suspense fallback={<Loading />}>
-                  <NewsFeed />
-                </Suspense>
-              </PrivateRoute>
+              <Suspense fallback={<Loading />}>
+                <NewsFeed />
+              </Suspense>
             }
           />
           <Route
             path="auction"
             element={
-              <PrivateRoute>
-                <Suspense fallback={<Loading />}>
-                  <Auction />
-                </Suspense>
-              </PrivateRoute>
+              <Suspense fallback={<Loading />}>
+                <Auction />
+              </Suspense>
             }
           />
           <Route
             path="about"
             element={
-              <PrivateRoute>
-                <Suspense fallback={<Loading />}>
-                  <About />
-                </Suspense>
-              </PrivateRoute>
+              <Suspense fallback={<Loading />}>
+                <About />
+              </Suspense>
             }
           />
         </Route>

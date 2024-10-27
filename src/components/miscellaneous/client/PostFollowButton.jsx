@@ -1,17 +1,30 @@
-import { Button } from "@/components/ui/button";
-import useFollow from "@/hooks/useFollow";
+/* eslint-disable react/prop-types */
 
-const PostFollowButton = ({ userIdToFollow }) => {
-  const { followUser, isAddingFollower } = useFollow();
+import useFollow from "@/hooks/useFollow";
+import AuthButton from "../auth/AuthButton";
+import { useGlobalContext } from "@/context/UserContext";
+
+const PostFollowButton = ({ userIdToFollow, createdByYou, isFollowing }) => {
+  const { followUser } = useFollow();
+  const { user } = useGlobalContext();
   return (
     <div>
-      <Button
+      <AuthButton
         onClick={() => followUser(userIdToFollow)}
-        className={"text-blue-500 font-semibold hover:text-blue-500 text-base"}
+        className={
+          "text-blue-500 disabled:border-none disabled:opacity-100 font-semibold hover:text-blue-500 text-base"
+        }
         variant="ghost"
+        disabled={createdByYou || isFollowing}
       >
-        Follow
-      </Button>
+        {user
+          ? createdByYou
+            ? "Created by you"
+            : isFollowing
+            ? "Following"
+            : "Follow"
+          : null}
+      </AuthButton>
     </div>
   );
 };

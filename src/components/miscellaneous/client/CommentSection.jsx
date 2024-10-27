@@ -12,19 +12,21 @@ const CommentSection = ({ postId, isCommentsLoading, comments }) => {
   return (
     <div className="flex flex-col flex-1 ">
       {/* header */}
-      <div className="flex items-center pb-3 space-x-4 border-b border-slate-700 ">
-        <Avatar className="rounded-full">
-          <AvatarImage
-            className="object-cover"
-            src={user?.profile}
-            alt={user?.fullname}
-          />
-          <AvatarFallback className="text-black rounded-full">
-            {getInitials(user?.fullname)}
-          </AvatarFallback>
-        </Avatar>
-        <p>{user?.fullname}</p>
-      </div>
+      {user && (
+        <div className="flex items-center pb-3 space-x-4 border-b border-slate-700 ">
+          <Avatar className="rounded-full">
+            <AvatarImage
+              className="object-cover"
+              src={user?.profile}
+              alt={user?.fullname}
+            />
+            <AvatarFallback className="text-black rounded-full">
+              {getInitials(user?.fullname)}
+            </AvatarFallback>
+          </Avatar>
+          <p>{user?.fullname}</p>
+        </div>
+      )}
       {/* display comments */}
       <div className="flex flex-1">
         {comments?.length === 0 ? (
@@ -49,6 +51,7 @@ const CommentSection = ({ postId, isCommentsLoading, comments }) => {
         )}
       </div>
       {/* add comment */}
+
       <AddComment postId={postId} className="bg-transparent border-slate-700" />
     </div>
   );

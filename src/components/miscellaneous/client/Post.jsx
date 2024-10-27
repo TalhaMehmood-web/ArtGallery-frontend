@@ -8,7 +8,6 @@ import { useState } from "react";
 import ViewCommentsDialog from "./ViewCommentsDialog";
 import { useQuery } from "react-query";
 import { fetchData } from "@/api/fetchData";
-import CommentSkeleton from "@/skeleton/CommentSkeleton";
 import getInitials from "@/utils/getInitials";
 import {
   Tooltip,
@@ -23,12 +22,14 @@ import { toast } from "sonner";
 import PostMenu from "./PostMenu";
 import useDateFormat from "@/hooks/useDateFormat";
 import PostFollowButton from "./PostFollowButton";
+import AuthButton from "../auth/AuthButton";
 const Post = ({ post }) => {
   const { user } = useGlobalContext();
   const { timeAgo } = useDateFormat(post?.createdAt);
   const [openCommentDialog, setOpenCommentDialog] = useState(false);
   const [isLiked, setIsLiked] = useState(post.likes.includes(user?._id));
   const { handleToggleLike, isLoading } = useTogglePostLikes(post._id);
+
   const toggleLike = () => {
     setIsLiked(!isLiked); // Optimistic update
     handleToggleLike(); // Call API to toggle like
@@ -71,23 +72,28 @@ const Post = ({ post }) => {
 
             <div>
               <p className="mx-4 text-lg italic font-semibold">
-                {post?.postedBy?.fullname}{" "}
-                {user?._id === post?.postedBy?._id && "(You)"}
+                {post?.postedBy?.fullname}
               </p>
               <p className="mx-4 text-sm italic font-semibold text-slate-500">
                 {post?.postedBy?.email}
               </p>
             </div>
           </div>
-          <div className="space-x-3 flex items-center  ">
+          <div className="flex items-center space-x-3 ">
             {/* follow button */}
-            <PostFollowButton userIdToFollow={post?.postedBy._id} />
+            <PostFollowButton
+              userIdToFollow={post?.postedBy._id}
+              createdByYou={post?.createdByYou}
+              isFollowing={post?.following}
+            />
             {/* post dropdown */}
             <PostMenu
               picture={post?.picture}
               setOpenCommentDialog={setOpenCommentDialog}
               postedBy={post?.postedBy?._id}
               postId={post?._id}
+              isFollowing={post?.following}
+              createdByYou={post?.createdByYou}
             />
           </div>
         </div>
@@ -128,17 +134,17 @@ const Post = ({ post }) => {
               <TooltipProvider>
                 <Tooltip delayDuration={500}>
                   <TooltipTrigger asChild>
-                    <Button
+                    <AuthButton
                       className="p-0"
                       variant="nothing"
                       disabled={isLoading}
+                      onClick={toggleLike}
                     >
                       <FaRegHeart
-                        onClick={toggleLike}
                         size={20}
                         className="transition-all duration-300 cursor-pointer hover:text-red-500"
                       />
-                    </Button>
+                    </AuthButton>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Like this post</p>
@@ -180,8 +186,9 @@ const Post = ({ post }) => {
         </div>
 
         {/* Fetch comments before rendering AddComment */}
-        {!isCommentsLoading ? (
-          <div className="flex items-center space-x-4">
+
+        <div className="flex items-center space-x-4">
+          {user && (
             <Avatar className="rounded-full">
               <AvatarImage
                 className="object-cover"
@@ -192,14 +199,9 @@ const Post = ({ post }) => {
                 {getInitials(user?.fullname)}
               </AvatarFallback>
             </Avatar>
-            <AddComment
-              className="flex-1 border-slate-300"
-              postId={post?._id}
-            />
-          </div>
-        ) : (
-          <CommentSkeleton />
-        )}
+          )}
+          <AddComment className="flex-1 border-slate-300" postId={post?._id} />
+        </div>
       </div>
 
       <ViewCommentsDialog

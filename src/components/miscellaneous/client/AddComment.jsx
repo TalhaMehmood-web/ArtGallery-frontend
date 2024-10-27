@@ -6,7 +6,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { v4 as uuidv4 } from "uuid"; // To generate a temporary ID for optimistic updates
 import { useGlobalContext } from "@/context/UserContext";
 import { IoSendSharp } from "react-icons/io5";
-import { Button } from "@/components/ui/button";
+
+import AuthButton from "../auth/AuthButton";
 const AddComment = ({ postId, className = "" }) => {
   const queryClient = useQueryClient();
   const { user } = useGlobalContext();
@@ -63,7 +64,6 @@ const AddComment = ({ postId, className = "" }) => {
     }
   );
   const onSubmit = async (data) => {
-    console.log(data);
     if (data.text.trim() === "") {
       return; // Prevent submission of empty comments
     }
@@ -81,14 +81,15 @@ const AddComment = ({ postId, className = "" }) => {
         className={className}
         type="text"
         placeholder="Add a comment"
+        disabled={!user}
         {...register("text")}
       />
-      <Button
+      <AuthButton
         className="border-none hover:bg-transparent focus:bg-transparent "
         type="submit"
       >
         <IoSendSharp className="text-xl text-yellow-500 md:text-3xl hover:text-yellow-500/80" />
-      </Button>
+      </AuthButton>
     </form>
   );
 };

@@ -21,7 +21,7 @@ const AuctionItem = ({ item }) => {
             </div>
           )}
           <img
-            className={`object-cover rounded-md border  aspect-square   w-full ${
+            className={`object-cover rounded-md border h-full  aspect-square   w-full ${
               imageLoading ? "hidden" : "block"
             } `}
             src={item?.picture?.picture}

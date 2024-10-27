@@ -19,12 +19,14 @@ import { useState } from "react";
 import { useGlobalContext } from "@/context/UserContext";
 import useDeletePost from "@/hooks/useDeletePost";
 import Loading from "../loading/Loading";
+import useFollow from "@/hooks/useFollow";
 
-const PostMenu = ({ picture, postedBy, postId }) => {
+const PostMenu = ({ picture, postedBy, postId, isFollowing, createdByYou }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [openPictureDialog, setOpenPictureDialog] = useState(false);
   const { user } = useGlobalContext();
   const { deletePost, postDeleting } = useDeletePost();
+  const { unfollowUser } = useFollow();
 
   return (
     <>
@@ -56,6 +58,20 @@ const PostMenu = ({ picture, postedBy, postId }) => {
                 className="cursor-pointer"
               >
                 Delete Post
+              </DropdownMenuItem>
+            </>
+          )}
+          {!createdByYou && isFollowing && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {
+                  unfollowUser(postedBy);
+                  setOpenDropdown(false);
+                }}
+                className="cursor-pointer"
+              >
+                UnFollow
               </DropdownMenuItem>
             </>
           )}

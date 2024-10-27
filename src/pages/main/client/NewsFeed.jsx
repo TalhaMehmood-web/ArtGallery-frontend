@@ -1,18 +1,21 @@
 import { fetchData } from "@/api/fetchData";
 import Post from "@/components/miscellaneous/client/Post";
 import PostPictureDialog from "@/components/miscellaneous/client/PostPictureDialog";
-import { Button } from "@/components/ui/button";
+
 import { useState } from "react";
 import { useQuery } from "react-query";
 import PostSkeleton from "@/skeleton/PostSkeleton";
+
+import AuthButton from "@/components/miscellaneous/auth/AuthButton";
+import { useGlobalContext } from "@/context/UserContext";
 const NewsFeed = () => {
   const [openPostPicture, setOpenPostPicture] = useState(false);
+  const { user } = useGlobalContext();
   const { data: posts, isLoading: postsLoading } = useQuery(
-    "posts",
-    () => fetchData("post"),
+    ["posts", user?._id],
+    () => fetchData(user?._id ? `post?userId=${user._id}` : "post"),
     {
       refetchOnWindowFocus: false,
-      staleTime: 500000,
     }
   );
 
@@ -20,12 +23,12 @@ const NewsFeed = () => {
     <>
       <div className="flex flex-col flex-1 flex-grow min-h-full">
         <div className="sticky top-0 left-0 flex justify-end w-full p-2 bg-transparent">
-          <Button
+          <AuthButton
+            className={"text-white bg-yellow-500 rounded-full "}
             onClick={() => setOpenPostPicture(true)}
-            className="text-white bg-yellow-500 rounded-full "
           >
             Create Post +
-          </Button>
+          </AuthButton>
         </div>
         {/* display post */}
         {posts?.length === 0 ? (

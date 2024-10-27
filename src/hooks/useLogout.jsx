@@ -2,7 +2,7 @@ import { useGlobalContext } from "@/context/UserContext";
 import { useMutation } from "react-query";
 import { postData } from "@/api/postData";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "sonner";
 const useLogout = () => {
   const { setUser } = useGlobalContext();
   const navigate = useNavigate();
@@ -20,8 +20,12 @@ const useLogout = () => {
     },
   });
 
-  const handleLogout = async () => {
-    await logoutMutation.mutateAsync();
+  const handleLogout = () => {
+    toast.promise(logoutMutation.mutateAsync(), {
+      loading: "Logging you out ...",
+      success: ({ data }) => data?.message || "Logged out",
+      error: (err) => err?.response?.data?.message || "Failed to log you out",
+    });
   };
 
   const { isLoading } = logoutMutation;

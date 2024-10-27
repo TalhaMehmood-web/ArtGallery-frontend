@@ -1,6 +1,6 @@
 import Login from "@/components/miscellaneous/auth/Login";
 import Signup from "@/components/miscellaneous/auth/Signup";
-import SignUpImage from "../../assets/Signup.png";
+import SignUpImage from "../../assets/Signup.PNG";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Auth = () => {
@@ -9,7 +9,7 @@ const Auth = () => {
       <img
         src={SignUpImage}
         alt="background"
-        className="absolute object-cover w-full h-full brightness-50 "
+        className="absolute object-cover object-top w-full h-full brightness-50 aspect-square "
       />
 
       <Tabs defaultValue="login" className="w-[700px] mt-5  z-10  ">

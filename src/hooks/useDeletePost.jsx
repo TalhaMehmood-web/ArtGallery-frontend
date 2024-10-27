@@ -15,8 +15,8 @@ const useDeletePost = () => {
         if (data) {
           toast.success(data.message);
           queryClient.invalidateQueries(["profile-data", user?._id]);
-          if (location.pathname === "/client/news") {
-            queryClient.invalidateQueries("posts");
+          if (location.pathname === "/news") {
+            queryClient.invalidateQueries(["posts", user?._id]);
           }
         }
       },

@@ -24,6 +24,9 @@ const GlobalContextProvider = ({ children }) => {
   const [selectedPicture, setSelectedPicture] = useState(null);
   const [loadingUser, setLoading] = useState(true);
   const [openPictureDrawer, setOpenPictureDrawer] = useState(false);
+  const [returnURL, setReturnURL] = useState(
+    JSON.parse(localStorage.getItem("returnURL"))
+  );
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -52,6 +55,8 @@ const GlobalContextProvider = ({ children }) => {
         setSelectedPicture,
         openPictureDrawer,
         setOpenPictureDrawer,
+        returnURL,
+        setReturnURL,
       }}
     >
       {children}

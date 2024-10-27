@@ -150,6 +150,7 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
               name="picture"
               className="z-10 text-white bg-transparent border border-yellow-500 cursor-pointer"
               type="file"
+              accept="image/*"
               {...register("picture")}
             />
             {errors.picture && (

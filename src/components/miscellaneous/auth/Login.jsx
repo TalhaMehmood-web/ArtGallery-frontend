@@ -7,11 +7,11 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { postData } from "@/api/postData";
 import { useGlobalContext } from "@/context/UserContext";
-import Loading from "../loading/Loading";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PasswordEye from "./PasswordEye";
-
+import { Loader2 } from "lucide-react";
 // Define Zod schema for validation
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -30,7 +30,7 @@ const loginSchema = z.object({
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser } = useGlobalContext();
+  const { setUser, returnURL } = useGlobalContext();
 
   // Use useForm with zodResolver
   const form = useForm({
@@ -55,7 +55,7 @@ const Login = () => {
       if (data?.data?.isAdmin) {
         navigate("/admin");
       } else {
-        navigate("/client");
+        navigate(returnURL);
       }
     },
   });
@@ -68,7 +68,7 @@ const Login = () => {
     });
   };
 
-  const { isLoading, isError } = loginMutation;
+  const { isLoading } = loginMutation;
 
   return (
     <>
@@ -111,12 +111,22 @@ const Login = () => {
 
           <div className="w-full my-3">
             <Button className="w-full">
+              {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               {isLoading ? "Processing..." : "Login"}
             </Button>
           </div>
         </form>
+        <div className="m-0 space-y-0 ">
+          <Button
+            type="button"
+            onClick={() => navigate("/forget-password")}
+            className="text-blue-500 bg-transparent border-none hover:text-blue-500 focus:text-blue-500 hover:bg-transparent hover:underline focus:bg-transparent"
+            variant="ghost"
+          >
+            Forget Password? Click here
+          </Button>
+        </div>
       </div>
-      {isLoading && !isError && <Loading />}
     </>
   );
 };

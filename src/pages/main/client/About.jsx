@@ -43,7 +43,7 @@ const About = () => {
 
           <div className="flex items-start text-center ">
             <Button
-              onClick={() => navigate("/client/gallery")}
+              onClick={() => navigate("/gallery")}
               className="text-white transition-all duration-300 bg-yellow-500 hover:bg-white hover:text-yellow-500 "
             >
               View Our Work

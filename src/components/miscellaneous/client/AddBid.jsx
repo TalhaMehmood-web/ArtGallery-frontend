@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { postData } from "@/api/postData";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { toast } from "sonner";
 import { useQueryClient } from "react-query";
+import AuthButton from "../auth/AuthButton";
 const AddBid = ({ openDialog, setOpenDialog, auctionId, basePrice }) => {
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -34,7 +34,7 @@ const AddBid = ({ openDialog, setOpenDialog, auctionId, basePrice }) => {
       onError: (error) => {
         console.log(error);
         toast.error("Failed to add bid price", {
-          description: error?.response?.data?.message,
+          description: error?.response?.data?.message || error?.response?.data,
           position: "top-center",
         });
       },
@@ -79,7 +79,9 @@ const AddBid = ({ openDialog, setOpenDialog, auctionId, basePrice }) => {
                 })}
               />
             </div>
-            <Button type="submit">{isLoading ? "Submitting" : "Submit"}</Button>
+            <AuthButton type="submit">
+              {isLoading ? "Submitting" : "Submit"}
+            </AuthButton>
           </form>
         </DialogContent>
       </Dialog>
