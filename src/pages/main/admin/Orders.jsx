@@ -31,7 +31,7 @@ import {
 import { ChevronDown, ArrowUpDown } from "lucide-react";
 import Loading from "@/components/miscellaneous/loading/Loading";
 import { toast } from "sonner";
-
+import { Trash2 } from "lucide-react";
 const Orders = () => {
   const {
     data: auctions,
@@ -77,7 +77,14 @@ const Orders = () => {
     {
       accessorKey: "endDate",
       header: "End Date",
-      cell: ({ row }) => new Date(row.original.endDate).toLocaleDateString(),
+      cell: ({ row }) => {
+        const endDate = new Date(row.original.endDate); 
+        const now = Date.now(); 
+      
+        return endDate.getTime() < now 
+          ? "Auction Ended" 
+          : endDate.toLocaleDateString(); 
+      }
     },
     {
       accessorKey: "numberOfBidders",
@@ -161,14 +168,14 @@ const Orders = () => {
         </div>
       ) : (
         <div className="w-full p-5">
-          <div className="grid grid-cols-4 gap-4 p-4">
+          <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-4">
             <Input
               placeholder="Filter by name or email..."
               onChange={(event) => filterByEmailOrName(event.target.value)}
               className="col-span-4 border border-yellow-500 md:max-w-full md:col-span-2"
             />
             {/* button for sheet */}
-
+<div className="flex flex-row space-x-2" >
             <Button
               className={`text-sm w-fit text-white col-span-1  bg-yellow-500 ${
                 !selectedAuction
@@ -179,9 +186,20 @@ const Orders = () => {
             >
               View All Bidders
             </Button>
-
+            <Button
+            variant="destructive"
+              className={`flex flex-row items-center space-x-2  ${
+                !selectedAuction
+                  ? " opacity-50  hover:bg-red-500 hover:text-white focus:text-white focus:bg-red-500 "
+                  : ""
+              }`}
+              onClick={()=>alert(selectedAuction?._id)}
+            >
+           <Trash2 className="w-4 h-4"  /> <p>Delete Auction</p>
+            </Button>
+            </div>
             {/* columns */}
-            <div className="flex items-end justify-end col-span-3 md:col-span-1 ">
+            <div className="flex items-end justify-end w-full col-span-3 md:col-span-1 ">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="ml-auto">

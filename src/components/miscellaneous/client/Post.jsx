@@ -71,10 +71,10 @@ const Post = ({ post }) => {
             </Avatar>
 
             <div>
-              <p className="mx-4 text-lg italic font-semibold">
-                {post?.postedBy?.fullname}
+              <p className="mx-4 text-sm italic font-semibold sm:text-lg">
+                {post?.postedBy?.fullname}{post?.createdByYou && "(You)" }
               </p>
-              <p className="mx-4 text-sm italic font-semibold text-slate-500">
+              <p className="mx-4 text-xs italic sm:text-sm sm:font-semibold text-slate-500">
                 {post?.postedBy?.email}
               </p>
             </div>

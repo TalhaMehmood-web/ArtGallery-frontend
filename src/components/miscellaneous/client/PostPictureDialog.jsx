@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -16,6 +14,7 @@ import { postData } from "@/api/postData"; // Assuming you have a postData funct
 import { toast } from "sonner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"; // Import Zod resolver for react-hook-form
+import LoaderButton from "@/components/ui/loaderButton";
 
 // Define your Zod schema for validation
 const schema = z.object({
@@ -65,13 +64,10 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
   // Mutation to post the data
   const createPostMutation = useMutation((data) => postData("post", data), {
     onSuccess: () => {
-      toast.success("Post created successfully!");
+      
       setOpenPostPicture(false);
       reset();
       queryClient.invalidateQueries("posts");
-    },
-    onError: (error) => {
-      toast.error(`Failed to create post: ${error.message}`);
     },
   });
 
@@ -83,9 +79,15 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("picture", picture[0]); // File input provides an array, so take the first element
-
     formData.append("hashTags", hashTags.split(",")); // Assuming hashTags are comma-separated
-    await createPostMutation.mutateAsync(formData);
+    
+    toast.promise(createPostMutation.mutateAsync(formData),{
+      loading:"Creating your post ... ",
+      success:"Post Created Successfully",
+      error:(err)=>err?.response?.data?.message || "Failed to create post! Try Again"
+
+    }) 
+    
   };
 
   const { isLoading } = createPostMutation;
@@ -177,13 +179,7 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
               </p>
             )}
           </div>
-          <Button
-            className="text-yellow-500 bg-white/90 hover:bg-transparent hover:text-white"
-            type="submit"
-            disabled={isLoading}
-          >
-            {isLoading ? "Creating Post..." : "Create Post"}
-          </Button>
+          <LoaderButton isLoading={isLoading} type="submit" text={isLoading?"Creating Post" :"Create Post"}  />
         </form>
       </DialogContent>
     </Dialog>

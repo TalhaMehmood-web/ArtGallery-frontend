@@ -12,14 +12,14 @@ const PostFollowButton = ({ userIdToFollow, createdByYou, isFollowing }) => {
       <AuthButton
         onClick={() => followUser(userIdToFollow)}
         className={
-          "text-blue-500 disabled:border-none disabled:opacity-100 font-semibold hover:text-blue-500 text-base"
+          "text-blue-500 disabled:border-none disabled:opacity-100 font-semibold hover:text-blue-500 text-sm sm:text-base"
         }
         variant="ghost"
         disabled={createdByYou || isFollowing}
       >
         {user
           ? createdByYou
-            ? "Created by you"
+            ? ""
             : isFollowing
             ? "Following"
             : "Follow"

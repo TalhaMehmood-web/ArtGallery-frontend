@@ -32,11 +32,11 @@ const PostMenu = ({ picture, postedBy, postId, isFollowing, createdByYou }) => {
     <>
       <DropdownMenu open={openDropdown} onOpenChange={setOpenDropdown}>
         <DropdownMenuTrigger asChild>
-          <Button onClick={() => setOpenDropdown(true)} variant="outline">
+          <Button className="px-3"  onClick={() => setOpenDropdown(true)} variant="outline">
             <CiMenuKebab />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-24">
+        <DropdownMenuContent side="bottom" className="w-20 sm:w-24">
           <DropdownMenuItem
             onClick={() => {
               setOpenDropdown(false);

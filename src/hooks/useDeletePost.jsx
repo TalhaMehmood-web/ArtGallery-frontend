@@ -13,7 +13,7 @@ const useDeletePost = () => {
     {
       onSuccess: ({ data }) => {
         if (data) {
-          toast.success(data.message);
+        
           queryClient.invalidateQueries(["profile-data", user?._id]);
           if (location.pathname === "/news") {
             queryClient.invalidateQueries(["posts", user?._id]);
@@ -23,8 +23,13 @@ const useDeletePost = () => {
     }
   );
 
-  const deletePost = async (postId) => {
-    await deletePostMutation.mutateAsync(postId);
+  const deletePost =  (postId) => {
+    toast.promise(deletePostMutation.mutateAsync(postId),{
+      loading:"Deleting Post ....",
+      success:"Post Deleted Successfully",
+      error:(err)=>err?.response?.data?.message || "Failed to delete post"
+    });
+     
   };
   const { isLoading: postDeleting } = deletePostMutation;
   return { deletePost, postDeleting };
