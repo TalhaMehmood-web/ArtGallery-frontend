@@ -17,6 +17,7 @@ const signupSchema = z
     fullname: z.string().min(1, "Full Name is required"),
     username: z.string().min(1, "Username is required"),
     email: z.string().min(1, "Email is required").email("Invalid email format"),
+    phone: z.string().min(1,"Phone number is required"),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -45,6 +46,7 @@ const Signup = () => {
       fullname: "",
       username: "",
       email: "",
+      phone:"",
       password: "",
       confirmPassword: "",
       profile: null,
@@ -68,7 +70,7 @@ const Signup = () => {
       if (data?.isAdmin) {
         navigate("/admin");
       } else {
-        navigate("/client");
+        navigate("/");
       }
     },
     onError: (error) => {
@@ -90,6 +92,7 @@ const Signup = () => {
     formData.append("fullname", data.fullname);
     formData.append("username", data.username);
     formData.append("email", data.email);
+    formData.append("phone", data.phone);
     formData.append("password", password);
     formData.append("confirmPassword", confirmPassword);
     formData.append("profile", profile[0]);
@@ -104,11 +107,9 @@ const Signup = () => {
         className="p-4 text-white rounded-md shadow-xl shadow-black/10 bg-black/60 "
       >
         <div className="flex flex-col space-y-4">
-          <div className="flex flex-col px-10 py-1 mb-4 space-y-4 bg-black/20">
+          <div className="flex flex-col py-1 mb-4 space-y-4 bg-black/20">
             <p className="text-3xl font-bold ">Signup</p>
-            <p className="mb-5 font-semibold text-blue-300 cursor-pointer hover:underline">
-              Already have an account? Login
-            </p>
+   
           </div>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <div className="flex flex-col space-y-1">
@@ -150,6 +151,7 @@ const Signup = () => {
               )}
             </div>
           </div>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <div className="flex flex-col space-y-1">
             <label className="font-semibold" htmlFor="email">
               Email
@@ -166,6 +168,24 @@ const Signup = () => {
             {errors.email && (
               <p className="text-sm text-red-500">{errors.email.message}</p>
             )}
+          </div>
+          <div className="flex flex-col space-y-1">
+            <label className="font-semibold" htmlFor="phone">
+            Phone Number
+            </label>
+            <Input
+              id="phone"
+              name="phone"
+              type="phone"
+              className="text-white bg-transparent border border-yellow-500"
+              placeholder="0-000-000-000"
+              {...register("phone")}
+              autoComplete="phone" // Add autoComplete
+            />
+            {errors.phone && (
+              <p className="text-sm text-red-500">{errors.phone.message}</p>
+            )}
+          </div>
           </div>
           <div className="flex flex-col space-y-1">
             <label className="font-semibold" htmlFor="profile">

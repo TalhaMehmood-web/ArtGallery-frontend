@@ -7,7 +7,7 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import logo from "@/assets/logo.png";
 const ResNav = ({ openSheet, setOpenSheet, navLinks }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,7 +20,7 @@ const ResNav = ({ openSheet, setOpenSheet, navLinks }) => {
       >
         <SheetHeader className="text-white">
           <SheetTitle className="text-xl italic font-bold text-yellow-500">
-            HOMEMADE HEAVEN
+            <img className="object-cover w-20 h-10" src={logo} alt="logo" />
           </SheetTitle>
           <SheetDescription>
             Navigation Bar to visit the pages . Click on below Links to proceed.

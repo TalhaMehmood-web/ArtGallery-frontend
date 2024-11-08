@@ -32,22 +32,7 @@ const schema = z.object({
     .string()
     .min(1, "Description is required")
     .max(225, "Maximum 255 characters are allowed"),
-  hashTags: z
-    .string()
-    .min(1, " A  Hash tags is required")
-    .max(60, "Maximum limit for hashtags is 60 characters") // Maximum limit for the entire string
-    .refine((value) => {
-      const tags = value.split(",").map((tag) => tag.trim());
-      return tags.length <= 3; // Ensure no more than 3 tags
-    }, "You can only provide a maximum of 3 tags.")
-    .refine((value) => {
-      const tags = value.split(",").map((tag) => tag.trim());
-      return tags.every((tag) => tag.length <= 20); // Ensure each tag is less than or equal to 20 characters
-    }, "Each hashtag must be 20 characters or less.")
-    .refine((value) => {
-      const regex = /^[\w\s]+(,[\w\s]+)*$/; // Regex pattern for comma-separated hashtags
-      return regex.test(value); // Test against the regex
-    }, "Hashtags should be comma-separated"),
+
 });
 
 const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
@@ -59,6 +44,12 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
+    defaultValues:{
+      title: '',
+      description: '',
+      picture: null,
+     
+    }
   });
 
   // Mutation to post the data
@@ -161,24 +152,7 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
               </p>
             )}
           </div>
-          <div className="flex flex-col space-y-2">
-            <label className="italic font-semibold" htmlFor="hashTags">
-              Type your Hash Tags
-            </label>
-            <Input
-              id="hashTags"
-              name="hashTags"
-              placeholder="max-limit = 3 example: art,painting,oil painting"
-              className="z-10 text-white bg-transparent border border-yellow-500 placeholder:text-slate-600"
-              type="text"
-              {...register("hashTags")}
-            />
-            {errors.hashTags && (
-              <p className="text-sm font-semibold text-red-500 sm:font-normal sm:text-sm ">
-                {errors.hashTags.message}
-              </p>
-            )}
-          </div>
+        
           <LoaderButton isLoading={isLoading} type="submit" text={isLoading?"Creating Post" :"Create Post"}  />
         </form>
       </DialogContent>

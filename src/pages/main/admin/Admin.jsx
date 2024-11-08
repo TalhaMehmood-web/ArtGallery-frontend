@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import ResNav from "@/components/ui/ResNav";
 import { adminNavLinks } from "@/lib/navLinks";
-
+import logo from "@/assets/logo.png";
 import UserInfo from "@/components/ui/UserInfo";
 const Admin = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const Admin = () => {
     <>
       <div className="flex flex-col w-full h-screen min-h-screen ">
         {/* admin nav */}
-        <div className="sticky top-0 z-50 flex items-center w-full px-4 py-1 text-white lg:justify-between bg-black/85 backdrop-opacity-10 ">
+        <div className="sticky top-0 z-50 flex items-center w-full px-4 py-3 text-white lg:py-0 lg:justify-between bg-black/85 backdrop-opacity-10 ">
           <div className="block cursor-pointer lg:hidden">
             <AlignJustify
               size={32}
@@ -23,10 +23,8 @@ const Admin = () => {
               onClick={() => setOpenSheet(true)}
             />
           </div>
-          <div className="hidden sm:block">
-            <p className="p-3 text-xl italic font-bold text-yellow-500 rounded-lg md:text-2xl lg:text-3xl animate-pulse ">
-              HANDMADE HEAVEN
-            </p>
+          <div className="hidden lg:block">
+            <img className="object-cover h-20 w-52" src={logo} alt="logo" />
           </div>
           <div className="flex justify-end flex-1 lg:hidden ">
             <UserInfo />

@@ -5,7 +5,7 @@ import ResNav from "@/components/ui/ResNav";
 import { clientNavLinks } from "@/lib/navLinks";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import logo from "@/assets/logo.png";
 import UserInfo from "@/components/ui/UserInfo";
 import { useGlobalContext } from "@/context/UserContext";
 const ClientNav = () => {
@@ -28,10 +28,8 @@ const ClientNav = () => {
             onClick={() => setOpenSheet(true)}
           />
         </div>
-        <div className="hidden sm:block">
-          <p className="text-2xl italic font-bold text-yellow-500 animate-pulse">
-            HOMEMADE HEAVEN
-          </p>
+        <div className="hidden md:block">
+          <img className="object-cover h-20 w-52" src={logo} alt="logo" />
         </div>
 
         <div className="flex justify-end flex-1 xl:hidden ">

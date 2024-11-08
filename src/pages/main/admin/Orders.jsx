@@ -78,13 +78,13 @@ const Orders = () => {
       accessorKey: "endDate",
       header: "End Date",
       cell: ({ row }) => {
-        const endDate = new Date(row.original.endDate); 
-        const now = Date.now(); 
-      
-        return endDate.getTime() < now 
-          ? "Auction Ended" 
-          : endDate.toLocaleDateString(); 
-      }
+        const endDate = new Date(row.original.endDate);
+        const now = Date.now();
+
+        return endDate.getTime() < now
+          ? "Auction Ended"
+          : endDate.toLocaleDateString();
+      },
     },
     {
       accessorKey: "numberOfBidders",
@@ -175,28 +175,28 @@ const Orders = () => {
               className="col-span-4 border border-yellow-500 md:max-w-full md:col-span-2"
             />
             {/* button for sheet */}
-<div className="flex flex-row space-x-2" >
-            <Button
-              className={`text-sm w-fit text-white col-span-1  bg-yellow-500 ${
-                !selectedAuction
-                  ? " opacity-50 hover:bg-yellow-500 hover:text-white focus:text-white focus:bg-yellow-500 "
-                  : ""
-              }`}
-              onClick={handleViewAllBiddersClick}
-            >
-              View All Bidders
-            </Button>
-            <Button
-            variant="destructive"
-              className={`flex flex-row items-center space-x-2  ${
-                !selectedAuction
-                  ? " opacity-50  hover:bg-red-500 hover:text-white focus:text-white focus:bg-red-500 "
-                  : ""
-              }`}
-              onClick={()=>alert(selectedAuction?._id)}
-            >
-           <Trash2 className="w-4 h-4"  /> <p>Delete Auction</p>
-            </Button>
+            <div className="flex flex-row space-x-2">
+              <Button
+                className={`text-sm w-fit text-white col-span-1  bg-yellow-500 ${
+                  !selectedAuction
+                    ? " opacity-50 hover:bg-yellow-500 hover:text-white focus:text-white focus:bg-yellow-500 "
+                    : ""
+                }`}
+                onClick={handleViewAllBiddersClick}
+              >
+                View All Bidders
+              </Button>
+              <Button
+                variant="destructive"
+                className={`flex flex-row items-center space-x-2  ${
+                  !selectedAuction
+                    ? " opacity-50  hover:bg-red-500 hover:text-white focus:text-white focus:bg-red-500 "
+                    : ""
+                }`}
+                onClick={() => alert(selectedAuction?._id)}
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
             </div>
             {/* columns */}
             <div className="flex items-end justify-end w-full col-span-3 md:col-span-1 ">

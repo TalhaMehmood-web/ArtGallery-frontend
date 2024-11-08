@@ -1,21 +1,19 @@
 import { fetchData } from "@/api/fetchData";
 import { useGlobalContext } from "@/context/UserContext";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 
 const useProfileAnalytics = () => {
   const { user } = useGlobalContext();
-  const queryClient = useQueryClient();
-  const profileData = queryClient.getQueryData(["profile-data", user?._id]);
+
   const { data, isLoading } = useQuery(
     ["profile-data", user?._id],
     () => fetchData("user/data"),
     {
-      staleTime: 50000,
-      refetchOnMount: false,
+      refetchOnWindowFocus:false
     }
   );
-
-  return { posts: data?.posts, isLoading, auctions: data?.auctions, data };
+console.log(data)
+  return { posts: data?.posts, isLoading, auctions: data?.auctions, followers:data?.followers  ,following:data?.following};
 };
 
 export default useProfileAnalytics;

@@ -45,7 +45,7 @@ const Home = () => {
           "overflow-hidden pointer-events-none "
         } `}
       >
-        <div className=" w-full h-[85vh] ">
+        <div className=" hidden lg:block  w-full h-[85vh] ">
           <HomeCarousel homePagePictures={homePagePictures} />
         </div>
         <HomeGallery

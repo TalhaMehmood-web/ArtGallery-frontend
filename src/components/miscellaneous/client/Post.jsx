@@ -27,8 +27,8 @@ const Post = ({ post }) => {
   const { user } = useGlobalContext();
   const { timeAgo } = useDateFormat(post?.createdAt);
   const [openCommentDialog, setOpenCommentDialog] = useState(false);
-  const [isLiked, setIsLiked] = useState(post.likes.includes(user?._id));
-  const { handleToggleLike, isLoading } = useTogglePostLikes(post._id);
+  const [isLiked, setIsLiked] = useState(post?.likes?.includes(user?._id));
+  const { handleToggleLike, isLoading } = useTogglePostLikes(post?._id);
 
   const toggleLike = () => {
     setIsLiked(!isLiked); // Optimistic update
@@ -74,9 +74,7 @@ const Post = ({ post }) => {
               <p className="mx-4 text-sm italic font-semibold sm:text-lg">
                 {post?.postedBy?.fullname}{post?.createdByYou && "(You)" }
               </p>
-              <p className="mx-4 text-xs italic sm:text-sm sm:font-semibold text-slate-500">
-                {post?.postedBy?.email}
-              </p>
+          
             </div>
           </div>
           <div className="flex items-center space-x-3 ">
@@ -174,14 +172,8 @@ const Post = ({ post }) => {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-2 md:px-4">
-          <div className="flex items-center space-x-2">
-            {post.hashTags.map((tag, index) => (
-              <p className="text-blue-500" key={tag + index}>
-                #{tag.trim().toLowerCase()}
-              </p>
-            ))}
-          </div>
+        <div className="flex flex-wrap items-center justify-end gap-2 md:px-4">
+     
           <p className="text-sm text-slate-500">Posted on : {timeAgo}</p>
         </div>
 

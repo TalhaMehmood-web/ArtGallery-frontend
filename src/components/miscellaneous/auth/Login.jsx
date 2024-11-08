@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -73,11 +73,9 @@ const Login = () => {
   return (
     <>
       <div className="flex flex-col p-4 space-y-2 text-white rounded-md bg-black/60 ">
-        <div className="flex flex-col px-10 py-1 mb-5 space-y-4 bg-black/20">
+        <div className="flex flex-col py-1 mb-5 space-y-4rounded-md bg-black/20 ">
           <p className="text-3xl font-bold ">Login</p>
-          <p className="mb-5 font-semibold text-blue-300 cursor-pointer hover:underline">
-            Don't have an account? Signup
-          </p>
+
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}

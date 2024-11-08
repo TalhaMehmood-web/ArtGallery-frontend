@@ -8,9 +8,9 @@ import useDeletePost from "@/hooks/useDeletePost";
 import { Badge } from "@/components/ui/badge";
 
 const ProfileAnalytics = () => {
-  const { posts, auctions, isLoading } = useProfileAnalytics();
+  const { posts, auctions, isLoading ,followers ,following} = useProfileAnalytics();
   const { postDeleting, deletePost } = useDeletePost();
-  // console.log(auctions);
+
   return (
     <>
       {isLoading || postDeleting ? (
@@ -19,7 +19,7 @@ const ProfileAnalytics = () => {
         </div>
       ) : (
         <div className="flex flex-col w-full min-h-screen gap-2 p-2 overflow-auto text-white bg-black sm:p-5 ">
-          <header className="grid grid-cols-1 gap-2 p-4 sm:grid-cols-2 lg:grid-cols-4 ">
+          <header className="grid grid-cols-1 gap-2 p-4 sm:grid-cols-2 lg:grid-cols-3 ">
             <ProfileItem
               header={"Total Posts Posted"}
               content={posts?.items?.length}
@@ -35,6 +35,14 @@ const ProfileAnalytics = () => {
             <ProfileItem
               header={"Highest Bids"}
               content={auctions?.numberOfHighestBids}
+            />
+             <ProfileItem
+              header={"Followers"}
+              content={followers?.length}
+            />
+             <ProfileItem
+              header={"Following"}
+              content={following?.length}
             />
           </header>
           <div className="grid flex-1 grid-cols-1 gap-2">

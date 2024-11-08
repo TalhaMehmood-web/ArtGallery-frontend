@@ -22,7 +22,7 @@ const Portfolio = () => {
           Hello My Name is
         </div>
         <div className="text-4xl font-extrabold animate-pulse text-nowrap sm:text-6xl md:text-7xl">
-          Tehryym Sheraz
+          Tehreem Sheraz
         </div>
         <div className="text-3xl font-extrabold text-yellow-500 sm:text-4xl md:text-5xl">
           Multidisciplinary Artist
@@ -57,7 +57,7 @@ const Portfolio = () => {
                     <p className="text-xl font-semibold">Name</p>
                   </div>
                   <p className="text-xl italic font-bold sm:text-2xl">
-                    Tehryym Sheraz
+                    Tehreem Sheraz
                   </p>
                 </div>
                 <div className="flex flex-col gap-2">

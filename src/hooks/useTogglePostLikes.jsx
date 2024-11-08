@@ -10,15 +10,15 @@ const useTogglePostLikes = (postId) => {
     {
       onMutate: async () => {
         // Cancel outgoing queries for this post
-        await queryClient.cancelQueries("posts");
+        await queryClient.cancelQueries( ["posts", user?._id]);
 
         // Snapshot of the previous value for rollback in case of error
-        const previousPosts = queryClient.getQueryData("posts");
+        const previousPosts = queryClient.getQueryData( ["posts", user?._id]);
 
         if (!previousPosts) return { previousPosts };
 
         // Optimistically update the likes on the post
-        queryClient.setQueryData("posts", (oldPosts) =>
+        queryClient.setQueryData( ["posts", user?._id], (oldPosts) =>
           oldPosts.map((p) =>
             p._id === postId
               ? {
@@ -37,7 +37,6 @@ const useTogglePostLikes = (postId) => {
         if (context?.previousPosts) {
           queryClient.setQueryData("posts", context.previousPosts);
         }
-        console.error(error.message);
       },
       onSettled: () => {
         // Refetch posts to sync with the server
