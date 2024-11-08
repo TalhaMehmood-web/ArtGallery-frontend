@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { FaPhone, FaEnvelope, FaUser } from "react-icons/fa";
 // import about from "@/assets/about.jpg";
 import { Button } from "@/components/ui/button";
@@ -28,8 +29,8 @@ const About = () => {
             className="mb-6 text-lg leading-relaxed"
             aria-label="Page Description"
           >
-            Welcome to Handmade Haven, your ultimate destination for artistic
-            expression! Here, creativity flourishes as artists and art
+            Welcome to Tehreem's Art House, your ultimate destination for
+            artistic expression! Here, creativity flourishes as artists and art
             enthusiasts come together to celebrate their passion. Our platform
             allows users to share their unique creations, connect with fellow
             creatives, and dive into inspiring discussions about all things art.
@@ -37,8 +38,8 @@ const About = () => {
             showcase their masterpieces, and art lovers have the chance to bid
             on stunning pieces. The highest bidder walks away with a unique work
             of art, making each auction an exhilarating experience. Join us at
-            Handmade Haven, where every stroke tells a story, and creativity
-            knows no limits!
+            Tehreem's Art House, where every stroke tells a story, and
+            creativity knows no limits!
           </p>
 
           <div className="flex items-start text-center ">
@@ -70,24 +71,24 @@ const About = () => {
             <ul className="space-y-2">
               <li className="flex items-center">
                 <FaUser className="mr-2 text-yellow-400" />
-                <span>Tehryym Sheraz </span>
+                <span>Tehreem Sheraz </span>
               </li>
               <li className="flex items-center">
                 <FaEnvelope className="mr-2 text-yellow-400" />
                 <a
-                  href="mailto:talhamehmood991@gmail.com"
+                  href="mailto:tehreemarthouse@gmail.com"
                   className="transition-colors duration-300 hover:text-yellow-400"
                 >
-                  talhamehmood991@gmail.com
+                  tehreemarthouse@gmail.com
                 </a>
               </li>
               <li className="flex items-center">
                 <FaPhone className="mr-2 text-yellow-400" />
                 <a
-                  href="tel:+923176747465"
+                  href="tel:+923294947618"
                   className="transition-colors duration-300 hover:text-yellow-400"
                 >
-                  +(92) 3176747465
+                  +(92) 3294947618
                 </a>
               </li>
             </ul>

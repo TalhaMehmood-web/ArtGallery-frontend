@@ -66,10 +66,10 @@ const Portfolio = () => {
                     <p className="text-xl font-semibold">Email</p>
                   </div>
                   <a
-                    href="mailto:talhamehmood991@gmail.com"
+                    href="mailto:tehreemarthouse@gmail.com"
                     className="transition-colors duration-300 hover:text-yellow-400"
                   >
-                    talhamehmood991@gmail.com
+                    tehreemarthouse@gmail.com
                   </a>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -78,10 +78,10 @@ const Portfolio = () => {
                     <p className="text-xl font-semibold">Phone No</p>
                   </div>
                   <a
-                    href="tel:+923176747465"
+                    href="tel:+923294947618"
                     className="transition-colors duration-300 hover:text-yellow-400"
                   >
-                    +(92) 3176747465
+                    +(92) 3294947618
                   </a>
                 </div>
               </div>
