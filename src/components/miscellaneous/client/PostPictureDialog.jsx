@@ -32,7 +32,6 @@ const schema = z.object({
     .string()
     .min(1, "Description is required")
     .max(225, "Maximum 255 characters are allowed"),
-
 });
 
 const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
@@ -44,18 +43,16 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues:{
-      title: '',
-      description: '',
+    defaultValues: {
+      title: "",
+      description: "",
       picture: null,
-     
-    }
+    },
   });
 
   // Mutation to post the data
   const createPostMutation = useMutation((data) => postData("post", data), {
     onSuccess: () => {
-      
       setOpenPostPicture(false);
       reset();
       queryClient.invalidateQueries("posts");
@@ -63,22 +60,19 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
   });
 
   const onSubmit = async (data) => {
-    const { picture, description, hashTags, title } = data;
+    const { picture, description, title } = data;
 
     // Prepare the form data to send
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("picture", picture[0]); // File input provides an array, so take the first element
-    formData.append("hashTags", hashTags.split(",")); // Assuming hashTags are comma-separated
-    
-    toast.promise(createPostMutation.mutateAsync(formData),{
-      loading:"Creating your post ... ",
-      success:"Post Created Successfully",
-      error:(err)=>err?.response?.data?.message || "Failed to create post! Try Again"
-
-    }) 
-    
+    toast.promise(createPostMutation.mutateAsync(formData), {
+      loading: "Creating your post ... ",
+      success: "Post Created Successfully",
+      error: (err) =>
+        err?.response?.data?.message || "Failed to create post! Try Again",
+    });
   };
 
   const { isLoading } = createPostMutation;
@@ -152,8 +146,12 @@ const PostPictureDialog = ({ openPostPicture, setOpenPostPicture }) => {
               </p>
             )}
           </div>
-        
-          <LoaderButton isLoading={isLoading} type="submit" text={isLoading?"Creating Post" :"Create Post"}  />
+
+          <LoaderButton
+            isLoading={isLoading}
+            type="submit"
+            text={isLoading ? "Creating Post" : "Create Post"}
+          />
         </form>
       </DialogContent>
     </Dialog>
